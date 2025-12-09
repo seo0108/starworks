@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ * == 개정이력(Modification Information) ==
+ *
+ *   수정일      			수정자           수정내용
+ *  ============   	============== =======================
+ *  2025. 9. 26.     	윤서현            최초 생성
+ *	2025. 10. 14.		김주민			selectMyRooms, findPrivateRoom
+ *	2025. 10. 15.		김주민			updateMessengerRoomName 추가
+ *
+-->
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.or.ddit.mybatis.mapper.MessengerRoomMapper">
+
+<!-- 대화방 명 수정  -->
+<update id="updateMessengerRoomName">
+	UPDATE MESSENGER_ROOM
+	SET MSGR_NM = #{msgrNm}
+	WHERE MSGR_ID = #{msgrId}
+</update>
+
+<!-- 내가 참여 중인 채팅방 목록 조회 (쿼리수정필요)-->
+<select id="selectMyRooms" resultType="MessengerRoomVO">
+    SELECT
+        r.MSGR_ID,
+        r.CRT_DT,
+        r.DEL_YN,
+        (
+            SELECT
+                CASE
+                    WHEN (
+                        SELECT COUNT(*)
+                        FROM MESSENGER_USER MU_CNT
+                        WHERE MU_CNT.MSGR_ID = r.MSGR_ID
+                            AND (MU_CNT.LEFT_DT IS NULL OR MU_CNT.LEFT_DT = '')
+                    ) = 2 THEN
+                        (
+                            SELECT U2.USER_NM
+                            FROM MESSENGER_USER MU2
+                            JOIN USERS U2 ON MU2.USER_ID = U2.USER_ID
+                            WHERE MU2.MSGR_ID = r.MSGR_ID
+                                AND MU2.USER_ID != #{userId}
+                                AND (MU2.LEFT_DT IS NULL OR MU2.LEFT_DT = '')
+                        )
+                    ELSE
+                        NVL(
+                            r.MSGR_NM,
+                            (
+                                SELECT LISTAGG(U3.USER_NM, ', ') WITHIN GROUP (ORDER BY U3.USER_NM)
+                                FROM MESSENGER_USER MU3
+                                JOIN USERS U3 ON MU3.USER_ID = U3.USER_ID
+                                WHERE MU3.MSGR_ID = r.MSGR_ID
+                                    AND (MU3.LEFT_DT IS NULL OR MU3.LEFT_DT = '')
+                            )
+                        )
+                END
+            FROM DUAL
+        ) AS MSGR_NM,
+        (
+            SELECT
+                CASE
+                    WHEN (
+                        SELECT COUNT(*)
+                        FROM MESSENGER_USER MU_CNT
+                        WHERE MU_CNT.MSGR_ID = r.MSGR_ID
+                            AND (MU_CNT.LEFT_DT IS NULL OR MU_CNT.LEFT_DT = '')
+                    ) = 2 THEN
+                        (
+                            SELECT fd.FILE_PATH
+                            FROM MESSENGER_USER MU2
+                            JOIN USERS U2 ON MU2.USER_ID = U2.USER_ID
+                            LEFT JOIN FILE_DETAIL fd ON U2.USER_IMG_FILE_ID = fd.FILE_ID
+                            WHERE MU2.MSGR_ID = r.MSGR_ID
+                                AND MU2.USER_ID != #{userId}
+                                AND (MU2.LEFT_DT IS NULL OR MU2.LEFT_DT = '')
+                        )
+                    ELSE NULL
+                END
+            FROM DUAL
+        ) AS PARTNER_FILE_PATH,
+        (
+            SELECT
+                CASE
+                    WHEN (
+                        SELECT COUNT(*)
+                        FROM MESSENGER_USER MU_CNT
+                        WHERE MU_CNT.MSGR_ID = r.MSGR_ID
+                            AND (MU_CNT.LEFT_DT IS NULL OR MU_CNT.LEFT_DT = '')
+                    ) = 2 THEN
+                        (
+                            SELECT d.DEPT_NM
+                            FROM MESSENGER_USER MU2
+                            JOIN USERS U2 ON MU2.USER_ID = U2.USER_ID
+                            LEFT JOIN DEPARTMENT d ON U2.DEPT_ID = d.DEPT_ID
+                            WHERE MU2.MSGR_ID = r.MSGR_ID
+                                AND MU2.USER_ID != #{userId}
+                                AND (MU2.LEFT_DT IS NULL OR MU2.LEFT_DT = '')
+                        )
+                    ELSE NULL
+                END
+            FROM DUAL
+        ) AS PARTNER_DEPT_NM,
+        (
+            SELECT
+                CASE
+                    WHEN (
+                        SELECT COUNT(*)
+                        FROM MESSENGER_USER MU_CNT
+                        WHERE MU_CNT.MSGR_ID = r.MSGR_ID
+                            AND (MU_CNT.LEFT_DT IS NULL OR MU_CNT.LEFT_DT = '')
+                    ) = 2 THEN
+                        (
+                            SELECT j.JBGD_NM
+                            FROM MESSENGER_USER MU2
+                            JOIN USERS U2 ON MU2.USER_ID = U2.USER_ID
+                            LEFT JOIN JOB_GRADE j ON U2.JBGD_CD = j.JBGD_CD
+                            WHERE MU2.MSGR_ID = r.MSGR_ID
+                                AND MU2.USER_ID != #{userId}
+                                AND (MU2.LEFT_DT IS NULL OR MU2.LEFT_DT = '')
+                        )
+                    ELSE NULL
+                END
+            FROM DUAL
+        ) AS PARTNER_JBGD_NM,
+        (
+            SELECT COUNT(*)
+            FROM MESSENGER_USER MU_COUNT
+            WHERE MU_COUNT.MSGR_ID = r.MSGR_ID
+                AND (MU_COUNT.LEFT_DT IS NULL OR MU_COUNT.LEFT_DT = '')
+        ) AS PARTICIPANT_COUNT,
+        (SELECT MAX(c.SEND_DT) FROM MESSENGER_CONTENT c WHERE c.MSGR_ID = r.MSGR_ID) AS LAST_MSG_DT,
+        (SELECT CONTENTS FROM (SELECT CONTENTS FROM MESSENGER_CONTENT c2
+             WHERE c2.MSGR_ID = r.MSGR_ID ORDER BY c2.SEND_DT DESC) WHERE ROWNUM = 1) AS LAST_MSG_CONT,
+        (SELECT COUNT(mc3.MSG_CONT_ID)
+         FROM MESSENGER_CONTENT mc3
+         LEFT JOIN MESSENGER_READ mr
+            ON mc3.MSG_CONT_ID = mr.MSG_CONT_ID AND mr.USER_ID = #{userId}
+         WHERE mc3.MSGR_ID = r.MSGR_ID
+           AND mc3.USER_ID != #{userId}
+           AND mr.MSG_CONT_ID IS NULL
+           ) AS UNREAD_COUNT
+    FROM
+        MESSENGER_ROOM r
+    INNER JOIN
+        MESSENGER_USER u
+        ON r.MSGR_ID = u.MSGR_ID
+    WHERE
+        u.USER_ID = #{userId}
+        AND (u.LEFT_DT IS NULL OR u.LEFT_DT = '')
+        AND r.DEL_YN = 'N'
+    ORDER BY
+        LAST_MSG_DT DESC NULLS LAST,
+        r.CRT_DT DESC
+</select>
+
+<!-- 두 사용자 간 1:1 채팅방 찾기 -->
+<select id="findPrivateRoom" resultType="MessengerRoomVO">
+    SELECT r.*
+    FROM MESSENGER_ROOM r
+    WHERE r.MSGR_ID IN (
+        SELECT u1.MSGR_ID
+        FROM MESSENGER_USER u1
+        WHERE u1.USER_ID = #{userId1}
+        INTERSECT
+        SELECT u2.MSGR_ID
+        FROM MESSENGER_USER u2
+        WHERE u2.USER_ID = #{userId2}
+    )
+    AND r.DEL_YN = 'N'
+    AND (
+        SELECT COUNT(*)
+        FROM MESSENGER_USER u
+        WHERE u.MSGR_ID = r.MSGR_ID
+    ) = 2
+    FETCH FIRST 1 ROWS ONLY
+</select>
+
+
+	<insert id="insertMessengerRoom" parameterType="messengerRoomVO">
+		<selectKey keyProperty="msgrId" resultType="String" order="BEFORE">
+			SELECT 'MSGR' || LPAD(MSGR_ID_SEQ.nextval, 8, 0) FROM DUAL
+		</selectKey>
+
+		INSERT INTO MESSENGER_ROOM(
+			MSGR_ID
+			,MSGR_NM
+			,CRT_DT
+			,DEL_YN
+		)VALUES(
+			 #{msgrId}
+			 ,#{msgrNm}
+			 ,SYSDATE
+			 ,'N'
+		)
+	</insert>
+
+	<select id="selectMessengerRoomList" resultType="kr.or.ddit.vo.MessengerRoomVO">
+		SELECT
+			MSGR_ID
+			,MSGR_NM
+			,CRT_DT
+			,DEL_YN
+		FROM
+			MESSENGER_ROOM
+	</select>
+
+	<select id="selectMessengerRoom" resultType="kr.or.ddit.vo.MessengerRoomVO">
+		SELECT
+			MSGR_ID
+			,MSGR_NM
+			,CRT_DT
+			,DEL_YN
+		FROM
+			MESSENGER_ROOM
+		WHERE
+			MSGR_ID=#{msgrId}
+	</select>
+
+	<delete id="deleteMessengerRoom">
+		DELETE FROM MESSENGER_ROOM
+		WHERE MSGR_ID=#{msgrId}
+	</delete>
+
+</mapper>

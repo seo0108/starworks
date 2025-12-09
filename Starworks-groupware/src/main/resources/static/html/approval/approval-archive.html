@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>보관함 - 전자결재</title>
+<!--     <link rel="preconnect" href="https://fonts.gstatic.com"> -->
+<!--     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700;800&display=swap" rel="stylesheet"> -->
+<!--     <link rel="stylesheet" href="mazer-1.0.0/dist/assets/css/bootstrap.css"> -->
+<!--     <link rel="stylesheet" href="mazer-1.0.0/dist/assets/vendors/perfect-scrollbar/perfect-scrollbar.css"> -->
+<!--     <link rel="stylesheet" href="mazer-1.0.0/dist/assets/vendors/bootstrap-icons/bootstrap-icons.css"> -->
+<!--     <link rel="stylesheet" href="mazer-1.0.0/dist/assets/css/app.css"> -->
+<!--     <link rel="shortcut icon" href="mazer-1.0.0/dist/assets/images/favicon.svg" type="image/x-icon"> -->
+</head>
+<body>
+            
+            <div id="main-content">
+                <div class="page-heading">
+                    <div class="page-title">
+                        <div class="row">
+                            <div class="col-12 col-md-6 order-md-1 order-last">
+                                <h3>보관함</h3>
+                                <p class="text-subtitle text-muted">완료된 문서를 조회하거나 다운로드할 수 있습니다.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <section class="section">
+                        <ul class="nav nav-tabs" id="myTab" role="tablist">
+                            <li class="nav-item" role="presentation">
+                                <a class="nav-link active" id="personal-archive-tab" data-bs-toggle="tab" href="#personal-archive" role="tab" aria-controls="personal-archive" aria-selected="true">개인 보관함</a>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <a class="nav-link" id="department-archive-tab" data-bs-toggle="tab" href="#department-archive" role="tab" aria-controls="department-archive" aria-selected="false">전체 보관함</a>
+                            </li>
+                        </ul>
+                        <div class="tab-content" id="myTabContent">
+                            <div class="tab-pane fade show active" id="personal-archive" role="tabpanel" aria-labelledby="personal-archive-tab">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div class="table-responsive">
+                                            <table class="table table-lg">
+                                                <thead>
+                                                    <tr><th>문서종류</th><th>제목</th><th>기안자</th><th>완료일</th><th>상태</th><th>관리</th></tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td class="text-bold-500">품의서</td>
+                                                        <td>영업팀 워크샵 장소 선정</td>
+                                                        <td class="text-bold-500">이대리</td>
+                                                        <td>2025-09-15</td>
+                                                        <td><span class="badge bg-success">완료</span></td>
+                                                        <td><a href="#" class="btn btn-sm btn-outline-secondary">상세보기</a> <a href="#" class="btn btn-sm btn-outline-primary">다운로드</a></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="text-bold-500">휴가신청서</td>
+                                                        <td>병가 신청</td>
+                                                        <td class="text-bold-500">박사원</td>
+                                                        <td>2025-09-14</td>
+                                                        <td><span class="badge bg-danger">반려</span></td>
+                                                        <td><a href="#" class="btn btn-sm btn-outline-secondary">상세보기</a> <a href="#" class="btn btn-sm btn-outline-primary">다운로드</a></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="text-bold-500">지출결의서</td>
+                                                        <td>[2분기] 사무용품 구매</td>
+                                                        <td class="text-bold-500">김차장</td>
+                                                        <td>2025-08-20</td>
+                                                        <td><span class="badge bg-success">완료</span></td>
+                                                        <td><a href="#" class="btn btn-sm btn-outline-secondary">상세보기</a> <a href="#" class="btn btn-sm btn-outline-primary">다운로드</a></td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane fade" id="department-archive" role="tabpanel" aria-labelledby="department-archive-tab">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div class="table-responsive">
+                                            <table class="table table-lg">
+                                                <thead>
+                                                    <tr><th>문서종류</th><th>제목</th><th>기안자</th><th>완료일</th><th>상태</th><th>관리</th></tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td class="text-bold-500">지출결의서</td>
+                                                        <td>[3분기] 마케팅 비용</td>
+                                                        <td class="text-bold-500">박과장</td>
+                                                        <td>2025-09-10</td>
+                                                        <td><span class="badge bg-success">완료</span></td>
+                                                        <td><a href="#" class="btn btn-sm btn-outline-secondary">상세보기</a> <a href="#" class="btn btn-sm btn-outline-primary">다운로드</a></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="text-bold-500">품의서</td>
+                                                        <td>신규 협력업체 등록</td>
+                                                        <td class="text-bold-500">최주임</td>
+                                                        <td>2025-09-05</td>
+                                                        <td><span class="badge bg-success">완료</span></td>
+                                                        <td><a href="#" class="btn btn-sm btn-outline-secondary">상세보기</a> <a href="#" class="btn btn-sm btn-outline-primary">다운로드</a></td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            </div>
+
+<!--     <script src="mazer-1.0.0/dist/assets/vendors/perfect-scrollbar/perfect-scrollbar.min.js"></script> -->
+<!--     <script src="mazer-1.0.0/dist/assets/js/bootstrap.bundle.min.js"></script> -->
+<!--     <script src="mazer-1.0.0/dist/assets/js/main.js"></script> -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const personalArchiveBody = document.querySelector('#personal-archive tbody');
+            const departmentArchiveBody = document.querySelector('#department-archive tbody');
+            const archivedDocs = JSON.parse(localStorage.getItem('archivedDocs')) || [];
+
+            function populateTable(tbody, docs) {
+                // Append docs from localStorage
+                docs.forEach(doc => {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td class="text-bold-500">${doc.docType}</td>
+                        <td>${doc.title}</td>
+                        <td class="text-bold-500">${doc.drafter}</td>
+                        <td>${doc.completedDate || doc.draftDate}</td>
+                        <td><span class="badge bg-success">${doc.status}</span></td>
+                        <td>
+                            <a href="${doc.href}?docId=${doc.id}" class="btn btn-sm btn-outline-secondary">상세보기</a> 
+                            <a href="#" class="btn btn-sm btn-outline-primary">다운로드</a>
+                        </td>
+                    `;
+                    tbody.appendChild(row);
+                });
+
+                // If tbody is still empty after trying to append, show the message.
+                if (tbody.children.length === 0) {
+                    tbody.innerHTML = '<tr><td colspan="6" class="text-center text-muted">보관된 문서가 없습니다.</td></tr>';
+                }
+            }
+
+            // For this prototype, both tables will show the same data.
+            populateTable(personalArchiveBody, archivedDocs);
+            populateTable(departmentArchiveBody, archivedDocs);
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>조직도 - Mazer Admin Dashboard</title>
+
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="mazer-1.0.0/dist/assets/css/bootstrap.css">
+
+    <link rel="stylesheet" href="mazer-1.0.0/dist/assets/vendors/perfect-scrollbar/perfect-scrollbar.css">
+    <link rel="stylesheet" href="mazer-1.0.0/dist/assets/vendors/bootstrap-icons/bootstrap-icons.css">
+    <link rel="stylesheet" href="mazer-1.0.0/dist/assets/css/app.css">
+    <link rel="shortcut icon" href="mazer-1.0.0/dist/assets/images/favicon.svg" type="image/x-icon">
+    
+</head>
+
+<body>
+    <div id="app">
+        <div id="sidebar" class="active">
+            <div class="sidebar-wrapper active">
+                <div class="sidebar-header">
+                    <div class="d-flex justify-content-between">
+                        <div class="logo">
+                            <a href="index.html"><img src="mazer-1.0.0/dist/assets/images/logo/logo.png" alt="Logo" srcset=""></a>
+                        </div>
+                        <div class="toggler">
+                            <a href="#" class="sidebar-hide d-xl-none d-block"><i class="bi bi-x bi-middle"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="sidebar-menu">
+                    <ul class="menu">
+                        <li class="sidebar-title">Menu</li>
+
+                        <li class="sidebar-item">
+                            <a href="index.html" class='sidebar-link'>
+                                <i class="bi bi-grid-fill"></i>
+                                <span>대시보드</span>
+                            </a>
+                        </li>
+
+                        <li class="sidebar-item active">
+                            <a href="organization_chart_mazer_themed.html" class='sidebar-link'>
+                                <i class="bi bi-diagram-3-fill"></i>
+                                <span>조직도</span>
+                            </a>
+                        </li>
+
+                        <li class="sidebar-item">
+                            <a href="#" class='sidebar-link'>
+                                <i class="bi bi-file-earmark-text-fill"></i>
+                                <span>전자결재</span>
+                            </a>
+                        </li>
+
+                        <li class="sidebar-item">
+                            <a href="#" class='sidebar-link'>
+                                <i class="bi bi-grid-1x2-fill"></i>
+                                <span>게시판</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <button class="sidebar-toggler btn x"><i data-feather="x"></i></button>
+            </div>
+        </div>
+        <div id="main">
+            <header class="mb-3">
+                <a href="#" class="burger-btn d-block d-xl-none">
+                    <i class="bi bi-justify fs-3"></i>
+                </a>
+            </header>
+
+            <div class="page-heading">
+                <h3>조직도</h3>
+            </div>
+            <div class="page-content">
+                <section class="row">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="input-group mb-3">
+                                    <input type="text" id="orgSearchInput" class="form-control"
+                                        placeholder="부서명 또는 사원명 검색" aria-label="Search organization">
+                                    <button class="btn btn-primary" type="button" id="orgSearchButton">검색</button>
+                                </div>
+
+                                <div class="row">
+                                    <!-- Organization Tree -->
+                                    <div class="col-md-6">
+                                        <h4>조직 구조</h4>
+                                        <div id="orgTreeContainer" class="org-tree border p-3 rounded bg-white"
+                                            style="min-height: 400px;">
+                                            <!-- Org Tree will be rendered here by JS -->
+                                        </div>
+                                    </div>
+
+                                    <!-- Department Detail -->
+                                    <div class="col-md-6">
+                                        <h4>부서 상세 정보</h4>
+                                        <div id="deptDetailContainer" class="border p-3 rounded bg-white"
+                                            style="min-height: 400px;">
+                                            <p class="text-muted">부서를 클릭하여 상세 정보를 확인하세요.</p>
+                                            <!-- Department details and employee list will be rendered here by JS -->
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+            <footer>
+                <div class="footer clearfix mb-0 text-muted">
+                    <div class="float-start">
+                        <p>2021 &copy; Mazer</p>
+                    </div>
+                    <div class="float-end">
+                        <p>Crafted with <span class="text-danger"><i class="bi bi-heart"></i></span> by <a
+                                href="http://ahmadsaugi.com">A. Saugi</a></p>
+                    </div>
+                </div>
+            </footer>
+        </div>
+    </div>
+
+    <!-- Member Detail Modal -->
+    <div class="modal fade" id="memberDetailModal" tabindex="-1" aria-labelledby="memberDetailModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="memberDetailModalLabel">사원 정보</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body text-center">
+                    <img id="memberPhoto" src="" class="profile-img" alt="프로필 사진">
+                    <h4><span id="memberName"></span> <span class="chat-icon" title="채팅하기">💬</span></h4>
+                    <p class="text-muted" id="memberPosition"></p>
+                    <ul class="list-group list-group-flush text-start">
+                        <li class="list-group-item">📞 전화번호: <span id="memberPhone"></span></li>
+                        <li class="list-group-item">📧 이메일: <span id="memberEmail"></span></li>
+                        <li class="list-group-item">📊 근무현황: <span id="memberStatus" class="badge"></span></li>
+                    </ul>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light-secondary" data-bs-dismiss="modal">닫기</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="mazer-1.0.0/dist/assets/vendors/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+    <script src="mazer-1.0.0/dist/assets/js/bootstrap.bundle.min.js"></script>
+
+    <script src="mazer-1.0.0/dist/assets/js/main.js"></script>
+    <script>
+        // Mock Data (copied from src/data/mockData.js)
+        const mockData = [
+            {
+                id: 1,
+                name: "CEO",
+                employees: [
+                    { id: 101, name: "홍길동", position: "대표이사", phone: "010-1111-1111", email: "ceo@example.com", status: "근무중", photo: "wh.png" }
+                ],
+                subDepartments: [
+                    {
+                        id: 2,
+                        name: "경영관리본부",
+                        employees: [
+                            { id: 201, name: "김영희", position: "본부장", phone: "010-2222-2222", email: "kim@example.com", status: "근무중", photo: "wh.png" }
+                        ],
+                        subDepartments: [
+                            {
+                                id: 4,
+                                name: "인사팀",
+                                employees: [
+                                    { id: 401, name: "박철수", position: "팀장", phone: "010-4444-4444", email: "park@example.com", status: "근무중", photo: "wh.png" },
+                                    { id: 402, name: "이하나", position: "대리", phone: "010-4444-5555", email: "lee@example.com", status: "휴가", photo: "wh.png" }
+                                ],
+                                subDepartments: []
+                            },
+                            {
+                                id: 5,
+                                name: "총무팀",
+                                employees: [
+                                    { id: 501, name: "최민준", position: "과장", phone: "010-5555-6666", email: "choi@example.com", status: "근무중", photo: "wh.png" }
+                                ],
+                                subDepartments: []
+                            }
+                        ]
+                    },
+                    {
+                        id: 3,
+                        name: "개발본부",
+                        employees: [
+                            { id: 301, name: "정순이", position: "본부장", phone: "010-3333-3333", email: "jung@example.com", status: "출장", photo: "wh.png" }
+                        ],
+                        subDepartments: [
+                            {
+                                id: 6,
+                                name: "프론트엔드팀",
+                                employees: [
+                                    { id: 601, name: "윤지후", position: "팀장", phone: "010-6666-7777", email: "yoon@example.com", status: "근무중", photo: "wh.png" },
+                                    { id: 602, name: "송가인", position: "사원", phone: "010-6666-8888", email: "song@example.com", status: "근무중", photo: "wh.png" }
+                                ],
+                                subDepartments: []
+                            },
+                            {
+                                id: 7,
+                                name: "백엔드팀",
+                                employees: [
+                                    { id: 701, name: "강하늘", position: "팀장", phone: "010-7777-8888", email: "kang@example.com", status: "근무중", photo: "wh.png" },
+                                    { id: 702, name: "배수지", position: "대리", phone: "010-7777-9999", email: "bae@example.com", status: "근무중", photo: "wh.png" }
+                                ],
+                                subDepartments: []
+                            }
+                        ]
+                    }
+                ]
+            }
+        ];
+
+        // Function to calculate total employees in a department and its sub-departments
+        function getTotalEmployees(department) {
+            let count = department.employees.length;
+            department.subDepartments.forEach(subDept => {
+                count += getTotalEmployees(subDept);
+            });
+            return count;
+        }
+
+        // Function to render the organization tree
+        function renderOrgTree(departments, parentElement) {
+            const ul = document.createElement('ul');
+            departments.forEach(dept => {
+                const li = document.createElement('li');
+                const totalEmployees = getTotalEmployees(dept);
+                const deptLink = document.createElement('a');
+                deptLink.href = "#";
+                deptLink.classList.add('department-name');
+                deptLink.innerHTML = `<i class="bi bi-folder-fill text-primary"></i> ${dept.name} (${totalEmployees}명)`;
+                deptLink.dataset.deptId = dept.id; // Store department ID
+                li.appendChild(deptLink);
+
+                // Add employee list under the department
+                if (dept.employees.length > 0) {
+                    const empUl = document.createElement('ul');
+                    empUl.classList.add('list-unstyled', 'ps-4');
+                    dept.employees.forEach(emp => {
+                        const empLi = document.createElement('li');
+                        const empLink = document.createElement('a');
+                        empLink.href = '#';
+                        empLink.classList.add('employee-link', 'text-decoration-none', 'text-muted');
+                        empLink.dataset.employeeId = emp.id;
+                        empLink.innerHTML = `<i class="bi bi-person-fill"></i> ${emp.name} <span class="badge bg-light text-dark rounded-pill">${emp.position}</span>`;
+                        empLi.appendChild(empLink);
+                        empUl.appendChild(empLi);
+                    });
+                    li.appendChild(empUl);
+                }
+
+                if (dept.subDepartments.length > 0) {
+                    renderOrgTree(dept.subDepartments, li);
+                }
+                ul.appendChild(li);
+            });
+            parentElement.appendChild(ul);
+        }
+
+        // Function to find a department by ID
+        function findDepartmentById(id, departments) {
+            for (const dept of departments) {
+                if (dept.id === id) {
+                    return dept;
+                }
+                const found = findDepartmentById(id, dept.subDepartments);
+                if (found) {
+                    return found;
+                }
+            }
+            return null;
+        }
+
+        // Function to find an employee by ID
+        function findEmployeeById(id, departments) {
+            for (const dept of departments) {
+                for (const emp of dept.employees) {
+                    if (emp.id === id) {
+                        return emp;
+                    }
+                }
+                const found = findEmployeeById(id, dept.subDepartments);
+                if (found) {
+                    return found;
+                }
+            }
+            return null;
+        }
+
+        // Function to display department details
+        function displayDepartmentDetails(deptId) {
+            const dept = findDepartmentById(deptId, mockData);
+            const deptDetailContainer = document.getElementById('deptDetailContainer');
+            deptDetailContainer.innerHTML = ''; // Clear previous content
+
+            if (dept) {
+                const totalEmployees = getTotalEmployees(dept);
+                let html = `
+                    <h4>${dept.name}</h4>
+                    <p>총 인원: ${totalEmployees}명</p>
+                    <h5>부서원 목록</h5>
+                    <ul class="list-group employee-list">
+                `;
+
+                function addEmployeesToList(department) {
+                    department.employees.forEach(emp => {
+                        html += `
+                            <li class="list-group-item d-flex justify-content-between align-items-center" data-employee-id="${emp.id}">
+                                ${emp.name} <span class="badge bg-secondary rounded-pill">${emp.position}</span>
+                            </li>
+                        `;
+                    });
+                    department.subDepartments.forEach(addEmployeesToList);
+                }
+
+                addEmployeesToList(dept);
+
+                html += `</ul>`;
+                deptDetailContainer.innerHTML = html;
+
+                // Add event listeners to employee list items
+                deptDetailContainer.querySelectorAll('.employee-list .list-group-item').forEach(item => {
+                    item.addEventListener('click', (event) => {
+                        const empId = parseInt(event.currentTarget.dataset.employeeId);
+                        displayMemberModal(empId);
+                    });
+                });
+            } else {
+                deptDetailContainer.innerHTML = '<p class="text-muted">부서를 클릭하여 상세 정보를 확인하세요.</p>';
+            }
+        }
+
+        // Function to display member details in modal
+        function displayMemberModal(empId) {
+            const employee = findEmployeeById(empId, mockData);
+            if (employee) {
+                document.getElementById('memberPhoto').src = employee.photo ? employee.photo : 'mazer-1.0.0/dist/assets/images/faces/1.jpg';
+                document.getElementById('memberName').textContent = employee.name;
+                document.getElementById('memberPosition').textContent = `직급: ${employee.position}`;
+                document.getElementById('memberPhone').textContent = employee.phone;
+                document.getElementById('memberEmail').textContent = employee.email;
+
+                const memberStatusSpan = document.getElementById('memberStatus');
+                memberStatusSpan.textContent = employee.status;
+                memberStatusSpan.className = 'badge'; // Reset classes
+                if (employee.status === '근무중') {
+                    memberStatusSpan.classList.add('bg-success');
+                } else if (employee.status === '휴가') {
+                    memberStatusSpan.classList.add('bg-warning', 'text-dark');
+                } else if (employee.status === '출장') {
+                    memberStatusSpan.classList.add('bg-info');
+                } else {
+                    memberStatusSpan.classList.add('bg-secondary');
+                }
+
+                const memberModal = new bootstrap.Modal(document.getElementById('memberDetailModal'));
+                memberModal.show();
+            }
+        }
+
+        // Function to search organization
+        function searchOrganization() {
+            const searchTerm = document.getElementById('orgSearchInput').value.toLowerCase();
+            const orgTreeContainer = document.getElementById('orgTreeContainer');
+            orgTreeContainer.innerHTML = ''; // Clear current tree
+
+            function filterData(departments, term) {
+                const results = [];
+                for (const dept of departments) {
+                    const matchingEmployees = dept.employees.filter(emp => emp.name.toLowerCase().includes(term));
+                    const matchingSubDepts = filterData(dept.subDepartments, term);
+
+                    if (dept.name.toLowerCase().includes(term) || matchingEmployees.length > 0 || matchingSubDepts.length > 0) {
+                        results.push({
+                            ...dept,
+                            employees: matchingEmployees,
+                            subDepartments: matchingSubDepts
+                        });
+                    }
+                }
+                return results;
+            }
+
+            const filteredData = filterData(mockData, searchTerm);
+            if (filteredData.length > 0) {
+                renderOrgTree(filteredData, orgTreeContainer);
+            } else {
+                orgTreeContainer.innerHTML = '<p class="text-muted">검색 결과가 없습니다.</p>';
+            }
+        }
+
+
+        // Initial rendering of the organization tree and event listeners
+        document.addEventListener('DOMContentLoaded', () => {
+            const orgTreeContainer = document.getElementById('orgTreeContainer');
+            renderOrgTree(mockData, orgTreeContainer);
+
+            // Add event listener for department and employee clicks
+            orgTreeContainer.addEventListener('click', (event) => {
+                const deptLink = event.target.closest('.department-name');
+                const empLink = event.target.closest('.employee-link');
+
+                if (deptLink) {
+                    event.preventDefault();
+                    const deptId = parseInt(deptLink.dataset.deptId);
+                    displayDepartmentDetails(deptId);
+                } else if (empLink) {
+                    event.preventDefault();
+                    const empId = parseInt(empLink.dataset.employeeId);
+                    displayMemberModal(empId);
+                }
+            });
+
+            // Add event listener for search button
+            document.getElementById('orgSearchButton').addEventListener('click', searchOrganization);
+            document.getElementById('orgSearchInput').addEventListener('keypress', (event) => {
+                if (event.key === 'Enter') {
+                    searchOrganization();
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>

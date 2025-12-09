@@ -1,0 +1,32 @@
+/* 기본 메뉴 스타일 */
+.approval-menu a {
+    transition: all 0.3s ease;
+}
+
+/* 상위 메뉴 활성화 (배경색 없음, 텍스트 색상만) */
+.menu-group > a.active {
+    color: #4f46e5 !important;
+}
+
+.menu-group > a.active p {
+    color: #4f46e5 !important;
+    background-color: #f0f4ff;
+    font-weight: bold;
+    padding: 5px 10px;
+    border-radius: 5px;
+}
+
+/* 하위 메뉴 활성화 (배경색 포함) */
+.menu-group ul li a.active {
+    color: #435ebe !important;
+    font-weight: bold;
+    background-color: #f0f4ff;
+    padding: 5px 10px;
+    border-radius: 5px;
+}
+
+/* 하위 메뉴 호버 효과 */
+.menu-group ul li a:hover {
+    background-color: #f8f9fa;
+    padding-left: 15px;
+}

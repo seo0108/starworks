@@ -1,0 +1,43 @@
+/**
+ * <pre>
+ * << 개정이력(Modification Information) >>
+ *
+ *   수정일      			수정자           수정내용
+ *  -----------   	-------------    ---------------------------
+ *  2025. 10. 1.     	윤서현            최초 생성
+ *
+ * </pre>
+ */
+@charset "UTF-8";
+
+/* 부서명 (폴더) */
+#org-tree li,
+#fav-org-tree li {
+  margin-bottom: 6px;
+}
+
+/* 부서명 텍스트 */
+.department-name {
+  font-weight: 600;
+  margin-bottom: 4px;
+  display: inline-block;
+}
+
+/* 직원 리스트 */
+#org-tree .employee-link,
+#fav-org-tree .employee-link {
+  display: inline-block;
+  padding: 3px 0;
+}
+
+/* 직원 항목 간격 */
+#org-tree ul li,
+#fav-org-tree ul li {
+  margin-bottom: 2px;
+}
+
+#fav-org-tree .employee-link.selected-user {
+    background-color: #f0f8ff;
+    border-radius: 4px;
+    padding: 2px 4px;
+}

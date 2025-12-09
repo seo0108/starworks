@@ -1,0 +1,860 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>휴가원 작성 (결재 처리 UI 개선) - Mazer Admin Dashboard</title>
+
+
+<!--     <link href="https://unpkg.com/filepond/dist/filepond.css" rel="stylesheet"> -->
+<!--     <link href="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css" rel="stylesheet"> -->
+<!--     <link rel="stylesheet" href="mazer-1.0.0/dist/assets/vendors/dragula/dragula.min.css"> -->
+</head>
+
+<body>
+
+	<div id="main-content">
+		<div class="page-heading">
+			<div class="page-title">
+				<div class="row">
+					<div class="col-12 col-md-6 order-md-1 order-last">
+						<h3>기안서 작성</h3>
+						<p class="text-subtitle text-muted">새로운 문서를 기안합니다.</p>
+					</div>
+					<div class="col-12 col-md-6 order-md-2 order-first">
+						<nav aria-label="breadcrumb"
+							class="breadcrumb-header float-start float-lg-end">
+							<ol class="breadcrumb">
+								<li class="breadcrumb-item"><a href="index.html">전자결재</a></li>
+								<li class="breadcrumb-item active" aria-current="page">기안서
+									작성</li>
+							</ol>
+						</nav>
+					</div>
+				</div>
+			</div>
+
+			<section class="section">
+				<div class="row">
+					<div class="col-12 col-lg-8">
+						<div class="card">
+							<div class="card-body">
+								<form action="#">
+									<div class="form-group mb-3">
+										<label for="title" class="form-label">제목</label> <input
+											type="text" class="form-control" id="title"
+											placeholder="제목을 입력하세요" value="휴가원">
+									</div>
+									<div class="form-group mb-3">
+										<label class="form-label">내용</label>
+										<div class="border p-3">
+											<!-- 											<span -->
+											<!-- 												style="font-family: &amp; quot; 맑은 고딕&amp;quot;; font-size: 10pt; line-height: normal; margin-top: 0px; margin-bottom: 0px;"> -->
+											<!-- 												<table -->
+											<!-- 													style="border: 0px solid rgb(0, 0, 0); width: 100%; font-family: malgun gothic, dotum, arial, tahoma; margin-top: 1px; border-collapse: collapse;"> -->
+											<!-- 													<colgroup> -->
+											<!-- 														<col width="310"> -->
+											<!-- 														<col width="490"> -->
+											<!-- 													</colgroup> -->
+											<!-- 													<tbody> -->
+											<!-- 														<tr> -->
+											<!-- 															<td -->
+											<!-- 																style="background: white; padding: 0px !important; border: 0px currentColor; height: 90px; text-align: center; color: black; font-size: 36px; font-weight: bold; vertical-align: top;" -->
+											<!-- 																colspan="2" -->
+											<!-- 																class="dext_table_border_t dext_table_border_r dext_table_border_b dext_table_border_l"> -->
+											<!-- 																휴가원</td> -->
+											<!-- 														</tr> -->
+											<!-- 														<tr> -->
+											<!-- 															<td -->
+											<!-- 																style="background: white; padding: 0px !important; border: 0px currentColor; text-align: left; color: black; font-size: 12px; font-weight: normal; vertical-align: top;" -->
+											<!-- 																colspan="2"> -->
+											<!-- 																<table -->
+											<!-- 																	style="border: 1px solid rgb(0, 0, 0); font-family: malgun gothic, dotum, arial, tahoma; margin-top: 1px; border-collapse: collapse; width: 100%"> -->
+											<!-- 																	<colgroup> -->
+											<!-- 																		<col width="100"> -->
+											<!-- 																		<col width="220"> -->
+											<!-- 																	</colgroup> -->
+											<!-- 																	<tbody> -->
+											<!-- 																		<tr> -->
+											<!-- 																			<td -->
+											<!-- 																				style="background: rgb(221, 221, 221); padding: 5px; border: 1px solid black; height: 18px; text-align: center; color: rgb(0, 0, 0); font-size: 12px; font-weight: bold; vertical-align: middle;"> -->
+											<!-- 																				기안자</td> -->
+											<!-- 																			<td -->
+											<!-- 																				style="background: rgb(255, 255, 255); padding: 5px; border: 1px solid black; text-align: left; color: rgb(0, 0, 0); font-size: 12px; font-weight: normal; vertical-align: middle;"> -->
+											<!-- 																				김차장</td> -->
+											<!-- 																		</tr> -->
+											<!-- 																		<tr> -->
+											<!-- 																			<td -->
+											<!-- 																				style="background: rgb(221, 221, 221); padding: 5px; border: 1px solid black; height: 18px; text-align: center; color: rgb(0, 0, 0); font-size: 12px; font-weight: bold; vertical-align: middle;"> -->
+											<!-- 																				기안부서</td> -->
+											<!-- 																			<td -->
+											<!-- 																				style="background: rgb(255, 255, 255); padding: 5px; border: 1px solid black; text-align: left; color: rgb(0, 0, 0); font-size: 12px; font-weight: normal; vertical-align: middle;"> -->
+											<!-- 																				인사팀</td> -->
+											<!-- 																		</tr> -->
+											<!-- 																		<tr> -->
+											<!-- 																			<td -->
+											<!-- 																				style="background: rgb(221, 221, 221); padding: 5px; border: 1px solid black; height: 18px; text-align: center; color: rgb(0, 0, 0); font-size: 12px; font-weight: bold; vertical-align: middle;"> -->
+											<!-- 																				기안일</td> -->
+											<!-- 																			<td -->
+											<!-- 																				style="background: rgb(255, 255, 255); padding: 5px; border: 1px solid black; text-align: left; color: rgb(0, 0, 0); font-size: 12px; font-weight: normal; vertical-align: middle;"> -->
+											<!-- 																				2025-09-15</td> -->
+											<!-- 																		</tr> -->
+											<!-- 																		<tr> -->
+											<!-- 																			<td -->
+											<!-- 																				style="background: rgb(221, 221, 221); padding: 5px; border: 1px solid black; height: 18px; text-align: center; color: rgb(0, 0, 0); font-size: 12px; font-weight: bold; vertical-align: middle;"> -->
+											<!-- 																				문서번호</td> -->
+											<!-- 																			<td -->
+											<!-- 																				style="background: rgb(255, 255, 255); padding: 5px; border: 1px solid black; text-align: left; color: rgb(0, 0, 0); font-size: 12px; font-weight: normal; vertical-align: middle;"> -->
+
+											<!-- 																			</td> -->
+											<!-- 																		</tr> -->
+											<!-- 																	</tbody> -->
+											<!-- 																</table> -->
+											<!-- 															</td> -->
+											<!-- 														</tr> -->
+											<!-- 													</tbody> -->
+											<!-- 												</table> -->
+											<!-- 												<table -->
+											<!-- 													style="border: 0px solid rgb(0, 0, 0); width: 100%; font-family: malgun gothic, dotum, arial, tahoma; margin-top: 10px; border-collapse: collapse;"> -->
+											<!-- 													<colgroup> -->
+											<!-- 														<col width="200"> -->
+											<!-- 														<col width="350"> -->
+											<!-- 														<col width="200"> -->
+											<!-- 														<col width="200"> -->
+											<!-- 													</colgroup> -->
+											<!-- 													<tbody> -->
+											<!-- 														<tr> -->
+											<!-- 															<td -->
+											<!-- 																style="padding: 5px; border: 1px solid black; height: 25px; text-align: center; color: rgb(0, 0, 0); font-size: 14px; vertical-align: middle; background-color: rgb(221, 221, 221);" -->
+											<!-- 																colspan="4"><span -->
+											<!-- 																style="font-weight: bold; font-family: &amp; quot; malgun gothic&amp;quot; , dotum , arial, tahoma; font-size: 11pt; line-height: normal; margin-top: 0px; margin-bottom: 0px;">신청인</span> -->
+											<!-- 															</td> -->
+											<!-- 														</tr> -->
+											<!-- 														<tr> -->
+											<!-- 															<td -->
+											<!-- 																style="background: rgb(221, 221, 221); padding: 5px; border: 1px solid black; height: 25px; text-align: center; color: rgb(0, 0, 0); font-size: 14px; font-weight: bold; vertical-align: middle;"> -->
+											<!-- 																소속</td> -->
+											<!-- 															<td -->
+											<!-- 																style="background: rgb(255, 255, 255); border-width: medium 1px 1px; border-style: none solid solid; border-color: currentColor black black; padding: 5px; height: 25px; text-align: left; color: rgb(0, 0, 0); font-size: 14px; font-weight: normal; vertical-align: middle;" -->
+											<!-- 																colspan="3" class="dext_table_border_t"><input -->
+											<!-- 																class="form-control" type="text"></td> -->
+											<!-- 														</tr> -->
+											<!-- 														<tr> -->
+											<!-- 															<td -->
+											<!-- 																style="background: rgb(221, 221, 221); padding: 5px; border: 1px solid black; height: 25px; text-align: center; color: rgb(0, 0, 0); font-size: 14px; font-weight: bold; vertical-align: middle;"> -->
+											<!-- 																직책</td> -->
+											<!-- 															<td -->
+											<!-- 																style="background: rgb(255, 255, 255); border-width: medium 1px 1px; border-style: none solid solid; border-color: currentColor black black; padding: 5px; height: 25px; text-align: left; color: rgb(0, 0, 0); font-size: 14px; font-weight: normal; vertical-align: middle;" -->
+											<!-- 																colspan="3" class="dext_table_border_t"><input -->
+											<!-- 																class="form-control" type="text"></td> -->
+											<!-- 														</tr> -->
+											<!-- 														<tr> -->
+											<!-- 															<td -->
+											<!-- 																style="background: rgb(221, 221, 221); padding: 5px; border: 1px solid black; height: 25px; text-align: center; color: rgb(0, 0, 0); font-size: 14px; font-weight: bold; vertical-align: middle;"> -->
+											<!-- 																성명</td> -->
+											<!-- 															<td -->
+											<!-- 																style="background: rgb(255, 255, 255); border-width: medium 1px 1px; border-style: none solid solid; border-color: currentColor black black; padding: 5px; height: 25px; text-align: left; color: rgb(0, 0, 0); font-size: 14px; font-weight: normal; vertical-align: middle;" -->
+											<!-- 																colspan="3" class="dext_table_border_t"><input -->
+											<!-- 																class="form-control" type="text"></td> -->
+											<!-- 														</tr> -->
+											<!-- 														<tr> -->
+											<!-- 															<td -->
+											<!-- 																style="padding: 5px; border: currentColor; height: 20px; text-align: left; color: rgb(0, 0, 0); font-size: 14px; vertical-align: middle; background-color: rgb(255, 255, 255);" -->
+											<!-- 																colspan="4" class="dext_table_border_t"> -->
+											<!-- 																<p -->
+											<!-- 																	style="font-family: &amp; quot; malgun gothic&amp;quot; , dotum , arial, tahoma; font-size: 11pt; line-height: 22px; margin-top: 0px; margin-bottom: 0px;"> -->
+											<!-- 																	<br> -->
+											<!-- 																</p> -->
+											<!-- 															</td> -->
+											<!-- 														</tr> -->
+											<!-- 														<tr> -->
+											<!-- 															<td -->
+											<!-- 																style="background: rgb(221, 221, 221); padding: 5px; border: 1px solid black; height: 25px; text-align: center; color: rgb(0, 0, 0); font-size: 14px; font-weight: bold; vertical-align: middle;"> -->
+											<!-- 																휴가종류</td> -->
+											<!-- 															<td -->
+											<!-- 																style="background: rgb(255, 255, 255); padding: 5px; border: 1px solid black; height: 25px; text-align: left; color: rgb(0, 0, 0); font-size: 14px; font-weight: normal; vertical-align: middle;" -->
+											<!-- 																colspan="3"><input class="form-control" type="text"> -->
+											<!-- 															</td> -->
+											<!-- 														</tr> -->
+											<!-- 														<tr> -->
+											<!-- 															<td -->
+											<!-- 																style="background: rgb(221, 221, 221); padding: 5px; border: 1px solid black; height: 25px; text-align: center; color: rgb(0, 0, 0); font-size: 14px; font-weight: bold; vertical-align: middle;"> -->
+											<!-- 																휴가기간</td> -->
+											<!-- 															<td -->
+											<!-- 																style="background: rgb(255, 255, 255); padding: 5px; border: 1px solid black; height: 25px; text-align: center; color: rgb(0, 0, 0); font-size: 14px; vertical-align: middle;"> -->
+											<!-- 																<div class="input-group"> -->
+											<!-- 																	<input type="date" class="form-control"> <span -->
+											<!-- 																		class="input-group-text">~</span> <input type="date" -->
+											<!-- 																		class="form-control"> -->
+											<!-- 																</div> -->
+											<!-- 															</td> -->
+											<!-- 															<td -->
+											<!-- 																style="background: rgb(221, 221, 221); padding: 5px; border: 1px solid black; height: 25px; text-align: center; color: rgb(0, 0, 0); font-size: 14px; font-weight: bold; vertical-align: middle;"> -->
+											<!-- 																잔여일</td> -->
+											<!-- 															<td -->
+											<!-- 																style="background: rgb(255, 255, 255); padding: 5px; border: 1px solid black; height: 25px; text-align: center; color: rgb(0, 0, 0); font-size: 14px; vertical-align: middle;"> -->
+											<!-- 																<div class="input-group"> -->
+											<!-- 																	<input type="text" class="form-control"> <span -->
+											<!-- 																		class="input-group-text">일</span> -->
+											<!-- 																</div> -->
+											<!-- 															</td> -->
+											<!-- 														</tr> -->
+											<!-- 														<tr> -->
+											<!-- 															<td -->
+											<!-- 																style="background: rgb(221, 221, 221); padding: 5px; border: 1px solid black; height: 25px; text-align: center; color: rgb(0, 0, 0); font-size: 14px; font-weight: bold; vertical-align: middle;"> -->
+											<!-- 																휴가사유</td> -->
+											<!-- 															<td -->
+											<!-- 																style="background: rgb(255, 255, 255); border-width: medium 1px 1px; border-style: none solid solid; border-color: currentColor black black; padding: 5px; height: 25px; text-align: left; color: rgb(0, 0, 0); font-size: 14px; font-weight: normal; vertical-align: middle;" -->
+											<!-- 																colspan="3" class="dext_table_border_t"><input -->
+											<!-- 																class="form-control" type="text"></td> -->
+											<!-- 														</tr> -->
+											<!-- 														<tr> -->
+											<!-- 															<td -->
+											<!-- 																style="border-width: medium 1px 1px; border-style: none solid solid; border-color: currentColor black black; padding: 5px; height: 100px; text-align: center; color: rgb(0, 0, 0); font-size: 14px; vertical-align: middle; background-color: rgb(255, 255, 255);" -->
+											<!-- 																colspan="4" class="dext_table_border_t"><span -->
+											<!-- 																style="font-weight: bold; font-family: &amp; quot; malgun gothic&amp;quot; , dotum , arial, tahoma; font-size: 11pt; line-height: normal; margin-top: 0px; margin-bottom: 0px;">휴가기준 -->
+											<!-- 																	제 13조에 의거 휴가를 신청하오니 허락하여 주시기 바랍니다.</span></td> -->
+											<!-- 														</tr> -->
+											<!-- 													</tbody> -->
+											<!-- 												</table> -->
+											<!-- 											</span> -->
+										</div>
+									</div>
+									<div class="form-group mb-3">
+										<label for="filepond" class="form-label">파일 첨부</label> <input
+											type="file" class="multiple-files-filepond" multiple>
+									</div>
+								</form>
+							</div>
+						</div>
+					</div>
+					<div class="col-12 col-lg-4">
+						<div class="card">
+							<div class="card-header">
+								<h5 class="card-title">결재선</h5>
+							</div>
+							<div class="card-body">
+								<div class="d-flex justify-content-end mb-3">
+									<button type="button" class="btn btn-sm btn-success me-1"
+										data-bs-toggle="modal" data-bs-target="#favoriteLineModal">결재선
+										즐겨찾기</button>
+									<button type="button" class="btn btn-sm btn-primary"
+										data-bs-toggle="modal" data-bs-target="#approvalLineModal">결재선
+										설정</button>
+								</div>
+								<table class="table table-bordered approval-line-table">
+									<tbody>
+										<tr>
+											<th class="text-center" style="width: 80px;">기안</th>
+											<td>
+												<div class="d-flex align-items-center">
+													<div class="avatar me-2">
+														<img src="mazer-1.0.0/dist/assets/images/faces/1.jpg"
+															alt="Face 1">
+													</div>
+													<div>
+														<p class="mb-0 fw-bold">김차장</p>
+														<p class="text-muted mb-0 text-sm">인사팀</p>
+													</div>
+												</div>
+											</td>
+										</tr>
+										<tr>
+											<th class="text-center">결재</th>
+											<td id="approval-line-display">
+												<p class="text-muted fst-italic">결재자를 설정해주세요.</p>
+											</td>
+										</tr>
+										<tr>
+											<th class="text-center">합의</th>
+											<td id="agreement-line-display">
+												<p class="text-muted fst-italic">합의자를 설정해주세요.</p>
+											</td>
+										</tr>
+										<tr>
+											<th class="text-center">참조</th>
+											<td id="reference-line-display">
+												<p class="text-muted fst-italic">참조자를 설정해주세요.</p>
+											</td>
+										</tr>
+										<tr id="sub-approval-row" style="display: none;">
+											<th class="text-center">대결</th>
+											<td id="sub-approval-line-display"></td>
+										</tr>
+										<tr id="final-approval-row" style="display: none;">
+											<th class="text-center">전결</th>
+											<td id="final-approval-line-display"></td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+							<div class="card-footer">
+								<div class="d-grid gap-2">
+									<button type="button" class="btn btn-primary"
+										data-bs-toggle="modal" data-bs-target="#requestApprovalModal">결재요청</button>
+									<button type="button" class="btn btn-light-secondary"
+										data-bs-toggle="modal" data-bs-target="#saveDraftModal">임시저장</button>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+		</div>
+	</div>
+
+	<!-- Favorite Line Modal -->
+	<div class="modal fade" id="favoriteLineModal" tabindex="-1"
+		aria-labelledby="favoriteLineModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-xl">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="favoriteLineModalLabel">결재선 즐겨찾기
+						생성</h5>
+					<button type="button" class="btn-close" data-bs-dismiss="modal"
+						aria-label="Close"></button>
+				</div>
+				<div class="modal-body">
+					<div class="row">
+						<div class="col-md-4">
+							<div class="card">
+								<div class="card-header">
+									<input type="text" id="fav-org-search" class="form-control"
+										placeholder="이름, 조직 검색">
+								</div>
+								<div class="card-body" style="height: 500px; overflow-y: auto;">
+									<ul id="fav-org-tree" class="list-group">
+										<!-- Org tree will be populated by JS -->
+									</ul>
+								</div>
+							</div>
+						</div>
+						<div class="col-md-2 d-flex flex-column justify-content-center">
+							<div class="form-group mb-3">
+								<label for="fav-approval-role-select" class="form-label">역할:</label>
+								<select class="form-select" id="fav-approval-role-select">
+									<option value="approver">결재</option>
+									<option value="agreer">합의</option>
+									<option value="referrer">참조</option>
+									<option value="sub-approver">대결</option>
+									<option value="final-approver">전결</option>
+								</select>
+							</div>
+							<button class="btn btn-primary" id="fav-add-to-line-btn">&gt;&gt;</button>
+						</div>
+						<div class="col-md-6">
+							<div class="card">
+								<div class="card-header">
+									<h5 class="card-title">결재선 (드래그하여 순서 변경)</h5>
+								</div>
+								<div class="card-body" style="height: 500px; overflow-y: auto;">
+									<ul class="list-group" id="fav-approval-line-final-list"></ul>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="form-group mt-3">
+						<label for="favorite-line-name" class="form-label">즐겨찾기 이름</label>
+						<input type="text" class="form-control" id="favorite-line-name"
+							placeholder="저장할 결재선 이름을 입력하세요">
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-light-secondary"
+						data-bs-dismiss="modal">취소</button>
+					<button type="button" class="btn btn-primary"
+						id="save-favorite-line-btn">저장</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Approval Line Modal -->
+	<div class="modal fade" id="approvalLineModal" tabindex="-1"
+		aria-labelledby="approvalLineModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-lg">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="approvalLineModalLabel">결재선 설정</h5>
+					<button type="button" class="btn-close" data-bs-dismiss="modal"
+						aria-label="Close"></button>
+				</div>
+				<div class="modal-body">
+					<div class="row mb-3">
+						<div class="col-md-8">
+							<label for="favorite-lines-select" class="form-label">결재선
+								즐겨찾기 불러오기</label>
+							<div class="input-group">
+								<select class="form-select" id="favorite-lines-select">
+									<option selected>저장된 즐겨찾기 선택...</option>
+								</select>
+								<button class="btn btn-outline-danger" type="button"
+									id="delete-favorite-line-btn">삭제</button>
+							</div>
+						</div>
+					</div>
+					<hr>
+					<div class="row">
+						<div class="col-md-4">
+							<div class="card">
+								<div class="card-header">
+									<input type="text" id="org-search" class="form-control"
+										placeholder="이름, 조직 검색">
+								</div>
+								<div class="card-body" style="height: 500px; overflow-y: auto;">
+									<ul id="org-tree" class="list-group">
+										<!-- Org tree will be populated by JS -->
+									</ul>
+								</div>
+							</div>
+						</div>
+						<div class="col-md-2 d-flex flex-column justify-content-center">
+							<div class="form-group mb-3">
+								<label for="approval-role-select" class="form-label">역할:</label>
+								<select class="form-select" id="approval-role-select">
+									<option value="approver">결재</option>
+									<option value="agreer">합의</option>
+									<option value="referrer">참조</option>
+									<option value="sub-approver">대결</option>
+									<option value="final-approver">전결</option>
+								</select>
+							</div>
+							<button class="btn btn-primary" id="add-to-line-btn">&gt;&gt;</button>
+						</div>
+						<div class="col-md-6">
+							<div class="card">
+								<div class="card-header">
+									<h5 class="card-title">결재선 (드래그하여 순서 변경)</h5>
+								</div>
+								<div class="card-body" style="height: 500px; overflow-y: auto;">
+									<ul class="list-group" id="approval-line-final-list"></ul>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-light-secondary"
+						data-bs-dismiss="modal">취소</button>
+					<button type="button" class="btn btn-primary"
+						id="confirm-approval-line">확인</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Request Approval Modal -->
+	<div class="modal fade" id="requestApprovalModal" tabindex="-1"
+		aria-labelledby="requestApprovalModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="requestApprovalModalLabel">결재 요청</h5>
+					<button type="button" class="btn-close" data-bs-dismiss="modal"
+						aria-label="Close"></button>
+				</div>
+				<div class="modal-body">
+					<div class="form-group">
+						<label class="form-label">처리 의견</label>
+						<div class="form-check">
+							<input class="form-check-input" type="radio"
+								name="approvalAction" id="action-approve" value="approve"
+								checked> <label class="form-check-label"
+								for="action-approve">승인</label>
+						</div>
+						<div class="form-check">
+							<input class="form-check-input" type="radio"
+								name="approvalAction" id="action-reject" value="reject">
+							<label class="form-check-label" for="action-reject">반려</label>
+						</div>
+						<div class="form-check">
+							<input class="form-check-input" type="radio"
+								name="approvalAction" id="action-agreement" value="agreement">
+							<label class="form-check-label" for="action-agreement">협의요청</label>
+						</div>
+						<div class="form-check">
+							<input class="form-check-input" type="radio"
+								name="approvalAction" id="action-finalize" value="finalize">
+							<label class="form-check-label" for="action-finalize">전결</label>
+						</div>
+						<div class="form-check">
+							<input class="form-check-input" type="radio"
+								name="approvalAction" id="action-delegate" value="delegate">
+							<label class="form-check-label" for="action-delegate">대결</label>
+						</div>
+					</div>
+
+					<div id="delegate-section" class="mt-3" style="display: none;">
+						<label for="delegate-user-select" class="form-label">대결자
+							지정</label> <select class="form-select" id="delegate-user-select"></select>
+					</div>
+
+					<div class="form-group mt-3">
+						<label for="approval-comment">코멘트 (선택)</label>
+						<textarea class="form-control" id="approval-comment" rows="3"></textarea>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-light-secondary"
+						data-bs-dismiss="modal">취소</button>
+					<button type="button" class="btn btn-primary"
+						id="confirm-approval-action">확인</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Save Draft Modal -->
+	<div class="modal fade" id="saveDraftModal" tabindex="-1"
+		aria-labelledby="saveDraftModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="saveDraftModalLabel">임시 저장</h5>
+					<button type="button" class="btn-close" data-bs-dismiss="modal"
+						aria-label="Close"></button>
+				</div>
+				<div class="modal-body">
+					<p>작성 중인 문서를 임시 저장하시겠습니까?</p>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-light-secondary"
+						data-bs-dismiss="modal">취소</button>
+					<button type="button" class="btn btn-primary">확인</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<script>
+        document.addEventListener('DOMContentLoaded', function () {
+            FilePond.registerPlugin(FilePondPluginImagePreview);
+            FilePond.create(document.querySelector('.multiple-files-filepond'));
+
+            const orgData = [
+                { name: '경영지원팀', users: [{name: '이부장', position: '부장'}, {name: '박과장', position: '과장'}] },
+                { name: '인사팀', users: [{name: '김차장', position: '차장'}] },
+                { name: '마케팅팀', users: [{name: '최과장', position: '과장'}, {name: '정대리', position: '대리'}] },
+            ];
+            const favoritesKey = 'approvalLineFavorites';
+
+            // --- General Functions ---
+            function getFavorites() {
+                return JSON.parse(localStorage.getItem(favoritesKey)) || [];
+            }
+
+            function saveFavorites(favorites) {
+                localStorage.setItem(favoritesKey, JSON.stringify(favorites));
+            }
+
+            function renderOrgTree(treeElement, filter = '') {
+                treeElement.innerHTML = '';
+                orgData.forEach(dept => {
+                    const filteredUsers = dept.users.filter(user => user.name.includes(filter) || dept.name.includes(filter));
+                    if (filteredUsers.length > 0) {
+                        const deptHeader = document.createElement('li');
+                        deptHeader.className = 'list-group-item list-group-item-secondary';
+                        deptHeader.textContent = dept.name;
+                        treeElement.appendChild(deptHeader);
+
+                        filteredUsers.forEach(user => {
+                            const userLi = document.createElement('li');
+                            userLi.className = 'list-group-item user-node';
+                            userLi.textContent = `${user.name} (${user.position}, ${dept.name})`;
+                            userLi.dataset.name = user.name;
+                            userLi.dataset.team = dept.name;
+                            userLi.dataset.position = user.position;
+                            treeElement.appendChild(userLi);
+                        });
+                    }
+                });
+            }
+            
+            function createApprovalLineItem(user, role) {
+                const roleSelect = document.getElementById('approval-role-select'); // Use any role select for text
+                const roleText = Array.from(roleSelect.options).find(opt => opt.value === role).text;
+                const li = document.createElement('li');
+                li.className = 'list-group-item d-flex justify-content-between align-items-center';
+                li.dataset.name = user.name;
+                li.dataset.team = user.team;
+                li.dataset.position = user.position;
+                li.dataset.role = role;
+                li.innerHTML = `<span>[${roleText}] ${user.name} (${user.position})</span><button type="button" class="btn-close btn-sm"></button>`;
+                return li;
+            }
+
+
+            // --- Main Approval Line Modal (#approvalLineModal) ---
+            const approvalLineModal = document.getElementById('approvalLineModal');
+            const orgTree = document.getElementById('org-tree');
+            const orgSearch = document.getElementById('org-search');
+            const addBtn = document.getElementById('add-to-line-btn');
+            const roleSelect = document.getElementById('approval-role-select');
+            const finalList = document.getElementById('approval-line-final-list');
+            let selectedUser = null;
+
+            renderOrgTree(orgTree);
+            dragula([finalList]);
+
+            orgSearch.addEventListener('keyup', (e) => renderOrgTree(orgTree, e.target.value));
+
+            orgTree.addEventListener('click', (e) => {
+                if (e.target.classList.contains('user-node')) {
+                    document.querySelectorAll('#org-tree .user-node').forEach(node => node.classList.remove('selected-user'));
+                    e.target.classList.add('selected-user');
+                    selectedUser = {
+                        name: e.target.dataset.name,
+                        team: e.target.dataset.team,
+                        position: e.target.dataset.position
+                    };
+                }
+            });
+
+            addBtn.addEventListener('click', () => {
+                if (!selectedUser) {
+                    alert('조직도에서 사용자를 먼저 선택하세요.');
+                    return;
+                }
+                const role = roleSelect.value;
+                const alreadyExists = finalList.querySelector(`li[data-name='${selectedUser.name}']`);
+                if (alreadyExists) {
+                    alert('이미 추가된 사용자입니다.');
+                    return;
+                }
+                finalList.appendChild(createApprovalLineItem(selectedUser, role));
+            });
+
+            finalList.addEventListener('click', (e) => {
+                if (e.target.classList.contains('btn-close')) {
+                    e.target.closest('li').remove();
+                }
+            });
+
+            document.getElementById('confirm-approval-line').addEventListener('click', function() {
+                const roles = { approver: [], agreer: [], referrer: [], 'sub-approver': [], 'final-approver': [] };
+                Array.from(finalList.children).forEach(item => {
+                    const role = item.dataset.role;
+                    if (roles[role]) {
+                        roles[role].push({ name: item.dataset.name, team: item.dataset.team });
+                    }
+                });
+
+                function updateLineDisplay(role, displayId, rowId, roleName) {
+                    const display = document.getElementById(displayId);
+                    const row = rowId ? document.getElementById(rowId) : null;
+                    display.innerHTML = '';
+
+                    if (roles[role].length === 0) {
+                        if (row) row.style.display = 'none';
+                        else display.innerHTML = `<p class="text-muted fst-italic">${roleName}를 설정해주세요.</p>`;
+                        return;
+                    }
+
+                    if (row) row.style.display = '';
+                    roles[role].forEach(user => {
+                        display.innerHTML += `
+                            <div class="d-flex align-items-center mb-2">
+                                <div class="avatar avatar-sm me-2"><span class="avatar-content bg-secondary rounded-circle">${user.name.charAt(0)}</span></div>
+                                <div><p class="mb-0 fw-bold">${user.name}</p><p class="text-muted mb-0 text-sm">${user.team}</p></div>
+                            </div>`;
+                    });
+                }
+
+                updateLineDisplay('approver', 'approval-line-display', null, '결재자');
+                updateLineDisplay('agreer', 'agreement-line-display', null, '합의자');
+                updateLineDisplay('referrer', 'reference-line-display', null, '참조자');
+                updateLineDisplay('sub-approver', 'sub-approval-line-display', 'sub-approval-row');
+                updateLineDisplay('final-approver', 'final-approval-line-display', 'final-approval-row');
+
+                bootstrap.Modal.getInstance(approvalLineModal).hide();
+            });
+
+
+            // --- Loading and Deleting Favorites in Main Modal ---
+            function populateFavoritesDropdown() {
+                const favorites = getFavorites();
+                const select = document.getElementById('favorite-lines-select');
+                select.innerHTML = '<option selected>저장된 즐겨찾기 선택...</option>';
+                favorites.forEach(fav => {
+                    const option = document.createElement('option');
+                    option.value = fav.name;
+                    option.textContent = fav.name;
+                    select.appendChild(option);
+                });
+            }
+
+            document.getElementById('favorite-lines-select').addEventListener('change', function() {
+                const selectedName = this.value;
+                if (!selectedName || selectedName === '저장된 즐겨찾기 선택...') return;
+
+                const favorites = getFavorites();
+                const selectedFav = favorites.find(fav => fav.name === selectedName);
+
+                if (selectedFav) {
+                    finalList.innerHTML = ''; // Clear current list
+                    selectedFav.line.forEach(user => {
+                        finalList.appendChild(createApprovalLineItem(user, user.role));
+                    });
+                }
+            });
+
+            document.getElementById('delete-favorite-line-btn').addEventListener('click', () => {
+                const select = document.getElementById('favorite-lines-select');
+                const selectedName = select.value;
+                if (!selectedName || selectedName === '저장된 즐겨찾기 선택...') {
+                    alert('삭제할 즐겨찾기를 선택해주세요.');
+                    return;
+                }
+
+                if (confirm(`'${selectedName}' 즐겨찾기를 삭제하시겠습니까?`)) {
+                    let favorites = getFavorites();
+                    favorites = favorites.filter(fav => fav.name !== selectedName);
+                    saveFavorites(favorites);
+                    populateFavoritesDropdown();
+                    finalList.innerHTML = ''; // Clear list if the deleted one was loaded
+                    alert('삭제되었습니다.');
+                }
+            });
+
+            approvalLineModal.addEventListener('show.bs.modal', populateFavoritesDropdown);
+
+
+            // --- Favorite Line Modal (#favoriteLineModal) ---
+            const favoriteLineModal = document.getElementById('favoriteLineModal');
+            const favOrgTree = document.getElementById('fav-org-tree');
+            const favOrgSearch = document.getElementById('fav-org-search');
+            const favAddBtn = document.getElementById('fav-add-to-line-btn');
+            const favRoleSelect = document.getElementById('fav-approval-role-select');
+            const favFinalList = document.getElementById('fav-approval-line-final-list');
+            let favSelectedUser = null;
+
+            renderOrgTree(favOrgTree);
+            dragula([favFinalList]);
+
+            favOrgSearch.addEventListener('keyup', (e) => renderOrgTree(favOrgTree, e.target.value));
+
+            favOrgTree.addEventListener('click', (e) => {
+                if (e.target.classList.contains('user-node')) {
+                    document.querySelectorAll('#fav-org-tree .user-node').forEach(node => node.classList.remove('selected-user'));
+                    e.target.classList.add('selected-user');
+                    favSelectedUser = {
+                        name: e.target.dataset.name,
+                        team: e.target.dataset.team,
+                        position: e.target.dataset.position
+                    };
+                }
+            });
+
+            favAddBtn.addEventListener('click', () => {
+                if (!favSelectedUser) {
+                    alert('조직도에서 사용자를 먼저 선택하세요.');
+                    return;
+                }
+                const role = favRoleSelect.value;
+                const alreadyExists = favFinalList.querySelector(`li[data-name='${favSelectedUser.name}']`);
+                if (alreadyExists) {
+                    alert('이미 추가된 사용자입니다.');
+                    return;
+                }
+                favFinalList.appendChild(createApprovalLineItem(favSelectedUser, role));
+            });
+
+            favFinalList.addEventListener('click', (e) => {
+                if (e.target.classList.contains('btn-close')) {
+                    e.target.closest('li').remove();
+                }
+            });
+
+            document.getElementById('save-favorite-line-btn').addEventListener('click', () => {
+                const name = document.getElementById('favorite-line-name').value;
+                if (!name) {
+                    alert('즐겨찾기 이름을 입력해주세요.');
+                    return;
+                }
+                if (favFinalList.children.length === 0) {
+                    alert('결재선을 구성해주세요.');
+                    return;
+                }
+
+                const favorites = getFavorites();
+                if (favorites.some(fav => fav.name === name)) {
+                    alert('이미 사용중인 이름입니다.');
+                    return;
+                }
+
+                const newLine = Array.from(favFinalList.children).map(item => ({
+                    name: item.dataset.name,
+                    team: item.dataset.team,
+                    position: item.dataset.position,
+                    role: item.dataset.role
+                }));
+
+                favorites.push({ name: name, line: newLine });
+                saveFavorites(favorites);
+
+                alert('결재선이 즐겨찾기에 저장되었습니다.');
+                bootstrap.Modal.getInstance(favoriteLineModal).hide();
+                document.getElementById('favorite-line-name').value = '';
+                favFinalList.innerHTML = '';
+            });
+
+
+
+
+
+            // --- Request Approval Modal Logic ---
+            const delegateSection = document.getElementById('delegate-section');
+            const delegateUserSelect = document.getElementById('delegate-user-select');
+
+            function populateDelegateSelect() {
+                delegateUserSelect.innerHTML = '<option selected disabled>대결자를 선택하세요</option>';
+                orgData.forEach(dept => {
+                    dept.users.forEach(user => {
+                        const option = document.createElement('option');
+                        option.value = user.name;
+                        option.textContent = `${user.name} (${user.position}, ${dept.name})`;
+                        delegateUserSelect.appendChild(option);
+                    });
+                });
+            }
+
+            document.querySelectorAll('input[name="approvalAction"]').forEach(radio => {
+                radio.addEventListener('change', function() {
+                    if (this.value === 'delegate') {
+                        delegateSection.style.display = 'block';
+                    } else {
+                        delegateSection.style.display = 'none';
+                    }
+                });
+            });
+
+            document.getElementById('requestApprovalModal').addEventListener('show.bs.modal', function () {
+                populateDelegateSelect();
+                delegateSection.style.display = 'none';
+                document.getElementById('action-approve').checked = true;
+            });
+
+            document.getElementById('confirm-approval-action').addEventListener('click', () => {
+                const selectedAction = document.querySelector('input[name="approvalAction"]:checked').value;
+                const comment = document.getElementById('approval-comment').value;
+                let message = `선택된 처리: ${selectedAction}\n코멘트: ${comment || '없음'}`;
+
+                if (selectedAction === 'delegate') {
+                    const delegateUser = delegateUserSelect.value;
+                    if (!delegateUser || delegateUser === '대결자를 선택하세요') {
+                        alert('대결자를 선택해주세요.');
+                        return;
+                    }
+                    message += `\n대결자: ${delegateUser}`;
+                }
+
+                alert(message);
+                bootstrap.Modal.getInstance(document.getElementById('requestApprovalModal')).hide();
+            });
+        });
+    </script>
+
+</body>
+
+</html>

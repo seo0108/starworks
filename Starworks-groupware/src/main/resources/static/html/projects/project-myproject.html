@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>내 프로젝트 (개선판) - 그룹웨어</title>
+
+</head>
+
+<body>
+	<div id="main-content">
+		<div class="page-content">
+			<div class="page-heading">
+				<div class="page-title">
+					<div class="row">
+						<div class="col-12 col-md-6 order-md-1 order-last">
+							<h3>내 프로젝트</h3>
+							<p class="text-subtitle text-muted">내가 참여하고 있는 프로젝트 현황을 한눈에
+								확인합니다.</p>
+						</div>
+						<div class="col-12 col-md-6 order-md-2 order-first">
+							<nav aria-label="breadcrumb"
+								class="breadcrumb-header float-start float-lg-end">
+								<ol class="breadcrumb">
+									<li class="breadcrumb-item"><a href="index.html">Dashboard</a></li>
+									<li class="breadcrumb-item">프로젝트 관리</li>
+									<li class="breadcrumb-item active" aria-current="page">내
+										프로젝트</li>
+								</ol>
+							</nav>
+						</div>
+					</div>
+				</div>
+
+				<!-- Top Summary & Graphs -->
+				<section class="section">
+					<div class="row">
+						<div class="col-12 col-lg-3 col-md-6">
+							<div class="card">
+								<div class="card-body px-3 py-4-5">
+									<div class="row">
+										<div class="col-md-4">
+											<div class="stats-icon purple">
+												<i class="bi bi-play-circle-fill summary-card-icon"></i>
+											</div>
+										</div>
+										<div class="col-md-8">
+											<h6 class="text-muted font-semibold summary-card-title">진행
+												중인 프로젝트</h6>
+											<h6 class="font-extrabold mb-0 summary-card-value"
+												id="summary-doing">0</h6>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="col-12 col-lg-3 col-md-6">
+							<div class="card">
+								<div class="card-body px-3 py-4-5">
+									<div class="row">
+										<div class="col-md-4">
+											<div class="stats-icon blue">
+												<i class="bi bi-pause-circle-fill summary-card-icon"></i>
+											</div>
+										</div>
+										<div class="col-md-8">
+											<h6 class="text-muted font-semibold summary-card-title">보류
+												중인 프로젝트</h6>
+											<h6 class="font-extrabold mb-0 summary-card-value"
+												id="summary-on-hold">0</h6>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="col-12 col-lg-3 col-md-6">
+							<div class="card">
+								<div class="card-body px-3 py-4-5">
+									<div class="row">
+										<div class="col-md-4">
+											<div class="stats-icon green">
+												<i class="bi bi-check-circle-fill summary-card-icon"></i>
+											</div>
+										</div>
+										<div class="col-md-8">
+											<h6 class="text-muted font-semibold summary-card-title">완료된
+												프로젝트</h6>
+											<h6 class="font-extrabold mb-0 summary-card-value"
+												id="summary-done">0</h6>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="col-12 col-lg-3 col-md-6">
+							<div class="card">
+								<div class="card-body px-3 py-4-5">
+									<div class="row">
+										<div class="col-md-4">
+											<div class="stats-icon red">
+												<i class="bi bi-graph-up summary-card-icon"></i>
+											</div>
+										</div>
+										<div class="col-md-8">
+											<h6 class="text-muted font-semibold summary-card-title">전체
+												평균 진행률</h6>
+											<h6 class="font-extrabold mb-0 summary-card-value"
+												id="summary-progress">0%</h6>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</section>
+				<section class="section">
+					<div class="row">
+						<div class="col-12 col-lg-6">
+							<div class="card">
+								<div class="card-header">
+									<h4 class="card-title">프로젝트 상태 비율</h4>
+								</div>
+								<div class="card-body">
+									<div class="chart-container">
+										<canvas id="project-status-chart"></canvas>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="col-12 col-lg-6">
+							<div class="card">
+								<div class="card-header">
+									<h4 class="card-title">내 업무 현황</h4>
+								</div>
+								<div class="card-body">
+									<div class="chart-container">
+										<canvas id="my-task-chart"></canvas>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</section>
+
+				<!-- Search, Filter, Lists... -->
+				<section class="section filter-section">
+					<div class="row align-items-end">
+						<div class="col-12 col-md-4">
+							<label for="search-input" class="form-label">검색</label><input
+								type="text" id="search-input" class="form-control"
+								placeholder="프로젝트명, 업무명으로 검색...">
+						</div>
+						<div class="col-12 col-md-3">
+							<label for="status-filter" class="form-label">상태</label><select
+								id="status-filter" class="form-select"><option
+									value="all">전체</option>
+								<option value="진행">진행</option>
+								<option value="보류">보류</option>
+								<option value="완료">완료</option>
+								<option value="취소">취소</option></select>
+						</div>
+						<div class="col-12 col-md-3">
+							<label for="date-filter" class="form-label">마감일</label><select
+								id="date-filter" class="form-select"><option
+									value="all">전체 기간</option>
+								<option value="7">7일 이내</option>
+								<option value="30">30일 이내</option>
+								<option value="overdue">기한 초과</option></select>
+						</div>
+						<div class="col-12 col-md-2 text-end">
+							<button id="filter-btn" class="btn btn-primary w-100">적용</button>
+						</div>
+					</div>
+				</section>
+				<section class="section">
+					<div class="card">
+						<div class="card-header">
+							<h4 class="card-title">내가 속한 프로젝트</h4>
+						</div>
+						<div class="card-body">
+							<div class="table-responsive">
+								<table class="table table-hover table-lg" id="projects-table">
+									<thead>
+										<tr>
+											<th>프로젝트명</th>
+											<th>참여자</th>
+											<th>기간</th>
+											<th>상태</th>
+											<th>진행률</th>
+											<th>최근 코멘트</th>
+											<th>액션</th>
+										</tr>
+									</thead>
+									<tbody></tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+				</section>
+				<section class="section">
+					<div class="card">
+						<div
+							class="card-header d-flex justify-content-between align-items-center">
+							<h4 class="card-title">내가 담당하는 업무</h4>
+							<div class="btn-group" role="group">
+								<button type="button" id="task-table-view-btn"
+									class="btn btn-primary btn-sm active">목록</button>
+								<button type="button" id="task-kanban-view-btn"
+									class="btn btn-primary btn-sm">보드</button>
+							</div>
+						</div>
+						<div class="card-body">
+							<div id="task-table-view">
+								<div class="table-responsive">
+									<table class="table table-hover table-lg" id="tasks-table">
+										<thead>
+											<tr>
+												<th>업무명</th>
+												<th>프로젝트</th>
+												<th>마감일</th>
+												<th>상태</th>
+												<th>진행률</th>
+												<th>최근 코멘트</th>
+												<th>액션</th>
+											</tr>
+										</thead>
+										<tbody></tbody>
+									</table>
+								</div>
+							</div>
+							<div id="task-kanban-view">
+								<div class="kanban-board">
+									<div class="kanban-column">
+										<div class="kanban-column-header">
+											<h5 class="kanban-column-title text-secondary">미시작</h5>
+										</div>
+										<div class="kanban-column-body" id="kanban-todo"
+											data-status="미시작"></div>
+									</div>
+									<div class="kanban-column">
+										<div class="kanban-column-header">
+											<h5 class="kanban-column-title text-primary">진행중</h5>
+										</div>
+										<div class="kanban-column-body" id="kanban-doing"
+											data-status="진행"></div>
+									</div>
+									<div class="kanban-column">
+										<div class="kanban-column-header">
+											<h5 class="kanban-column-title text-success">완료</h5>
+										</div>
+										<div class="kanban-column-body" id="kanban-done"
+											data-status="완료"></div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</section>
+			</div>
+		</div>
+	</div>
+
+
+	<!-- Modals -->
+	<div class="modal fade" id="comments-modal" tabindex="-1"
+		aria-labelledby="commentsModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered modal-lg">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="commentsModalLabel">코멘트</h5>
+					<button type="button" class="btn-close" data-bs-dismiss="modal"
+						aria-label="Close"></button>
+				</div>
+				<div class="modal-body">
+					<div id="comment-list-container"></div>
+					<div class="add-comment-form mt-3">
+						<div class="input-group">
+							<input type="text" id="new-comment-input" class="form-control"
+								placeholder="코멘트를 입력하세요...">
+							<button class="btn btn-primary" id="add-comment-btn">등록</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="modal fade" id="files-modal" tabindex="-1"
+		aria-labelledby="filesModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered modal-lg">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="filesModalLabel">파일</h5>
+					<button type="button" class="btn-close" data-bs-dismiss="modal"
+						aria-label="Close"></button>
+				</div>
+				<div class="modal-body">
+					<div id="file-list-container"></div>
+					<div class="add-file-form mt-3">
+						<div class="input-group">
+							<input type="file" class="form-control">
+							<button class="btn btn-primary">업로드</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="modal fade" id="participants-modal" tabindex="-1"
+		aria-labelledby="participantsModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="participantsModalLabel">참여자</h5>
+					<button type="button" class="btn-close" data-bs-dismiss="modal"
+						aria-label="Close"></button>
+				</div>
+				<div class="modal-body">
+					<div id="participant-list-container"></div>
+					<div class="add-participant-form mt-3">
+						<div class="input-group">
+							<input type="text" class="form-control" placeholder="이메일로 초대...">
+							<button class="btn btn-primary">초대</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+	    <script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
+
+	<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // --- MOCK DATA ---
+        const users = {
+            'user1': { name: '홍길동', avatar: '/dist/assets/static/images/faces/1.jpg' },
+            'user2': { name: '김철수', avatar: '/dist/assets/static/images/faces/2.jpg' },
+            'user3': { name: '이영희', avatar: '/dist/assets/static/images/faces/3.jpg' },
+            'user4': { name: '박지성', avatar: '/dist/assets/static/images/faces/4.jpg' },
+            'user5': { name: '김연아', avatar: '/dist/assets/static/images/faces/5.jpg' },
+        };
+        const currentUser = 'user1';
+
+        let data = {
+            projects: [
+                { id: 1, name: '그룹웨어 고도화', manager: 'user2', participants: ['user1', 'user2', 'user3', 'user5'], startDate: '2024-01-01', endDate: '2024-12-31', status: '진행', checklists: { total: 20, done: 15 }, comments: [{user: 'user3', text: '디자인 시안 검토 요청드립니다.', ts: '2024-09-14 10:30'}], files: [{name: '기획서.pdf', size: '2.1MB'}] },
+                { id: 2, name: '신규 ERP 시스템 구축', manager: 'user2', participants: ['user1', 'user2', 'user4'], startDate: '2024-03-01', endDate: '2025-02-28', status: '완료', checklists: { total: 35, done: 35 }, comments: [{user: 'user1', text: '최종 오픈 완료되었습니다. 수고하셨습니다!', ts: '2025-02-27 18:00'}], files: [] },
+                { id: 3, name: '모바일 앱 리뉴얼', manager: 'user3', participants: ['user1', 'user3'], startDate: '2024-05-10', endDate: '2024-09-20', status: '보류', checklists: { total: 10, done: 2 }, comments: [], files: [] },
+                { id: 4, name: 'AI 챗봇 개발', manager: 'user1', participants: ['user1', 'user4', 'user5'], startDate: '2024-08-01', endDate: '2024-09-18', status: '진행', checklists: { total: 15, done: 5 }, comments: [{user: 'user4', text: '자연어 처리 모델 학습 데이터 문의', ts: '2024-09-12 14:00'}], files: [] },
+                { id: 5, name: '사내 인트라넷 개편', manager: 'user5', participants: ['user1', 'user5'], startDate: '2024-07-15', endDate: '2024-09-15', status: '취소', checklists: { total: 8, done: 1 }, comments: [], files: [] },
+                { id: 6, name: '신규 정산 시스템', manager: 'user1', participants: ['user1', 'user2'], startDate: '2024-09-01', endDate: '2024-11-30', status: '진행', checklists: { total: 12, done: 1 }, comments: [], files: [] },
+            ],
+            tasks: [
+                { id: 1, projectId: 1, name: '요구사항 정의서 작성', assignee: 'user1', endDate: '2024-09-14', status: '완료', checklists: { total: 5, done: 5 }, comments: [{user: 'user1', text: '최종본 공유 완료.', ts: '2024-09-14 09:00'}], files: [{name: '요구사항정의서_v2.docx', size: '1.2MB'}] },
+                { id: 2, projectId: 1, name: 'API 서버 개발', assignee: 'user1', endDate: '2024-09-30', status: '진행', checklists: { total: 10, done: 6 }, comments: [{user: 'user2', text: '인증 모듈 관련 질문 있습니다.', ts: '2024-09-15 11:20'}], files: [] },
+                { id: 3, projectId: 3, name: '모바일 UI/UX 개선', assignee: 'user1', endDate: '2024-09-17', status: '보류', checklists: { total: 8, done: 1 }, comments: [], files: [] },
+                { id: 4, projectId: 4, name: '챗봇 시나리오 설계', assignee: 'user1', endDate: '2024-09-25', status: '진행', checklists: { total: 4, done: 1 }, comments: [], files: [] },
+                { id: 5, projectId: 2, name: '데이터 마이그레이션', assignee: 'user1', endDate: '2024-08-30', status: '완료', checklists: { total: 3, done: 3 }, comments: [], files: [] },
+                { id: 6, projectId: 1, name: '사용자 테스트', assignee: 'user3', endDate: '2024-10-10', status: '미시작', checklists: { total: 7, done: 0 }, comments: [], files: [] },
+            ]
+        };
+
+        const myTasks = data.tasks.filter(t => t.assignee === currentUser);
+        let projectStatusChart, myTaskChart;
+        let activeModal = { type: null, id: null };
+
+        const commentsModal = new bootstrap.Modal(document.getElementById('comments-modal'));
+        const filesModal = new bootstrap.Modal(document.getElementById('files-modal'));
+        const participantsModal = new bootstrap.Modal(document.getElementById('participants-modal'));
+
+        // --- UTILITY FUNCTIONS ---
+        const getStatusBadgeClass = (status) => {
+            switch (status) {
+                case '진행': return 'bg-primary'; case '보류': return 'bg-secondary';
+                case '완료': return 'bg-success'; case '취소': return 'bg-danger';
+                case '미시작': return 'bg-warning text-dark';
+                default: return 'bg-light text-dark';
+            }
+        };
+        const getDaysRemaining = (endDate) => {
+            const today = new Date(); const end = new Date(endDate);
+            today.setHours(0, 0, 0, 0); end.setHours(0, 0, 0, 0);
+            return Math.round((end - today) / (1000 * 60 * 60 * 24));
+        };
+        const createTooltip = (element, title) => {
+            if (!element || !title) return;
+            return new bootstrap.Tooltip(element, { title: title, placement: 'top', trigger: 'hover', container: 'body' });
+        };
+
+        // --- RENDER FUNCTIONS ---
+        const renderSummaryAndCharts = (projectList, taskList) => {
+            const doingProjects = projectList.filter(p => p.status === '진행').length;
+            const onHoldProjects = projectList.filter(p => p.status === '보류').length;
+            const doneProjects = projectList.filter(p => p.status === '완료').length;
+            const totalProgress = projectList.reduce((acc, p) => acc + (p.checklists.total > 0 ? (p.checklists.done / p.checklists.total) : 0), 0);
+            const avgProgress = projectList.length > 0 ? Math.round((totalProgress / projectList.length) * 100) : 0;
+            document.getElementById('summary-doing').textContent = doingProjects;
+            document.getElementById('summary-on-hold').textContent = onHoldProjects;
+            document.getElementById('summary-done').textContent = doneProjects;
+            document.getElementById('summary-progress').textContent = `${avgProgress}%`;
+
+            const projectStatusCtx = document.getElementById('project-status-chart').getContext('2d');
+            if(projectStatusChart) projectStatusChart.destroy();
+            projectStatusChart = new Chart(projectStatusCtx, { type: 'doughnut', data: { labels: ['진행', '보류', '완료', '취소'], datasets: [{ data: [doingProjects, onHoldProjects, doneProjects, projectList.filter(p => p.status === '취소').length], backgroundColor: ['#435ebe', '#6c757d', '#198754', '#dc3545'] }] }, options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom' } } } });
+
+            const myTaskCtx = document.getElementById('my-task-chart').getContext('2d');
+            if(myTaskChart) myTaskChart.destroy();
+            myTaskChart = new Chart(myTaskCtx, { type: 'bar', data: { labels: ['미시작', '진행', '완료', '보류'], datasets: [{ label: '업무 수', data: [ myTasks.filter(t=>t.status==='미시작').length, myTasks.filter(t=>t.status==='진행').length, myTasks.filter(t=>t.status==='완료').length, myTasks.filter(t=>t.status==='보류').length ], backgroundColor: ['#ffc107', '#435ebe', '#198754', '#6c757d'] }] }, options: { responsive: true, maintainAspectRatio: false, scales: { y: { beginAtZero: true } }, plugins: { legend: { display: false } } } });
+        };
+
+        const renderProjects = (projectList) => {
+            const tableBody = document.querySelector('#projects-table tbody');
+            tableBody.innerHTML = '';
+            if (projectList.length === 0) { tableBody.innerHTML = '<tr><td colspan="7" class="text-center py-5">표시할 프로젝트가 없습니다.</td></tr>'; return; }
+            projectList.forEach(p => {
+                const progress = p.checklists.total > 0 ? Math.round((p.checklists.done / p.checklists.total) * 100) : 0;
+                const daysRemaining = getDaysRemaining(p.endDate);
+                let deadlineBadge = '';
+                if (daysRemaining <= 3 && daysRemaining >= 0 && p.status === '진행') { deadlineBadge = `<span class="badge bg-danger deadline-badge ms-2">D-${daysRemaining}</span>`; }
+                else if (daysRemaining < 0 && p.status === '진행') { deadlineBadge = `<span class="badge bg-danger deadline-badge ms-2">기한 초과</span>`; }
+
+                const participantsHTML = `<div class="avatar-group">${p.participants.slice(0, 3).map(uid => `<div class="avatar" data-bs-toggle="tooltip" title="${users[uid].name}"><img src="${users[uid].avatar}" alt="${users[uid].name}"></div>`).join('')}${p.participants.length > 3 ? `<div class="avatar bg-secondary"><span class="avatar-content" data-bs-toggle="tooltip" title="외 ${p.participants.length - 3}명">+${p.participants.length - 3}</span></div>` : ''}</div>`;
+                const lastComment = p.comments.length > 0 ? p.comments[p.comments.length - 1] : null;
+                const commentHTML = lastComment ? `<div class="comment-preview" data-bs-toggle="tooltip" title="${lastComment.text}"><i class="bi bi-chat-left-text"></i>${lastComment.text}</div>` : '<span class="text-muted fst-italic">코멘트 없음</span>';
+
+                const row = `<tr><td><a href="project-detail.html?id=${p.id}" class="fw-bold">${p.name}</a>${deadlineBadge}</td><td>${participantsHTML}</td><td>${p.startDate} ~ ${p.endDate}</td><td><span class="badge ${getStatusBadgeClass(p.status)}">${p.status}</span></td><td><div class="progress progress-sm"><div class="progress-bar" role="progressbar" style="width: ${progress}%" aria-valuenow="${progress}"></div></div><div class="progress-details text-center">${p.checklists.done} / ${p.checklists.total}</div></td><td>${commentHTML}</td><td class="action-buttons" data-id="${p.id}" data-type="project"><button class="btn btn-outline-secondary btn-action" data-action="comments"><i class="bi bi-chat-dots"></i></button><button class="btn btn-outline-secondary btn-action" data-action="files"><i class="bi bi-folder2-open"></i></button><button class="btn btn-outline-secondary btn-action" data-action="participants"><i class="bi bi-people"></i></button></td></tr>`;
+                tableBody.innerHTML += row;
+            });
+            document.querySelectorAll('#projects-table [data-bs-toggle="tooltip"]').forEach(el => createTooltip(el, el.getAttribute('title')));
+        };
+
+        const renderTasksTable = (taskList) => {
+            const tableBody = document.querySelector('#tasks-table tbody');
+            tableBody.innerHTML = '';
+            if (taskList.length === 0) { tableBody.innerHTML = '<tr><td colspan="7" class="text-center py-5">표시할 업무가 없습니다.</td></tr>'; return; }
+            taskList.forEach(t => {
+                const project = data.projects.find(p => p.id === t.projectId);
+                const progress = t.checklists.total > 0 ? Math.round((t.checklists.done / t.checklists.total) * 100) : 0;
+                const daysRemaining = getDaysRemaining(t.endDate);
+                let deadlineBadge = '';
+                if (daysRemaining <= 3 && daysRemaining >= 0 && t.status === '진행') { deadlineBadge = `<span class="badge bg-danger deadline-badge ms-2">D-${daysRemaining}</span>`; }
+                else if (daysRemaining < 0 && t.status === '진행') { deadlineBadge = `<span class="badge bg-danger deadline-badge ms-2">기한 초과</span>`; }
+                const lastComment = t.comments.length > 0 ? t.comments[t.comments.length - 1] : null;
+                const commentHTML = lastComment ? `<div class="comment-preview" data-bs-toggle="tooltip" title="${lastComment.text}"><i class="bi bi-chat-left-text"></i>${lastComment.text}</div>` : '<span class="text-muted fst-italic">코멘트 없음</span>';
+
+                const row = `<tr><td><span class="fw-bold">${t.name}</span>${deadlineBadge}</td><td><a href="project-detail.html?id=${project.id}">${project.name}</a></td><td>${t.endDate}</td><td><span class="badge ${getStatusBadgeClass(t.status)}">${t.status}</span></td><td><div class="progress progress-sm"><div class="progress-bar" role="progressbar" style="width: ${progress}%" aria-valuenow="${progress}"></div></div><div class="progress-details text-center">${t.checklists.done} / ${t.checklists.total}</div></td><td>${commentHTML}</td><td class="action-buttons" data-id="${t.id}" data-type="task"><button class="btn btn-outline-secondary btn-action" data-action="comments"><i class="bi bi-chat-dots"></i></button><button class="btn btn-outline-secondary btn-action" data-action="files"><i class="bi bi-folder2-open"></i></button></td></tr>`;
+                tableBody.innerHTML += row;
+            });
+            document.querySelectorAll('#tasks-table [data-bs-toggle="tooltip"]').forEach(el => createTooltip(el, el.getAttribute('title')));
+        };
+
+        const renderKanbanBoard = (taskList) => { /* ... same as before ... */ };
+
+        // --- MODAL RENDER FUNCTIONS ---
+        const renderCommentsInModal = (item) => {
+            const container = document.getElementById('comment-list-container');
+            container.innerHTML = '';
+            if (!item.comments || item.comments.length === 0) { container.innerHTML = '<p class="text-center text-muted p-4">코멘트가 없습니다.</p>'; return; }
+            item.comments.forEach(c => {
+                const user = users[c.user];
+                container.innerHTML += `<div class="comment-item list-group-item"><div class="avatar"><img src="${user.avatar}" alt=""></div><div class="flex-grow-1"><div class="d-flex justify-content-between"><h6 class="mb-1">${user.name}</h6><small class="text-muted">${c.ts}</small></div><p class="mb-0">${c.text}</p></div></div>`;
+            });
+        };
+        const renderFilesInModal = (item) => {
+            const container = document.getElementById('file-list-container');
+            container.innerHTML = '';
+            if (!item.files || item.files.length === 0) { container.innerHTML = '<p class="text-center text-muted p-4">파일이 없습니다.</p>'; return; }
+            container.innerHTML = `<ul class="list-group list-group-flush">${item.files.map(f => `<li class="list-group-item d-flex justify-content-between align-items-center"><span><i class="bi bi-file-earmark-text me-2"></i>${f.name}</span><span class="badge bg-light text-dark">${f.size}</span></li>`).join('')}</ul>`;
+        };
+        const renderParticipantsInModal = (item) => {
+            const container = document.getElementById('participant-list-container');
+            container.innerHTML = '';
+            if (!item.participants || item.participants.length === 0) { container.innerHTML = '<p class="text-center text-muted p-4">참여자가 없습니다.</p>'; return; }
+            container.innerHTML = `<ul class="list-group list-group-flush">${item.participants.map(uid => { const user = users[uid]; return `<li class="list-group-item d-flex align-items-center"><div class="avatar me-3"><img src="${user.avatar}"></div><div><h6 class="mb-0">${user.name}</h6><small class="text-muted">${item.manager === uid ? 'Manager' : 'Member'}</small></div></li>`; }).join('')}</ul>`;
+        };
+
+        // --- EVENT HANDLERS ---
+        const applyFilters = () => {
+            const searchTerm = document.getElementById('search-input').value.toLowerCase();
+            const statusFilter = document.getElementById('status-filter').value;
+            const dateFilter = document.getElementById('date-filter').value;
+            let filteredProjects = data.projects.filter(p => (p.name.toLowerCase().includes(searchTerm)) && (statusFilter === 'all' || p.status === statusFilter) && (dateFilter === 'all' || (getDaysRemaining(p.endDate) >= 0 && getDaysRemaining(p.endDate) <= (dateFilter === 'overdue' ? -1 : parseInt(dateFilter)))));
+            let filteredTasks = myTasks.filter(t => (t.name.toLowerCase().includes(searchTerm)) && (statusFilter === 'all' || t.status === statusFilter) && (dateFilter === 'all' || (getDaysRemaining(t.endDate) >= 0 && getDaysRemaining(t.endDate) <= (dateFilter === 'overdue' ? -1 : parseInt(dateFilter)))));
+            renderProjects(filteredProjects); renderTasksTable(filteredTasks); renderKanbanBoard(filteredTasks); renderSummaryAndCharts(filteredProjects, myTasks);
+        };
+        document.getElementById('filter-btn').addEventListener('click', applyFilters);
+
+        document.getElementById('main').addEventListener('click', function(e) {
+            const actionBtn = e.target.closest('.btn-action');
+            if (!actionBtn) return;
+            const action = actionBtn.dataset.action;
+            const container = actionBtn.closest('.action-buttons');
+            const id = parseInt(container.dataset.id);
+            const type = container.dataset.type;
+            activeModal = { type, id };
+            const item = data[type + 's'].find(i => i.id === id);
+            if (!item) return;
+
+            if (action === 'comments') { renderCommentsInModal(item); commentsModal.show(); }
+            else if (action === 'files') { renderFilesInModal(item); filesModal.show(); }
+            else if (action === 'participants') { if(type === 'project') { renderParticipantsInModal(item); participantsModal.show(); } }
+        });
+
+        document.getElementById('add-comment-btn').addEventListener('click', function() {
+            const input = document.getElementById('new-comment-input');
+            if (!input.value.trim() || !activeModal.id) return;
+            const item = data[activeModal.type + 's'].find(i => i.id === activeModal.id);
+            if (!item) return;
+            item.comments.push({ user: currentUser, text: input.value, ts: new Date().toLocaleString('ko-KR') });
+            renderCommentsInModal(item);
+            applyFilters(); // Re-render lists to update comment preview
+            input.value = '';
+        });
+
+        // View switcher & Kanban D&D (same as before)
+        const tableView = document.getElementById('task-table-view'), kanbanView = document.getElementById('task-kanban-view');
+        const tableBtn = document.getElementById('task-table-view-btn'), kanbanBtn = document.getElementById('task-kanban-view-btn');
+        tableBtn.addEventListener('click', () => { tableView.style.display = 'block'; kanbanView.style.display = 'none'; tableBtn.classList.add('active'); kanbanBtn.classList.remove('active'); });
+        kanbanBtn.addEventListener('click', () => { tableView.style.display = 'none'; kanbanView.style.display = 'block'; kanbanBtn.classList.add('active'); tableBtn.classList.remove('active'); });
+        ['kanban-todo', 'kanban-doing', 'kanban-done'].forEach(colId => { new Sortable(document.getElementById(colId), { group: 'kanban', animation: 150, onEnd: function (evt) { const task = data.tasks.find(t => t.id == evt.item.dataset.taskId); if (task) { task.status = evt.to.dataset.status; applyFilters(); } } }); });
+
+        // --- INITIAL RENDER ---
+        applyFilters();
+    });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,298 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>사용자 대시보드 V6 - Mazer 테마</title>
+
+<link rel="preconnect" href="https://fonts.gstatic.com">
+<link
+	href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700;800&display=swap"
+	rel="stylesheet">
+<link rel="stylesheet" href="mazer-1.0.0/dist/assets/css/bootstrap.css">
+<link rel="stylesheet"
+	href="mazer-1.0.0/dist/assets/vendors/iconly/bold.css">
+<link rel="stylesheet"
+	href="mazer-1.0.0/dist/assets/vendors/perfect-scrollbar/perfect-scrollbar.css">
+<link rel="stylesheet"
+	href="mazer-1.0.0/dist/assets/vendors/bootstrap-icons/bootstrap-icons.css">
+<link rel="stylesheet" href="mazer-1.0.0/dist/assets/css/app.css">
+<link rel="shortcut icon" href="assets/compiled/svg/favicon.svg"
+	type="image/x-icon">
+</head>
+
+<body>
+
+	<div id="main-content">
+		<div class="page-heading">
+			<div class="d-flex justify-content-between align-items-center">
+				<h3>김개발님, 좋은 하루입니다!</h3>
+				<div>
+					<button class="btn btn-primary">
+						<i class="bi bi-file-earmark-plus-fill me-2"></i>새 결재 작성
+					</button>
+					<button class="btn btn-outline-primary">
+						<i class="bi bi-calendar-plus-fill me-2"></i>연차 신청
+					</button>
+				</div>
+			</div>
+		</div>
+		<div class="page-content">
+			<section class="row">
+				<!-- KPI Cards -->
+				<div class="col-6 col-lg-3 col-md-6">
+					<div class="card">
+						<div class="card-body px-3 py-4-5">
+							<div class="row">
+								<div class="col-md-4">
+									<div class="stats-icon purple">
+										<i class="iconly-boldPaper-Download"></i>
+									</div>
+								</div>
+								<div class="col-md-8">
+									<h6 class="text-muted font-semibold">결재 대기</h6>
+									<h6 class="font-extrabold mb-0">3</h6>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-6 col-lg-3 col-md-6">
+					<div class="card">
+						<div class="card-body px-3 py-4-5">
+							<div class="row">
+								<div class="col-md-4">
+									<div class="stats-icon blue">
+										<i class="iconly-boldWork"></i>
+									</div>
+								</div>								
+								<div class="col-md-8">
+									<h6 class="text-muted font-semibold">진행중 프로젝트</h6>
+									<h6 class="font-extrabold mb-0">5</h6>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-6 col-lg-3 col-md-6">
+					<div class="card">
+						<div class="card-body px-3 py-4-5">
+							<div class="row">
+								<div class="col-md-4">
+									<div class="stats-icon green">
+										<i class="iconly-boldCalendar"></i>
+									</div>
+								</div>
+								<div class="col-md-8">
+									<h6 class="text-muted font-semibold">남은 연차</h6>
+									<h6 class="font-extrabold mb-0">12일</h6>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-6 col-lg-3 col-md-6">
+					<div class="card">
+						<div class="card-body px-3 py-4-5">
+							<div class="row">
+								<div class="col-md-4">
+									<div class="stats-icon red">
+										<i class="iconly-boldChat"></i>
+									</div>
+								</div>
+								<div class="col-md-8">
+									<h6 class="text-muted font-semibold">새 알림</h6>
+									<h6 class="font-extrabold mb-0">8</h6>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<!-- Main Content -->
+				<div class="col-12 col-lg-8">
+					<div class="card">
+						<div class="card-header">
+							<h4 class="card-title">나의 결재 현황</h4>
+							<ul class="nav nav-tabs" id="myTab" role="tablist">
+								<li class="nav-item" role="presentation"><a
+									class="nav-link active" id="approval-tab" data-bs-toggle="tab"
+									href="#approval" role="tab" aria-controls="approval"
+									aria-selected="true">결재 대기 문서</a></li>
+								<li class="nav-item" role="presentation"><a
+									class="nav-link" id="submitted-tab" data-bs-toggle="tab"
+									href="#submitted" role="tab" aria-controls="submitted"
+									aria-selected="false">상신 문서</a></li>
+							</ul>
+						</div>
+						<div class="card-body">
+							<div class="tab-content" id="myTabContent">
+								<div class="tab-pane fade show active" id="approval"
+									role="tabpanel" aria-labelledby="approval-tab">
+									<ul class="list-group list-group-flush">
+										<li
+											class="list-group-item d-flex justify-content-between align-items-center">
+											<span>[휴가신청] 디자인팀 박디자인 (3일)</span>
+											<button class="btn btn-sm btn-outline-primary">확인</button>
+										</li>
+										<li
+											class="list-group-item d-flex justify-content-between align-items-center">
+											<span>[지출결의] 3분기 마케팅 비용</span>
+											<button class="btn btn-sm btn-outline-primary">확인</button>
+										</li>
+										<li
+											class="list-group-item d-flex justify-content-between align-items-center">
+											<span>[구매요청] 개발팀 맥북 프로 2대</span>
+											<button class="btn btn-sm btn-outline-primary">확인</button>
+										</li>
+									</ul>
+								</div>
+								<div class="tab-pane fade" id="submitted" role="tabpanel"
+									aria-labelledby="submitted-tab">
+									<ul class="list-group list-group-flush">
+										<li
+											class="list-group-item d-flex justify-content-between align-items-center">
+											<span>[휴가신청] 김개발 (1일)</span> <span class="badge bg-success">승인</span>
+										</li>
+										<li
+											class="list-group-item d-flex justify-content-between align-items-center">
+											<span>[지출결의] 2분기 서버 비용</span> <span class="badge bg-warning">진행중</span>
+										</li>
+									</ul>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="card">
+						<div class="card-header">
+							<h4 class="card-title">내 프로젝트</h4>
+						</div>
+						<div class="card-body">
+							<table class="table table-hover">
+								<thead>
+									<tr>
+										<th>프로젝트명</th>
+										<th>진행률</th>
+										<th>마감일</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td>그룹웨어 UI 개선</td>
+										<td>
+											<div class="progress progress-lg">
+												<div class="progress-bar bg-success" role="progressbar"
+													style="width: 75%" aria-valuenow="75"></div>
+											</div>
+										</td>
+										<td>2025-10-31</td>
+									</tr>
+									<tr>
+										<td>API 문서 작성</td>
+										<td>
+											<div class="progress progress-lg">
+												<div class="progress-bar bg-primary" role="progressbar"
+													style="width: 95%" aria-valuenow="95"></div>
+											</div>
+										</td>
+										<td>2025-09-20</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+
+				<!-- Right Sidebar -->
+				<div class="col-12 col-lg-4">
+					<div class="card">
+						<div class="card-header">
+							<h4 class="card-title">나의 출퇴근</h4>
+						</div>
+						<div class="card-body text-center">
+							<h5 id="current-time" class="mb-3">--:--:--</h5>
+							<p class="text-muted mb-2">
+								출근 시간: <span id="clock-in-time">--:--</span>
+							</p>
+							<div class="d-grid gap-2">
+								<button class="btn btn-primary" id="btn-clock-in">출근</button>
+								<button class="btn btn-outline-secondary" id="btn-clock-out"
+									disabled>퇴근</button>
+							</div>
+						</div>
+					</div>
+					<div class="card">
+						<div class="card-header">
+							<h4>사내 공지</h4>
+						</div>
+						<div class="card-body">
+							<ul class="list-group list-group-flush">
+								<li class="list-group-item">[중요] 2025년 하반기 워크샵 안내</li>
+								<li class="list-group-item">사내 시스템 정기 점검 안내</li>
+							</ul>
+						</div>
+					</div>
+					<div class="card">
+						<div class="card-header">
+							<h4>나의 일정 (오늘)</h4>
+						</div>
+						<div class="card-body">
+							<ul class="list-group list-group-flush">
+								<li class="list-group-item"><span
+									class="badge bg-primary me-2">10:00</span> 주간 개발팀 회의</li>
+								<li class="list-group-item"><span
+									class="badge bg-success me-2">14:00</span> 외부 업체 미팅</li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</section>
+		</div>
+	</div>
+
+
+	<!--     <script src="mazer-1.0.0/dist/assets/vendors/apexcharts/apexcharts.js"></script> -->
+	<script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Attendance Management
+            const clockTimeEl = document.getElementById('current-time');
+            const clockInTimeEl = document.getElementById('clock-in-time');
+            const clockInBtn = document.getElementById('btn-clock-in');
+            const clockOutBtn = document.getElementById('btn-clock-out');
+
+            let attendanceStatus = 'not_clocked_in'; // not_clocked_in, clocked_in, clocked_out
+
+            function updateClock() {
+                const now = new Date();
+                clockTimeEl.textContent = now.toLocaleTimeString('ko-KR');
+            }
+            setInterval(updateClock, 1000);
+            updateClock();
+
+            clockInBtn.addEventListener('click', () => {
+                if (attendanceStatus === 'not_clocked_in') {
+                    const now = new Date();
+                    attendanceStatus = 'clocked_in';
+                    clockInTimeEl.textContent = now.toLocaleTimeString('ko-KR', { hour: '2-digit', minute: '2-digit' });
+                    clockInBtn.disabled = true;
+                    clockOutBtn.disabled = false;
+                    alert('출근 처리되었습니다.');
+                }
+            });
+
+            clockOutBtn.addEventListener('click', () => {
+                if (attendanceStatus === 'clocked_in') {
+                    if(confirm('퇴근 처리하시겠습니까?')){
+                        attendanceStatus = 'clocked_out';
+                        clockOutBtn.disabled = true;
+                        alert('퇴근 처리되었습니다.');
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>

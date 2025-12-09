@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StarWorks Final Logos</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 2rem;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            text-align: center;
+            color: white;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .logos-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+            gap: 3rem;
+            margin-bottom: 3rem;
+        }
+
+        .logo-section {
+            background: white;
+            border-radius: 30px;
+            padding: 3rem;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+
+        .logo-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #667eea;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .logo-display {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 3rem;
+            background: #f8f9fa;
+            border-radius: 20px;
+            margin-bottom: 2rem;
+        }
+
+        .variations {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .variation-box {
+            padding: 2rem;
+            border-radius: 15px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .variation-box.white {
+            background: white;
+            border: 2px solid #e0e0e0;
+        }
+
+        .variation-box.dark {
+            background: #2c3e50;
+        }
+
+        .variation-box.gradient {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        .variation-box.light {
+            background: #f0f0f0;
+        }
+
+        .download-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .download-btn {
+            padding: 0.8rem 1.5rem;
+            border: none;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.95rem;
+        }
+
+        .download-btn.primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .download-btn.secondary {
+            background: #f8f9fa;
+            color: #667eea;
+            border: 2px solid #667eea;
+        }
+
+        .download-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .info-box {
+            background: #f8f9fa;
+            padding: 1.5rem;
+            border-radius: 15px;
+            margin-top: 2rem;
+        }
+
+        .info-box h3 {
+            color: #667eea;
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+
+        .info-box p {
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 0.5rem;
+        }
+
+        /* SVG 애니메이션 */
+        @keyframes steamFloat {
+            0%, 100% {
+                opacity: 0;
+                transform: translateY(0);
+            }
+            50% {
+                opacity: 1;
+                transform: translateY(-15px);
+            }
+        }
+
+        .steam-path {
+            animation: steamFloat 2s ease-in-out infinite;
+        }
+
+        .steam-path:nth-child(2) {
+            animation-delay: 0.4s;
+        }
+
+        .steam-path:nth-child(3) {
+            animation-delay: 0.8s;
+        }
+
+        @keyframes rotate {
+            from {
+                transform: rotate(0deg);
+            }
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .rotating {
+            animation: rotate 20s linear infinite;
+            transform-origin: center;
+        }
+
+        @media (max-width: 1024px) {
+            .logos-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .variations {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>✨ StarWorks 최종 로고 디자인 ✨</h1>
+        
+        <div class="logos-container">
+            <!-- Logo 2 - Circle Emblem -->
+            <div class="logo-section">
+                <div class="logo-title">🎯 Design 2 - Circle Emblem</div>
+                
+                <div class="logo-display">
+                    <svg width="300" height="300" viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg">
+                        <defs>
+                            <linearGradient id="gradient1" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" style="stop-color:#667eea;stop-opacity:1" />
+                                <stop offset="100%" style="stop-color:#764ba2;stop-opacity:1" />
+                            </linearGradient>
+                            <filter id="shadow1">
+                                <feDropShadow dx="0" dy="4" stdDeviation="8" flood-opacity="0.3"/>
+                            </filter>
+                        </defs>
+                        
+                        <!-- Outer Circle -->
+                        <circle cx="150" cy="150" r="145" fill="url(#gradient1)" filter="url(#shadow1)"/>
+                        
+                        <!-- Inner White Circle -->
+                        <circle cx="150" cy="150" r="125" fill="white"/>
+                        
+                        <!-- Dashed Border -->
+                        <circle cx="150" cy="150" r="135" fill="none" stroke="white" stroke-width="3" 
+                                stroke-dasharray="10 8" opacity="0.6"/>
+                        
+                        <!-- Top Star -->
+                        <path d="M 150 45 L 157 65 L 178 65 L 161 77 L 168 97 L 150 85 L 132 97 L 139 77 L 122 65 L 143 65 Z" 
+                              fill="url(#gradient1)" filter="url(#shadow1)"/>
+                        
+                        <!-- Coffee Steam -->
+                        <g class="steam-group">
+                            <path class="steam-path" d="M 135 95 Q 130 85 135 75" 
+                                  fill="none" stroke="url(#gradient1)" stroke-width="3" 
+                                  stroke-linecap="round" opacity="0"/>
+                            <path class="steam-path" d="M 150 90 Q 150 80 150 70" 
+                                  fill="none" stroke="url(#gradient1)" stroke-width="3" 
+                                  stroke-linecap="round" opacity="0"/>
+                            <path class="steam-path" d="M 165 95 Q 170 85 165 75" 
+                                  fill="none" stroke="url(#gradient1)" stroke-width="3" 
+                                  stroke-linecap="round" opacity="0"/>
+                        </g>
+                        
+                        <!-- Coffee Cup -->
+                        <path d="M 120 120 L 125 180 Q 130 190 150 190 Q 170 190 175 180 L 180 120 Z" 
+                              fill="url(#gradient1)" opacity="0.15"/>
+                        
+                        <!-- STAR Text -->
+                        <text x="150" y="155" font-family="Arial, sans-serif" font-size="48" 
+                              font-weight="900" text-anchor="middle" fill="url(#gradient1)">STAR</text>
+                        
+                        <!-- WORKS Text -->
+                        <text x="150" y="180" font-family="Arial, sans-serif" font-size="16" 
+                              font-weight="700" text-anchor="middle" fill="#764ba2" 
+                              letter-spacing="4">WORKS</text>
+                        
+                        <!-- Small Coffee Bean Decoration -->
+                        <ellipse cx="150" cy="195" rx="8" ry="5" fill="#764ba2"/>
+                        <line x1="150" y1="190" x2="150" y2="200" stroke="white" stroke-width="1"/>
+                    </svg>
+                </div>
+
+                <div class="variations">
+                    <div class="variation-box white">
+                        <svg width="150" height="150" viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="150" cy="150" r="145" fill="url(#gradient1)"/>
+                            <circle cx="150" cy="150" r="125" fill="white"/>
+                            <circle cx="150" cy="150" r="135" fill="none" stroke="white" stroke-width="3" 
+                                    stroke-dasharray="10 8" opacity="0.6"/>
+                            <path d="M 150 45 L 157 65 L 178 65 L 161 77 L 168 97 L 150 85 L 132 97 L 139 77 L 122 65 L 143 65 Z" 
+                                  fill="url(#gradient1)"/>
+                            <text x="150" y="155" font-family="Arial, sans-serif" font-size="48" 
+                                  font-weight="900" text-anchor="middle" fill="url(#gradient1)">STAR</text>
+                            <text x="150" y="180" font-family="Arial, sans-serif" font-size="16" 
+                                  font-weight="700" text-anchor="middle" fill="#764ba2" 
+                                  letter-spacing="4">WORKS</text>
+                        </svg>
+                    </div>
+                    <div class="variation-box dark">
+                        <svg width="150" height="150" viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="150" cy="150" r="145" fill="white"/>
+                            <circle cx="150" cy="150" r="125" fill="#2c3e50"/>
+                            <circle cx="150" cy="150" r="135" fill="none" stroke="#2c3e50" stroke-width="3" 
+                                    stroke-dasharray="10 8" opacity="0.6"/>
+                            <path d="M 150 45 L 157 65 L 178 65 L 161 77 L 168 97 L 150 85 L 132 97 L 139 77 L 122 65 L 143 65 Z" 
+                                  fill="white"/>
+                            <text x="150" y="155" font-family="Arial, sans-serif" font-size="48" 
+                                  font-weight="900" text-anchor="middle" fill="white">STAR</text>
+                            <text x="150" y="180" font-family="Arial, sans-serif" font-size="16" 
+                                  font-weight="700" text-anchor="middle" fill="white" 
+                                  letter-spacing="4">WORKS</text>
+                        </svg>
+                    </div>
+                    <div class="variation-box gradient">
+                        <svg width="150" height="150" viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="150" cy="150" r="145" fill="white" opacity="0.2"/>
+                            <circle cx="150" cy="150" r="125" fill="white"/>
+                            <circle cx="150" cy="150" r="135" fill="none" stroke="white" stroke-width="3" 
+                                    stroke-dasharray="10 8" opacity="0.4"/>
+                            <path d="M 150 45 L 157 65 L 178 65 L 161 77 L 168 97 L 150 85 L 132 97 L 139 77 L 122 65 L 143 65 Z" 
+                                  fill="url(#gradient1)"/>
+                            <text x="150" y="155" font-family="Arial, sans-serif" font-size="48" 
+                                  font-weight="900" text-anchor="middle" fill="url(#gradient1)">STAR</text>
+                            <text x="150" y="180" font-family="Arial, sans-serif" font-size="16" 
+                                  font-weight="700" text-anchor="middle" fill="#764ba2" 
+                                  letter-spacing="4">WORKS</text>
+                        </svg>
+                    </div>
+                    <div class="variation-box light">
+                        <svg width="150" height="150" viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="150" cy="150" r="145" fill="url(#gradient1)"/>
+                            <circle cx="150" cy="150" r="125" fill="#f0f0f0"/>
+                            <path d="M 150 45 L 157 65 L 178 65 L 161 77 L 168 97 L 150 85 L 132 97 L 139 77 L 122 65 L 143 65 Z" 
+                                  fill="url(#gradient1)"/>
+                            <text x="150" y="155" font-family="Arial, sans-serif" font-size="48" 
+                                  font-weight="900" text-anchor="middle" fill="url(#gradient1)">STAR</text>
+                            <text x="150" y="180" font-family="Arial, sans-serif" font-size="16" 
+                                  font-weight="700" text-anchor="middle" fill="#764ba2" 
+                                  letter-spacing="4">WORKS</text>
+                        </svg>
+                    </div>
+                </div>
+
+                <div class="info-box">
+                    <h3>💡 활용 가이드</h3>
+                    <p>• 정식 브랜드 로고로 사용 가능</p>
+                    <p>• 앱 아이콘, 파비콘에 최적화</p>
+                    <p>• 명함, 간판 등 오프라인 매체에 적합</p>
+                    <p>• 최소 사용 크기: 32x32px</p>
+                </div>
+
+                <div class="download-buttons">
+                    <button class="download-btn primary" onclick="downloadSVG('emblem')">SVG 다운로드</button>
+                    <button class="download-btn secondary" onclick="downloadPNG('emblem', 512)">PNG 512px</button>
+                    <button class="download-btn secondary" onclick="downloadPNG('emblem', 1024)">PNG 1024px</button>
+                </div>
+            </div>
+
+            <!-- Logo 4 - Minimal Type -->
+            <div class="logo-section">
+                <div class="logo-title">☕ Design 4 - Minimal Type</div>
+                
+                <div class="logo-display">
+                    <svg width="350" height="300" viewBox="0 0 350 300" xmlns="http://www.w3.org/2000/svg">
+                        <defs>
+                            <linearGradient id="gradient2" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" style="stop-color:#667eea;stop-opacity:1" />
+                                <stop offset="100%" style="stop-color:#764ba2;stop-opacity:1" />
+                            </linearGradient>
+                            <filter id="shadow2">
+                                <feDropShadow dx="0" dy="4" stdDeviation="6" flood-opacity="0.25"/>
+                            </filter>
+                        </defs>
+                        
+                        <!-- Coffee Cup -->
+                        <g transform="translate(125, 30)">
+                            <!-- Cup Lid -->
+                            <ellipse cx="50" cy="0" rx="55" ry="8" fill="url(#gradient2)" opacity="0.8"/>
+                            <rect x="-5" y="-3" width="110" height="6" rx="3" fill="url(#gradient2)"/>
+                            
+                            <!-- Cup Body -->
+                            <path d="M 10 10 L 15 100 Q 20 115 50 115 Q 80 115 85 100 L 90 10 Z" 
+                                  fill="url(#gradient2)" filter="url(#shadow2)"/>
+                            
+                            <!-- Star in Cup -->
+                            <path d="M 50 40 L 54 52 L 67 52 L 56 60 L 60 72 L 50 64 L 40 72 L 44 60 L 33 52 L 46 52 Z" 
+                                  fill="white" opacity="0.95"/>
+                            
+                            <!-- Cup Handle -->
+                            <path d="M 90 30 Q 110 45 110 65 Q 110 85 90 100" 
+                                  fill="none" stroke="url(#gradient2)" stroke-width="8" 
+                                  stroke-linecap="round" opacity="0.7"/>
+                            <path d="M 90 35 Q 105 47 105 65 Q 105 83 90 95" 
+                                  fill="none" stroke="white" stroke-width="3" 
+                                  stroke-linecap="round" opacity="0.3"/>
+                        </g>
+                        
+                        <!-- StarWorks Text -->
+                        <g transform="translate(175, 180)">
+                            <text x="0" y="0" font-family="'Arial Black', sans-serif" font-size="56" 
+                                  font-weight="900" text-anchor="middle" letter-spacing="-2">
+                                <tspan fill="url(#gradient2)">Star</tspan>
+                                <tspan fill="url(#gradient2)">Works</tspan>
+                            </text>
+                        </g>
+                        
+                        <!-- Tagline -->
+                        <text x="175" y="215" font-family="Arial, sans-serif" font-size="13" 
+                              font-weight="700" text-anchor="middle" fill="#764ba2" 
+                              letter-spacing="5" opacity="0.8">COFFEE GROUPWARE</text>
+                        
+                        <!-- Decorative Elements -->
+                        <circle cx="100" cy="190" r="3" fill="#667eea" opacity="0.6"/>
+                        <circle cx="250" cy="190" r="3" fill="#764ba2" opacity="0.6"/>
+                        <circle cx="90" cy="200" r="2" fill="#667eea" opacity="0.4"/>
+                        <circle cx="260" cy="200" r="2" fill="#764ba2" opacity="0.4"/>
+                    </svg>
+                </div>
+
+                <div class="variations">
+                    <div class="variation-box white">
+                        <svg width="200" height="140" viewBox="0 0 350 230" xmlns="http://www.w3.org/2000/svg">
+                            <g transform="translate(125, 20)">
+                                <ellipse cx="50" cy="0" rx="55" ry="8" fill="url(#gradient2)" opacity="0.8"/>
+                                <rect x="-5" y="-3" width="110" height="6" rx="3" fill="url(#gradient2)"/>
+                                <path d="M 10 10 L 15 100 Q 20 115 50 115 Q 80 115 85 100 L 90 10 Z" 
+                                      fill="url(#gradient2)"/>
+                                <path d="M 50 40 L 54 52 L 67 52 L 56 60 L 60 72 L 50 64 L 40 72 L 44 60 L 33 52 L 46 52 Z" 
+                                      fill="white"/>
+                            </g>
+                            <text x="175" y="165" font-family="'Arial Black', sans-serif" font-size="42" 
+                                  font-weight="900" text-anchor="middle" fill="url(#gradient2)" 
+                                  letter-spacing="-1">StarWorks</text>
+                            <text x="175" y="190" font-family="Arial, sans-serif" font-size="11" 
+                                  font-weight="700" text-anchor="middle" fill="#764ba2" 
+                                  letter-spacing="4">COFFEE GROUPWARE</text>
+                        </svg>
+                    </div>
+                    <div class="variation-box dark">
+                        <svg width="200" height="140" viewBox="0 0 350 230" xmlns="http://www.w3.org/2000/svg">
+                            <g transform="translate(125, 20)">
+                                <ellipse cx="50" cy="0" rx="55" ry="8" fill="white" opacity="0.8"/>
+                                <rect x="-5" y="-3" width="110" height="6" rx="3" fill="white"/>
+                                <path d="M 10 10 L 15 100 Q 20 115 50 115 Q 80 115 85 100 L 90 10 Z" 
+                                      fill="white"/>
+                                <path d="M 50 40 L 54 52 L 67 52 L 56 60 L 60 72 L 50 64 L 40 72 L 44 60 L 33 52 L 46 52 Z" 
+                                      fill="#2c3e50"/>
+                            </g>
+                            <text x="175" y="165" font-family="'Arial Black', sans-serif" font-size="42" 
+                                  font-weight="900" text-anchor="middle" fill="white" 
+                                  letter-spacing="-1">StarWorks</text>
+                            <text x="175" y="190" font-family="Arial, sans-serif" font-size="11" 
+                                  font-weight="700" text-anchor="middle" fill="white" 
+                                  letter-spacing="4" opacity="0.8">COFFEE GROUPWARE</text>
+                        </svg>
+                    </div>
+                    <div class="variation-box gradient">
+                        <svg width="200" height="140" viewBox="0 0 350 230" xmlns="http://www.w3.org/2000/svg">
+                            <g transform="translate(125, 20)">
+                                <ellipse cx="50" cy="0" rx="55" ry="8" fill="white" opacity="0.9"/>
+                                <rect x="-5" y="-3" width="110" height="6" rx="3" fill="white"/>
+                                <path d="M 10 10 L 15 100 Q 20 115 50 115 Q 80 115 85 100 L 90 10 Z" 
+                                      fill="white" opacity="0.95"/>
+                                <path d="M 50 40 L 54 52 L 67 52 L 56 60 L 60 72 L 50 64 L 40 72 L 44 60 L 33 52 L 46 52 Z" 
+                                      fill="#667eea"/>
+                            </g>
+                            <text x="175" y="165" font-family="'Arial Black', sans-serif" font-size="42" 
+                                  font-weight="900" text-anchor="middle" fill="white" 
+                                  letter-spacing="-1">StarWorks</text>
+                            <text x="175" y="190" font-family="Arial, sans-serif" font-size="11" 
+                                  font-weight="700" text-anchor="middle" fill="white" 
+                                  letter-spacing="4" opacity="0.9">COFFEE GROUPWARE</text>
+                        </svg>
+                    </div>
+                    <div class="variation-box light">
+                        <svg width="200" height="140" viewBox="0 0 350 230" xmlns="http://www.w3.org/2000/svg">
+                            <g transform="translate(125, 20)">
+                                <ellipse cx="50" cy="0" rx="55" ry="8" fill="url(#gradient2)" opacity="0.8"/>
+                                <rect x="-5" y="-3" width="110" height="6" rx="3" fill="url(#gradient2)"/>
+                                <path d="M 10 10 L 15 100 Q 20 115 50 115 Q 80 115 85 100 L 90 10 Z" 
+                                      fill="url(#gradient2)"/>
+                                <path d="M 50 40 L 54 52 L 67 52 L 56 60 L 60 72 L 50 64 L 40 72 L 44 60 L 33 52 L 46 52 Z" 
+                                      fill="white"/>
+                            </g>
+                            <text x="175" y="165" font-family="'Arial Black', sans-serif" font-size="42" 
+                                  font-weight="900" text-anchor="middle" fill="url(#gradient2)" 
+                                  letter-spacing="-1">StarWorks</text>
+                            <text x="175" y="190" font-family="Arial, sans-serif" font-size="11" 
+                                  font-weight="700" text-anchor="middle" fill="#764ba2" 
+                                  letter-spacing="4">COFFEE GROUPWARE</text>
+                        </svg>
+                    </div>
+                </div>
+
+                <div class="info-box">
+                    <h3>💡 활용 가이드</h3>
+                    <p>• 로그인 페이지, 헤더 로고로 최적</p>
+                    <p>• 가로형 레이아웃에 적합</p>
+                    <p>• 문서, PPT, 이메일 서명에 활용</p>
+                    <p>• 최소 사용 크기: 150px 너비</p>
+                </div>
+
+                <div class="download-buttons">
+                    <button class="download-btn primary" onclick="downloadSVG('minimal')">SVG 다운로드</button>
+                    <button class="download-btn secondary" onclick="downloadPNG('minimal', 512)">PNG 512px</button>
+                    <button class="download-btn secondary" onclick="downloadPNG('minimal', 1024)">PNG 1024px</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="logo-section" style="max-width: 800px; margin: 0 auto;">
+            <div class="logo-title">📋 브랜드 컬러 가이드</div>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem; padding: 1rem;">
+                <div style="text-align: center;">
+                    <div style="width: 100%; height: 100px; background: #667eea; border-radius: 10px; margin-bottom: 0.5rem;"></div>
+                    <strong>Primary Purple</strong>
+                    <p style="color: #666; margin-top: 0.3rem;">#667eea</p>
+                </div>
+                <div style="text-align: center;">
+                    <div style="width: 100%; height: 100px; background: #764ba2; border-radius: 10px; margin-bottom: 0.5rem;"></div>
+                    <strong>Secondary Purple</strong>
+                    <p style="color: #666; margin-top: 0.3rem;">#764ba2</p>
+                </div>
+                <div style="text-align: center;">
+                    <div style="width: 100%; height: 100px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 10px; margin-bottom: 0.5rem;"></div>
+                    <strong>Gradient</strong>
+                    <p style="color: #666; margin-top: 0.3rem;">Primary → Secondary</p>
+                </div>
+            </div>
+
+            <div class="info-box" style="margin-top: 2rem;">
+                <h3>🎨 사용 가이드라인</h3>
+                <p><strong>로고 최소 여백:</strong> 로고 높이의 20% 이상</p>
+                <p><strong>권장 배경:</strong> 흰색, 밝은 회색, 또는 그라데이션 배경</p>
+                <p><strong>금지 사항:</strong> 로고 왜곡, 임의 색상 변경, 그림자 효과 추가</p>
+                <p><strong>파일 형식:</strong> 웹용 SVG, 인쇄용 PNG (300dpi 이상)</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // SVG 다운로드 함수
+        function downloadSVG(type) {
+            alert('SVG 파일 다운로드 기능은 실제 구현 시 서버에서 처리됩니다.\n브라우저에서 우클릭 > "다른 이름으로 저장"을 사용하세요!');
+        }
+
+        // PNG 다운로드 함수
+        function downloadPNG(type, size) {
+            alert(`PNG ${size}px 다운로드 기능은 실제 구현 시 서버에서 처리됩니다.\n브라우저의 개발자 도구를 사용하거나 SVG를 PNG로 변환하는 온라인 도구를 이용하세요!`);
+        }
+
+        // Steam 애니메이션
+        const steamPaths = document.querySelectorAll('.steam-path');
+        steamPaths.forEach((path, index) => {
+            path.style.animationDelay = `${index * 0.4}s`;
+        });
+    </script>
+</body>
+</html>

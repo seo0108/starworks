@@ -1,0 +1,164 @@
+/**
+ * <pre>
+ * << 개정이력(Modification Information) >>
+ *
+ *   수정일      			수정자           수정내용
+ *  -----------   	-------------    ---------------------------
+ *  2025. 10. 28.     	윤서현            최초 생성
+ *
+ * </pre>
+ */
+@charset "UTF-8";
+
+
+
+/* ===========================================
+   전체 테마 컬러 팔레트
+   딥그린(#2f4636) ~ 브라운(#73523a) 톤 통일
+=========================================== */
+
+/* 버튼 */
+.btn-primary {
+  background: linear-gradient(135deg, #3b5c47 0%, #73523a 100%);
+  border: none;
+  border-radius: 12px;
+  font-weight: 700;
+  font-size: 1rem;
+  color: #fff;
+  padding: 0.75rem 1.5rem;
+  box-shadow: 0 4px 10px rgba(80, 60, 40, 0.25);
+  transition: all 0.25s ease;
+}
+
+.btn-primary:hover {
+  background: linear-gradient(135deg, #4a6b53 0%, #8b634a 100%);
+  box-shadow: 0 6px 14px rgba(80, 60, 40, 0.35);
+  transform: translateY(-2px);
+}
+
+.btn-primary:active {
+  transform: scale(0.97);
+  box-shadow: 0 2px 6px rgba(80, 60, 40, 0.3);
+}
+
+/* 모달 */
+.modal-content {
+  border-radius: 18px;
+  border: none;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+  overflow: hidden;
+  animation: modalFadeIn 0.25s ease;
+  background-color: #fdfcfb;
+}
+
+@keyframes modalFadeIn {
+  from { transform: translateY(-10px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+/* 모달 헤더 */
+.modal-header {
+  background: linear-gradient(135deg, #3b5c47 0%, #73523a 100%);
+  color: #fff;
+  border-bottom: none;
+  padding: 1rem 1.5rem;
+}
+
+.modal-header .modal-title {
+  font-weight: 700;
+  font-size: 1.25rem;
+}
+
+.modal-header .btn-close {
+  filter: brightness(0) invert(1);
+  opacity: 0.8;
+}
+.modal-header .btn-close:hover {
+  opacity: 1;
+}
+
+/* 모달 내부 */
+.modal-body {
+  background-color: #f9f9f6;
+  padding: 1.8rem;
+}
+.modal-body label {
+  font-weight: 600;
+  color: #2f2f2f;
+}
+.modal-body p.text-muted {
+  color: #666 !important;
+  font-size: 0.95rem;
+}
+
+/* 입력창 focus 색상 */
+.form-control:focus, .form-select:focus {
+  border-color: #6d4d37;
+  box-shadow: 0 0 0 3px rgba(115, 82, 58, 0.25);
+}
+
+/* 모달 하단 버튼 */
+.modal-footer {
+  border-top: none;
+  background-color: #f6f5f3;
+  padding: 1rem 1.5rem;
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.5rem;
+}
+
+.modal-footer .btn-secondary {
+  background-color: #ece8e3;
+  color: #3e3e3e;
+  border-radius: 10px;
+  font-weight: 600;
+  transition: all 0.2s ease;
+}
+.modal-footer .btn-secondary:hover {
+  background-color: #ded8d2;
+}
+
+/* 결재완료 목록 hover/active 색상 */
+.list-group-item:hover {
+  background-color: #f1ece7 !important;
+}
+.list-group-item.active {
+  background-color: #e6e0da !important;
+  color: #2b2b2b !important;
+  font-weight: 700 !important;
+  box-shadow: 0 2px 6px rgba(115, 82, 58, 0.25);
+  transform: scale(1.01);
+}
+
+/* 포인트 강조 (예: 라벨 등) */
+.card-body .row.mb-3 .col-sm-3 strong,
+.card-body .row.mb-3 .col-sm-9 {
+  color: #2f2f2f !important;
+  font-weight: 700 !important;
+  font-size: 1.05rem !important;
+}
+
+/* ===== 기안서 상세 제목 강조 ===== */
+.card-header .card-title {
+  font-size: 1.6rem !important;   /* 글자 크기 키움 */
+  font-weight: 800 !important;    /* 두껍게 */
+  color: #2f2f2f !important;      /* 짙은 검정 */
+  letter-spacing: -0.3px;
+  margin-bottom: 0;               /* 아래 여백 제거 */
+}
+
+/* 버튼과의 시각적 균형을 위해 버튼 쪽 약간 내려줌 */
+.card-body .d-flex.justify-content-end.mb-3 {
+  margin-top: -0.5rem;
+}
+
+/* 제품 설명 및 특징 / 레시피 및 원재료 아래 내용만 강조 */
+#marketingContent,
+#ingredientContent {
+  color: #000 !important;         /* 진한 검정색 */
+  font-weight: 700 !important;    /* 굵게 */
+  font-size: 1.05rem !important;  /* 살짝 크게 */
+  line-height: 1.65;
+}
+
+

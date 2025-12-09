@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>팀 일정 관리 - 그룹웨어</title>
+</head>
+<body>
+	<div id="main-content">
+		<div class="page-heading">
+			<h3>팀 일정 관리</h3>
+			<p class="text-muted">소속된 팀의 일정을 확인하고 관리합니다.</p>
+		</div>
+
+		<div class="page-content calendar-page-container">
+			<div class="card calendar-card">
+				<div class="card-header">
+					<div class="d-flex align-items-center">
+						<h5 class="card-title mb-0 me-3">팀 선택:</h5>
+						<select class="form-select" id="projectSelector"
+							style="width: 250px;">
+							<!-- 옵션은 스크립트에서 동적으로 생성됩니다. -->
+						</select>
+					</div>
+				</div>
+				<div class="card-body calendar-card-body">
+					<div id='calendar-container'>
+						<div id='calendar'></div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Modals -->
+	<div class="modal fade" id="eventModal" tabindex="-1"
+		aria-labelledby="eventModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="eventModalLabel"></h5>
+					<button type="button" class="btn-close" data-bs-dismiss="modal"
+						aria-label="Close"></button>
+				</div>
+				<div class="modal-body">
+					<form id="eventForm">
+						<input type="hidden" id="eventId"> <input type="hidden"
+							id="eventProjectId">
+						<div class="mb-3">
+							<label for="eventTitle" class="form-label">일정 제목</label> <input
+								type="text" class="form-control" id="eventTitle" required>
+						</div>
+						<div class="mb-3">
+							<label for="eventStart" class="form-label">시작일</label> <input
+								type="datetime-local" class="form-control" id="eventStart"
+								required>
+						</div>
+						<div class="mb-3">
+							<label for="eventEnd" class="form-label">종료일</label> <input
+								type="datetime-local" class="form-control" id="eventEnd">
+						</div>
+						<div class="mb-3 form-check">
+							<input type="checkbox" class="form-check-input" id="allDayCheck">
+							<label class="form-check-label" for="allDayCheck">하루 종일</label>
+						</div>
+						<div class="mb-3">
+							<label for="eventDescription" class="form-label">설명</label>
+							<textarea class="form-control" id="eventDescription" rows="3"></textarea>
+						</div>
+					</form>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary"
+						data-bs-dismiss="modal">닫기</button>
+					<button type="button" class="btn btn-primary" id="saveEvent">저장</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="modal fade" id="eventDetailModal" tabindex="-1"
+		aria-labelledby="eventDetailModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="eventDetailModalLabel">일정 상세</h5>
+					<button type="button" class="btn-close" data-bs-dismiss="modal"
+						aria-label="Close"></button>
+				</div>
+				<div class="modal-body">
+					<p>
+						<strong>프로젝트:</strong> <span id="detailProject"></span>
+					</p>
+					<p>
+						<strong>제목:</strong> <span id="detailTitle"></span>
+					</p>
+					<p>
+						<strong>시작:</strong> <span id="detailStart"></span>
+					</p>
+					<p>
+						<strong>종료:</strong> <span id="detailEnd"></span>
+					</p>
+					<p>
+						<strong>설명:</strong> <span id="detailDescription"></span>
+					</p>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-danger" id="deleteEvent">삭제</button>
+					<button type="button" class="btn btn-primary" id="editEvent">수정</button>
+					<button type="button" class="btn btn-secondary"
+						data-bs-dismiss="modal">닫기</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+	<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // --- Sample Data ---
+        const projects = [
+            { id: 'projectA', name: '최종 프로젝트 1팀' },
+            { id: 'projectB', name: '신규 서비스 개발팀' },
+            { id: 'projectC', name: 'TFT' }
+        ];
+
+        const allTeamEvents = [
+            { id: 't1', projectId: 'projectA', title: 'UI/UX 설계 리뷰', start: '2025-09-02T10:00:00' },
+            { id: 't2', projectId: 'projectA', title: '1차 스프린트 마감', start: '2025-09-05', allDay: true },
+            { id: 't3', projectId: 'projectB', title: '기술 스택 선정 회의', start: '2025-09-03T14:00:00' },
+            { id: 't4', projectId: 'projectB', title: '프로토타입 개발', start: '2025-09-08', end: '2025-09-12' },
+            { id: 't5', projectId: 'projectC', title: '시장 조사 보고', start: '2025-09-10T11:00:00' },
+        ];
+
+        // --- DOM Elements & Modals ---
+        const calendarEl = document.getElementById('calendar');
+        const projectSelector = document.getElementById('projectSelector');
+        const eventModal = new bootstrap.Modal(document.getElementById('eventModal'));
+        const eventDetailModal = new bootstrap.Modal(document.getElementById('eventDetailModal'));
+        
+        // --- State ---
+        let clickedEventInfo = null;
+        let currentProjectId = projects[0]?.id; // Default to the first project
+
+        // --- Populate Project Selector ---
+        projects.forEach(project => {
+            const option = document.createElement('option');
+            option.value = project.id;
+            option.textContent = project.name;
+            projectSelector.appendChild(option);
+        });
+
+        // --- FullCalendar Initialization ---
+        const calendar = new FullCalendar.Calendar(calendarEl, {
+            locale: 'ko',
+            timeZone: 'Asia/Seoul',
+            initialView: 'dayGridMonth',
+            headerToolbar: {
+                left: 'prev,next today addEventButton',
+                center: 'title',
+                right: 'dayGridMonth,timeGridWeek'
+            },
+            customButtons: {
+                addEventButton: {
+                    text: '새 일정 추가',
+                    click: () => openAddModal(currentProjectId)
+                }
+            },
+            height: '100%',
+            events: getEventsForProject(currentProjectId),
+            selectable: true,
+            editable: true,
+            dayMaxEvents: true,
+            dateClick: (info) => openAddModal(currentProjectId, info),
+            eventClick: (info) => showDetailModal(info)
+        });
+
+        calendar.render();
+
+        // --- Event Listeners ---
+        projectSelector.addEventListener('change', (e) => {
+            currentProjectId = e.target.value;
+            calendar.removeAllEvents();
+            calendar.addEventSource(getEventsForProject(currentProjectId));
+        });
+
+        document.getElementById('saveEvent').addEventListener('click', saveEvent);
+        document.getElementById('editEvent').addEventListener('click', handleEdit);
+        document.getElementById('deleteEvent').addEventListener('click', handleDelete);
+        document.getElementById('allDayCheck').addEventListener('change', e => toggleAllDay(e.target.checked));
+
+        // --- Functions ---
+
+        function getEventsForProject(projectId) {
+            return allTeamEvents.filter(event => event.projectId === projectId);
+        }
+
+        function openAddModal(projectId, info = null) {
+            document.getElementById('eventForm').reset();
+            document.getElementById('eventModalLabel').innerText = '새 팀 일정 추가';
+            document.getElementById('eventId').value = '';
+            document.getElementById('eventProjectId').value = projectId;
+            
+            const now = new Date();
+            if (info && info.dateStr) {
+                const clickedDate = new Date(info.dateStr);
+                now.setFullYear(clickedDate.getFullYear());
+                now.setMonth(clickedDate.getMonth());
+                now.setDate(clickedDate.getDate());
+            }
+            
+            document.getElementById('eventStart').value = toLocalISOString(now).substring(0, 16);
+            now.setHours(now.getHours() + 1);
+            document.getElementById('eventEnd').value = toLocalISOString(now).substring(0, 16);
+
+            toggleAllDay(false);
+            eventModal.show();
+        }
+
+        function showDetailModal(info) {
+            clickedEventInfo = info;
+            const event = info.event;
+            const projectId = event.extendedProps.projectId;
+            const project = projects.find(p => p.id === projectId);
+
+            document.getElementById('detailProject').textContent = project ? project.name : 'N/A';
+            document.getElementById('detailTitle').textContent = event.title;
+            document.getElementById('detailStart').textContent = formatEventDate(event.start, event.allDay);
+            const endStr = formatEventDate(event.end, event.allDay, true, event.start);
+            document.getElementById('detailEnd').textContent = (endStr && endStr !== formatEventDate(event.start, event.allDay)) ? endStr : '미지정';
+            document.getElementById('detailDescription').textContent = event.extendedProps.description || '';
+            
+            eventDetailModal.show();
+        }
+
+        function saveEvent() {
+            const id = document.getElementById('eventId').value;
+            const projectId = document.getElementById('eventProjectId').value;
+            const title = document.getElementById('eventTitle').value;
+            const allDay = document.getElementById('allDayCheck').checked;
+            let start = document.getElementById('eventStart').value;
+            let end = document.getElementById('eventEnd').value;
+
+            if (!title || !start || !projectId) {
+                alert('일정 제목, 시작일, 프로젝트는 필수입니다.');
+                return;
+            }
+            
+            if(allDay && end) { end = getNextDay(end); }
+
+            const newEventData = {
+                title: title,
+                start: start,
+                end: end || null,
+                allDay: allDay,
+                extendedProps: {
+                    projectId: projectId,
+                    description: document.getElementById('eventDescription').value
+                }
+            };
+
+            if (id) { // Edit
+                const eventToUpdate = calendar.getEventById(id);
+                if (eventToUpdate) {
+                    eventToUpdate.setProp('title', newEventData.title);
+                    eventToUpdate.setStart(newEventData.start);
+                    eventToUpdate.setEnd(newEventData.end);
+                    eventToUpdate.setAllDay(newEventData.allDay);
+                    eventToUpdate.setExtendedProp('description', newEventData.extendedProps.description);
+                }
+            } else { // Add
+                newEventData.id = new Date().toISOString();
+                allTeamEvents.push(newEventData); // Add to the main source array
+                calendar.addEvent(newEventData);
+            }
+            eventModal.hide();
+        }
+
+        function handleEdit() {
+            if (!clickedEventInfo) return;
+            const event = clickedEventInfo.event;
+            eventDetailModal.hide();
+            
+            document.getElementById('eventForm').reset();
+            document.getElementById('eventModalLabel').innerText = '팀 일정 수정';
+            document.getElementById('eventId').value = event.id;
+            document.getElementById('eventProjectId').value = event.extendedProps.projectId;
+            document.getElementById('eventTitle').value = event.title;
+            document.getElementById('eventDescription').value = event.extendedProps.description || '';
+            
+            toggleAllDay(event.allDay);
+            if (event.allDay) {
+                document.getElementById('eventStart').value = event.startStr;
+                document.getElementById('eventEnd').value = event.endStr ? getPrevDay(event.endStr) : '';
+            } else {
+                document.getElementById('eventStart').value = toLocalISOString(event.start).substring(0, 16);
+                document.getElementById('eventEnd').value = event.end ? toLocalISOString(event.end).substring(0, 16) : '';
+            }
+            eventModal.show();
+        }
+
+        function handleDelete() {
+            if (!clickedEventInfo) return;
+            if (confirm("'" + clickedEventInfo.event.title + "' 일정을 삭제하시겠습니까?")) {
+                const eventId = clickedEventInfo.event.id;
+                const eventInArray = allTeamEvents.findIndex(e => e.id === eventId);
+                if(eventInArray > -1) {
+                    allTeamEvents.splice(eventInArray, 1);
+                }
+                clickedEventInfo.event.remove();
+                eventDetailModal.hide();
+            }
+        }
+
+        function toggleAllDay(isAllDay) {
+            document.getElementById('allDayCheck').checked = isAllDay;
+            const startInput = document.getElementById('eventStart');
+            const endInput = document.getElementById('eventEnd');
+            const currentStart = startInput.value ? new Date(startInput.value) : new Date();
+            const currentEnd = endInput.value ? new Date(endInput.value) : new Date();
+
+            if (isAllDay) {
+                startInput.type = 'date';
+                endInput.type = 'date';
+                startInput.value = currentStart.toISOString().substring(0,10);
+                endInput.value = currentEnd.toISOString().substring(0,10);
+            } else {
+                startInput.type = 'datetime-local';
+                endInput.type = 'datetime-local';
+                startInput.value = toLocalISOString(currentStart).substring(0,16);
+                endInput.value = toLocalISOString(currentEnd).substring(0,16);
+            }
+        }
+        function toLocalISOString(date) {
+            if(!date) return '';
+            const d = new Date(date);
+            const tzoffset = d.getTimezoneOffset() * 60000;
+            return (new Date(d - tzoffset)).toISOString().slice(0, -1);
+        }
+        function getNextDay(dateStr) {
+            const date = new Date(dateStr);
+            date.setDate(date.getDate() + 1);
+            return date.toISOString().split('T')[0];
+        }
+        function getPrevDay(dateStr) {
+            const date = new Date(dateStr);
+            date.setDate(date.getDate() - 1);
+            return date.toISOString().split('T')[0];
+        }
+        function formatEventDate(date, isAllDay, isEnd = false, startDate = null) {
+            if (!date) return null;
+            let d = new Date(date);
+            if (isAllDay && isEnd) {
+                d.setDate(d.getDate() - 1);
+                if (startDate && new Date(startDate).toISOString().split('T')[0] === d.toISOString().split('T')[0]) {
+                    return null;
+                }
+            }
+            const options = { year: 'numeric', month: 'long', day: 'numeric' };
+            if (!isAllDay) {
+                options.hour = '2-digit';
+                options.minute = '2-digit';
+                options.hour12 = false;
+            }
+            return d.toLocaleString('ko-KR', options);
+        }
+    });
+    </script>
+</body>
+</html>

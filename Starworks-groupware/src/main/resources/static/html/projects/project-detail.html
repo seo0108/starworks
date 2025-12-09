@@ -1,0 +1,745 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>프로젝트 상세</title>
+
+
+</head>
+
+<body>
+
+	<div id="main-content">
+		<div class="page-heading">
+			<div class="d-flex justify-content-between align-items-center">
+				<h3 id="project-name">프로젝트 상세</h3>
+				<a href="project-list.html" class="btn btn-light">목록으로</a>
+			</div>
+		</div>
+		<div class="page-content">
+			<section class="row">
+				<div class="col-12">
+					<!-- Project Overview Card -->
+					<div class="card">
+						<div
+							class="card-header d-flex justify-content-between align-items-center">
+							<h4 class="card-title mb-0">프로젝트 개요</h4>
+							<a href="project-edit.html"
+								class="btn btn-sm btn-outline-primary">수정</a>
+						</div>
+						<div class="card-body">
+							<div class="row">
+								<!-- Column 1 -->
+								<div class="col-md-4 border-end">
+									<div class="mb-3">
+										<strong>프로젝트명</strong>
+										<p id="project-overview-name"></p>
+									</div>
+									<div class="mb-3">
+										<strong>담당자 (책임자)</strong>
+										<p id="project-overview-manager"></p>
+									</div>
+									<div class="mb-3">
+										<strong>기간</strong>
+										<p id="project-overview-duration"></p>
+									</div>
+									<div class="mb-3">
+										<strong>상태</strong>
+										<p>
+											<span id="project-overview-status" class="badge"></span>
+										</p>
+									</div>
+								</div>
+								<!-- Column 2 -->
+								<div class="col-md-4 border-end">
+									<div class="mb-3">
+										<strong>참여자</strong>
+										<div id="project-overview-participants" class="avatar-group"></div>
+									</div>
+									<div class="mb-3">
+										<strong>열람자</strong>
+										<div id="project-overview-viewers" class="avatar-group"></div>
+									</div>
+									<div class="mb-3">
+										<strong>프로젝트 유형</strong>
+										<p id="project-overview-type"></p>
+									</div>
+									<div class="mb-3">
+										<strong>예산</strong>
+										<p id="project-overview-budget"></p>
+									</div>
+								</div>
+								<!-- Column 3 -->
+								<div class="col-md-4">
+									<div class="mb-3">
+										<strong>목표</strong>
+										<p id="project-overview-goal"></p>
+									</div>
+									<div class="mb-3">
+										<strong>범위</strong>
+										<p id="project-overview-scope"></p>
+									</div>
+								</div>
+							</div>
+							<hr>
+							<div class="row">
+								<div class="col-12">
+									<div class="mb-3">
+										<strong>상세설명</strong>
+										<textarea id="project-overview-description"
+											class="form-control" rows="3" readonly></textarea>
+									</div>
+									<div class="mb-3">
+										<strong>첨부파일</strong>
+										<div id="project-overview-attachments"></div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<!-- Project Progress Card -->
+					<div class="card">
+						<div class="card-header">
+							<h4 class="card-title">프로젝트 진행률</h4>
+						</div>
+						<div class="card-body">
+							<div class="progress" style="height: 25px;">
+								<div id="project-progress-bar"
+									class="progress-bar progress-bar-striped progress-bar-animated"
+									role="progressbar" style="width: 0%;" aria-valuenow="0"
+									aria-valuemin="0" aria-valuemax="100">0%</div>
+							</div>
+						</div>
+					</div>
+
+					<!-- Task List Card -->
+					<section class="row">
+						<div class="col-12">
+							<div class="card">
+								<div
+									class="card-header d-flex justify-content-between align-items-center">
+									<h4 class="mb-0">업무 목록</h4>
+									<button type="button" class="btn btn-primary"
+										data-bs-toggle="modal" data-bs-target="#task-create-modal">업무
+										등록</button>
+								</div>
+								<div class="card-body">
+									<div class="table-responsive">
+										<table class="table table-hover">
+											<thead>
+												<tr>
+													<th>업무명</th>
+													<th>담당자</th>
+													<th>상태</th>
+													<th>하위업무 진행률</th>
+													<th>기간</th>
+													<th>액션</th>
+												</tr>
+											</thead>
+											<tbody id="task-list-tbody">
+											</tbody>
+										</table>
+									</div>
+								</div>
+							</div>
+						</div>
+					</section>
+				</div>
+			</section>
+		</div>
+	</div>
+
+
+	<!-- Task Details Modal -->
+	<div class="modal fade" id="task-checklist-modal" tabindex="-1"
+		aria-labelledby="taskChecklistModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered modal-lg">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="taskChecklistModalLabel">
+						업무 상세: <span></span>
+					</h5>
+					<div>
+						<button type="button" class="btn btn-outline-primary btn-sm"
+							id="edit-task-btn">수정</button>
+						<button type="button" class="btn btn-success btn-sm d-none"
+							id="save-task-btn">저장</button>
+						<button type="button" class="btn-close" data-bs-dismiss="modal"
+							aria-label="Close"></button>
+					</div>
+				</div>
+				<div class="modal-body">
+					<!-- View Mode -->
+					<div id="task-details-container" class="mb-4">
+						<div class="row mb-2">
+							<div class="col-sm-3">
+								<strong>담당자</strong>
+							</div>
+							<div class="col-sm-9" id="modal-task-assignee"></div>
+						</div>
+						<div class="row mb-2">
+							<div class="col-sm-3">
+								<strong>하위업무 진행률</strong>
+							</div>
+							<div class="col-sm-9" id="modal-task-progress"></div>
+						</div>
+						<div class="row mb-2">
+							<div class="col-sm-3">
+								<strong>기간</strong>
+							</div>
+							<div class="col-sm-9" id="modal-task-period"></div>
+						</div>
+						<div class="row mb-2">
+							<div class="col-sm-3">
+								<strong>상세 내용</strong>
+							</div>
+							<div class="col-sm-9" id="modal-task-description"></div>
+						</div>
+						<div class="row mt-2">
+							<div class="col-sm-3">
+								<strong>첨부파일</strong>
+							</div>
+							<div class="col-sm-9" id="modal-task-attachments"></div>
+						</div>
+					</div>
+					<!-- Edit Form (hidden) -->
+					<div id="task-edit-form-container" class="mb-4 d-none">
+						<div class="row mb-3">
+							<label for="modal-task-name-edit" class="col-sm-3 col-form-label"><strong>업무명</strong></label>
+							<div class="col-sm-9">
+								<input type="text" class="form-control"
+									id="modal-task-name-edit">
+							</div>
+						</div>
+						<div class="row mb-3">
+							<label for="modal-task-assignee-edit"
+								class="col-sm-3 col-form-label"><strong>담당자</strong></label>
+							<div class="col-sm-9">
+								<select class="form-select" id="modal-task-assignee-edit"></select>
+							</div>
+						</div>
+						<div class="row mb-3">
+							<label class="col-sm-3 col-form-label"><strong>기간</strong></label>
+							<div class="col-sm-9 input-group">
+								<input type="date" class="form-control"
+									id="modal-task-start-date-edit"><span
+									class="input-group-text">~</span><input type="date"
+									class="form-control" id="modal-task-end-date-edit">
+							</div>
+						</div>
+						<div class="row">
+							<label for="modal-task-description-edit"
+								class="col-sm-3 col-form-label"><strong>상세 내용</strong></label>
+							<div class="col-sm-9">
+								<textarea class="form-control" id="modal-task-description-edit"
+									rows="3"></textarea>
+							</div>
+						</div>
+					</div>
+					<hr class="mb-4">
+					<h6>하위 업무 체크리스트</h6>
+					<div id="checklist-container" class="mb-3"></div>
+					<div class="input-group mb-4">
+						<input type="text" id="new-checklist-item-input"
+							class="form-control" placeholder="새 체크리스트 항목 추가">
+						<button id="add-checklist-item-btn"
+							class="btn btn-outline-primary" type="button">추가</button>
+					</div>
+					<hr>
+					<h6 class="mt-4">코멘트</h6>
+					<div id="comment-list" class="mb-4"
+						style="max-height: 250px; overflow-y: auto;"></div>
+					<div class="comment-form">
+						<div class="d-flex gap-3">
+							<div class="avatar avatar-md">
+								<img id="current-user-avatar-comment"
+									src="/dist/assets/static/images/faces/1.jpg">
+							</div>
+							<div class="flex-grow-1">
+								<textarea id="new-comment-input" class="form-control" rows="2"
+									placeholder="코멘트를 입력하세요..."></textarea>
+								<button id="add-comment-btn"
+									class="btn btn-primary btn-sm mt-2 float-end">등록</button>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary"
+						data-bs-dismiss="modal">닫기</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Task Create Modal -->
+	<div class="modal fade" id="task-create-modal" tabindex="-1"
+		aria-labelledby="taskCreateModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered modal-lg">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="taskCreateModalLabel">신규 업무 등록</h5>
+					<button type="button" class="btn-close" data-bs-dismiss="modal"
+						aria-label="Close"></button>
+				</div>
+				<div class="modal-body">
+					<form class="form">
+						<div class="row">
+							<div class="col-12">
+								<div class="form-group">
+									<label for="task-name-modal" class="form-label">업무명 <span
+										class="text-danger">*</span></label><input type="text"
+										id="task-name-modal" class="form-control form-control-lg"
+										placeholder="예: 로그인 기능 개발" required>
+								</div>
+							</div>
+							<div class="col-md-6 col-12">
+								<div class="form-group">
+									<label for="task-assignee-modal" class="form-label">담당자
+										<span class="text-danger">*</span>
+									</label><select id="task-assignee-modal" class="form-select"></select>
+								</div>
+							</div>
+							<div class="col-md-6 col-12">
+								<div class="form-group">
+									<label for="task-status-modal" class="form-label">업무 상태</label><select
+										id="task-status-modal" class="form-select"><option
+											value="todo" selected>미시작</option>
+										<option value="doing">진행중</option>
+										<option value="on_hold">보류</option>
+										<option value="done">완료</option>
+										<option value="cancelled">취소</option></select>
+								</div>
+							</div>
+							<div class="col-12">
+								<div class="form-group">
+									<label class="form-label">기간 <span class="text-danger">*</span></label>
+									<div class="input-group">
+										<input type="date" id="start-date-modal" class="form-control"
+											required><span class="input-group-text">~</span><input
+											type="date" id="end-date-modal" class="form-control" required>
+									</div>
+								</div>
+							</div>
+							<div class="col-12">
+								<div class="form-group">
+									<label for="task-description-modal" class="form-label">상세
+										내용</label>
+									<textarea id="task-description-modal" class="form-control"
+										rows="6" placeholder="업무의 배경, 목표, 요구사항 등을 상세히 작성합니다."></textarea>
+								</div>
+							</div>
+						</div>
+						<hr class="form-section-divider">
+						<div class="row">
+							<div class="col-12">
+								<div class="form-group">
+									<label for="task-files-modal" class="form-label">첨부파일</label><input
+										type="file" id="task-files-modal" class="form-control"
+										multiple>
+									<p class="text-muted mt-1">
+										<small>기획서, 디자인 시안, 관련 자료 등을 첨부할 수 있습니다.</small>
+									</p>
+								</div>
+							</div>
+						</div>
+					</form>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-light-secondary"
+						data-bs-dismiss="modal">취소</button>
+					<button type="button" class="btn btn-primary" id="create-task-btn">업무
+						생성</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+	<script>
+    // Mock Data
+    const mockData = {
+        users: [
+            { id: 1, name: "김관리", avatar: "/dist/assets/static/images/faces/1.jpg" },
+            { id: 2, name: "이책임", avatar: "/dist/assets/static/images/faces/2.jpg" },
+            { id: 31, name: "박참여", avatar: "/dist/assets/static/images/faces/3.jpg" },
+            { id: 32, name: "최참여", avatar: "/dist/assets/static/images/faces/4.jpg" },
+            { id: 5, name: "나열람", avatar: "/dist/assets/static/images/faces/5.jpg" },
+            { id: 6, name: "조직장", avatar: "/dist/assets/static/images/faces/6.jpg" }
+        ],
+        projects: [
+            {
+                id: 1, 
+                name: "신규 그룹웨어 구축", 
+                managerId: 2, 
+                participantIds: [1, 2, 31, 32], 
+                viewerIds: [5, 6],
+                status: "doing", 
+                startDate: "2025-09-01", 
+                endDate: "2025-10-20", 
+                goal: "차세대 그룹웨어 시스템 구축을 통한 업무 효율성 증대", 
+                scope: "전자결재, 프로젝트 관리, 메신저 기능 개발",
+                projectType: "내부시스템/운영",
+                budget: "1억 5천만원",
+                description: "Mazer 템플릿을 기반으로 한 신규 그룹웨어 시스템 개발 프로젝트입니다. 주요 기능은 전자결재, 프로젝트 관리, 실시간 메신저 등을 포함하며, 최신 웹 기술을 적용하여 사용자 경험을 극대화하는 것을 목표로 합니다.", 
+                taskIds: [101, 102, 103, 104], 
+                files: [{name: '그룹웨어 기획서_v1.1.pdf', size: '2.1MB', url: '#'}, {name: '서버 아키텍처.png', size: '312KB', url: '#'}] 
+            },
+            {
+                id: 2, 
+                name: "모바일 앱 리뉴얼", 
+                managerId: 1, 
+                participantIds: [1, 31], 
+                viewerIds: [2, 6],
+                status: "todo", 
+                startDate: "2025-10-01", 
+                endDate: "2025-10-05", 
+                goal: "모바일 앱 UI/UX 전면 개편", 
+                scope: "앱 아이콘, 스플래시 화면, 메인 UI",
+                projectType: "신제품 개발/R&D",
+                budget: "5천만원",
+                description: "기존 모바일 앱의 노후화된 디자인을 개선하고 사용자 편의성을 증대시키는 것을 목표로 합니다.", 
+                taskIds: [201], 
+                files: [{name: '앱 리뉴얼 요구사항.docx', size: '88KB', url: '#'}] 
+            },
+        ],
+        tasks: [
+            { id: 101, projectId: 1, name: "요구사항 정의서 작성", assigneeId: 31, status: "done", startDate: "2025-09-01", endDate: "2025-09-05", description: "프로젝트 요구사항을 명확히 하고 모든 이해관계자의 합의를 도출하기 위한 공식 문서를 작성합니다.", files: [{name: '요구사항 명세서_final.docx', size: '1.2MB', url: '#'}] },
+            { id: 102, projectId: 1, name: "UI/UX 디자인", assigneeId: 32, status: "doing", startDate: "2025-09-06", endDate: "2025-09-20", description: "UI/UX 디자인 시안을 작업하고 프로토타입을 제작합니다. 디자인 시스템을 참고하여 일관성 있는 디자인을 적용해야 합니다.", files: [{name: '메인화면_시안.jpg', size: '4.5MB', url: '#'}, {name: 'UI 프로토타입.fig', size: '10.2MB', url: '#'}] },
+            { id: 103, projectId: 1, name: "API 서버 개발", assigneeId: 1, status: "on_hold", startDate: "2025-09-21", endDate: "2025-10-10", description: "정의된 요구사항과 디자인에 따라 실제 기능을 구현하는 개발 작업을 진행합니다.", files: [] },
+            { id: 104, projectId: 1, name: "퍼블리싱 및 프론트엔드 개발", assigneeId: 32, status: "todo", startDate: "2025-09-21", endDate: "2025-10-20", description: "디자인 시안을 기반으로 웹 페이지를 구현합니다.", files: [{name: 'publishing_guide.pdf', size: '950KB', url: '#'}] },
+            { id: 201, projectId: 2, name: "앱 아이콘 디자인", assigneeId: 31, status: "todo", startDate: "2025-10-01", endDate: "2025-10-05", description: "앱의 정체성을 나타내는 새로운 아이콘을 디자인합니다.", files: [] },
+        ],
+        checklists: {
+            101: [{id: 1, text: "기능 명세 확정", done: true}, {id: 2, text: "비기능 요구사항 정리", done: true}],
+            102: [{id: 3, text: "와이어프레임 스케치", done: true}, {id: 4, text: "프로토타입 제작", done: false}, {id: 5, text: "디자인 시스템 정리", done: false}],
+            103: [],
+        },
+        comments: {
+            101: [{id: 3, userId: 31, text: "요구사항 정의서 초안 전달드립니다. 검토 부탁드려요.", timestamp: "2025-09-04 14:30"}],
+            102: [
+                {id: 1, userId: 32, text: "디자인 시안 공유합니다.", timestamp: "2025-09-10 16:20"},
+                {id: 4, userId: 2, text: "네, 확인했습니다. 피드백은 내일 오전 중으로 드릴게요.", timestamp: "2025-09-10 17:05"}
+            ],
+            103: [{id: 2, userId: 1, text: "서버 사양 관련해서 논의 필요합니다.", timestamp: "2025-09-22 09:15"}],
+            104: [{id: 5, userId: 32, text: "퍼블리싱 시작했습니다. 특이사항 없으면 다음 주까지 완료될 것 같습니다.", timestamp: "2025-09-23 10:00"}]
+        }
+    };
+    const currentUser = { id: 1, name: "김관리", avatar: "mazer-1.0.0/dist/assets/images/faces/1.jpg" };
+    const taskStatusMap = { todo: '미시작', doing: '진행중', on_hold: '보류', done: '완료', cancelled: '취소' };
+    const taskStatusColors = { todo: 'secondary', doing: 'primary', on_hold: 'warning', done: 'success', cancelled: 'danger' };
+
+    document.addEventListener('DOMContentLoaded', function() {
+        // --- Main Variables & Initial Setup ---
+        const params = new URLSearchParams(window.location.search);
+        const projectId = parseInt(params.get('id')) || 1;
+        const project = mockData.projects.find(function(p) { return p.id === projectId; });
+
+        if (!project) {
+            document.getElementById('main').innerHTML = '<h3 class="text-center">프로젝트를 찾을 수 없습니다.</h3>';
+            return;
+        }
+
+        const taskChecklistModal = new bootstrap.Modal(document.getElementById('task-checklist-modal'));
+        const taskCreateModal = new bootstrap.Modal(document.getElementById('task-create-modal'));
+        let currentEditingTaskId = null;
+
+        // --- DOM Elements ---
+        const editTaskBtn = document.getElementById('edit-task-btn');
+        const saveTaskBtn = document.getElementById('save-task-btn');
+        const taskDetailsContainer = document.getElementById('task-details-container');
+        const taskEditFormContainer = document.getElementById('task-edit-form-container');
+        const createTaskBtn = document.getElementById('create-task-btn');
+
+        // --- RENDER FUNCTIONS ---
+        const getTaskProgress = (taskId) => {
+            const list = mockData.checklists[taskId] || [];
+            if (list.length === 0) return 100; // 하위 업무가 없으면 100%로 간주
+            const doneCount = list.filter(function(item) { return item.done; }).length;
+            return Math.round((doneCount / list.length) * 100);
+        };
+
+        const calculateProjectProgress = (project) => {
+            const projectTasks = project.taskIds.map(function(id) { return mockData.tasks.find(function(t) { return t.id === id; }); }).filter(Boolean);
+            if (projectTasks.length === 0) return 0;
+            const doneTasksCount = projectTasks.filter(function(t) { return t.status === 'done'; }).length;
+            return Math.round((doneTasksCount / projectTasks.length) * 100);
+        };
+
+        const createFileListItem = (file) => {
+            return (
+                '<div class="d-flex justify-content-between align-items-center border-bottom py-2">' + 
+                    '<div>' + 
+                        '<i class="bi bi-file-earmark-text me-2"></i>' + 
+                        '<a href="' + (file.url || '#') + '" class="text-body">' + (file.name || '파일 이름 없음') + '</a>' + 
+                    '</div>' + 
+                    '<small class="text-muted">' + (file.size || '') + '</small>' + 
+                '</div>'
+            );
+        };
+        
+        const createAvatarGroup = (container, userIds) => {
+            container.innerHTML = '';
+            if (!userIds || userIds.length === 0) {
+                container.innerHTML = '<p class="text-muted small">해당 없음</p>';
+                return;
+            }
+            const users = userIds.map(function(id) { return mockData.users.find(function(u) { return u.id === id; }); });
+            users.slice(0, 5).forEach(function(p) {
+                if (!p) return;
+                const avatarDiv = document.createElement('div');
+                avatarDiv.className = 'avatar';
+                avatarDiv.innerHTML = '<img src="' + p.avatar + '" alt="' + p.name + '" data-bs-toggle="tooltip" data-bs-placement="top" title="' + p.name + '">';
+                container.appendChild(avatarDiv);
+            });
+            if (users.length > 5) {
+                const remaining = users.length - 5;
+                const moreAvatarDiv = document.createElement('div');
+                moreAvatarDiv.className = 'avatar bg-secondary';
+                moreAvatarDiv.innerHTML = '<span class="avatar-content" data-bs-toggle="tooltip" data-bs-placement="top" title="외 ' + remaining + '명">+' + remaining + '</span>';
+                container.appendChild(moreAvatarDiv);
+            }
+        };
+
+        const renderProjectHeader = (p) => {
+            document.getElementById('project-name').textContent = p.name;
+            document.getElementById('project-overview-name').textContent = p.name;
+            
+            const statusSpan = document.getElementById('project-overview-status');
+            const projectStatus = p.status || 'todo';
+            const projectStatusText = taskStatusMap[projectStatus] || '미지정';
+            statusSpan.textContent = projectStatusText;
+            statusSpan.className = 'badge bg-' + (taskStatusColors[projectStatus] || 'secondary');
+
+            document.getElementById('project-overview-duration').textContent = (p.startDate || '미정') + ' ~ ' + (p.endDate || '미정');
+
+            const manager = mockData.users.find(function(u) { return u.id === p.managerId; });
+            document.getElementById('project-overview-manager').textContent = manager ? manager.name : '미지정';
+
+            createAvatarGroup(document.getElementById('project-overview-participants'), p.participantIds || []);
+            createAvatarGroup(document.getElementById('project-overview-viewers'), p.viewerIds || []);
+            
+            new bootstrap.Tooltip(document.body, { selector: '[data-bs-toggle="tooltip"]', trigger: 'hover' });
+
+            document.getElementById('project-overview-type').textContent = p.projectType || '분류되지 않음';
+            document.getElementById('project-overview-budget').textContent = p.budget || '미정';
+            document.getElementById('project-overview-goal').textContent = p.goal || '정의되지 않음';
+            document.getElementById('project-overview-scope').textContent = p.scope || '정의되지 않음';
+            document.getElementById('project-overview-description').value = p.description;
+
+            const attachmentsContainer = document.getElementById('project-overview-attachments');
+            attachmentsContainer.innerHTML = '';
+            if (p.files && p.files.length > 0) {
+                p.files.forEach(function(file) {
+                    attachmentsContainer.innerHTML += createFileListItem(file);
+                });
+            } else {
+                attachmentsContainer.innerHTML = '<p class="text-muted small">첨부파일이 없습니다.</p>';
+            }
+        };
+
+        const renderProjectProgress = (project) => {
+            const overallProgress = calculateProjectProgress(project);
+            const progressBar = document.getElementById('project-progress-bar');
+            progressBar.style.width = overallProgress + '%';
+            progressBar.setAttribute('aria-valuenow', overallProgress);
+            progressBar.textContent = overallProgress + '%';
+        };
+
+        const renderTasks = (p) => {
+            const taskTbody = document.getElementById('task-list-tbody');
+            taskTbody.innerHTML = '';
+            const projectTasks = p.taskIds.map(function(id) { return mockData.tasks.find(function(t) { return t.id === id; }); }).filter(Boolean);
+
+            projectTasks.forEach(function(task) {
+                const assignee = mockData.users.find(function(u) { return u.id === task.assigneeId; }) || { name: '미지정' };
+                const progress = getTaskProgress(task.id);
+                const statusBadge = '<span class="badge bg-' + (taskStatusColors[task.status] || 'secondary') + '">' + (taskStatusMap[task.status] || '미지정') + '</span>';
+                
+                const tr = document.createElement('tr');
+                tr.innerHTML = (
+                    '<td>' + task.name + '</td>' + 
+                    '<td>' + assignee.name + '</td>' + 
+                    '<td>' + statusBadge + '</td>' + 
+                    '<td>' + 
+                        '<div class="progress progress-sm"><div class="progress-bar" role="progressbar" style="width: ' + progress + '%;" aria-valuenow="' + progress + '"></div></div>' + 
+                    '</td>' + 
+                    '<td>' + (task.startDate || '') + ' ~ ' + (task.endDate || '') + '</td>' + 
+                    '<td><button class="btn btn-sm btn-outline-secondary btn-task-detail" data-task-id="' + task.id + '">상세</button></td>'
+                );
+                taskTbody.appendChild(tr);
+            });
+        };
+
+        const renderComments = (taskId) => {
+            const commentList = document.getElementById('comment-list');
+            commentList.innerHTML = '';
+            const taskComments = mockData.comments[taskId] || [];
+            if (taskComments.length === 0) {
+                commentList.innerHTML = '<p class="text-center text-muted">코멘트가 없습니다.</p>';
+                return;
+            }
+            taskComments.slice().reverse().forEach(function(comment) {
+                const user = mockData.users.find(function(u) { return u.id === comment.userId; });
+                if (user) {
+                    commentList.innerHTML += (
+                        '<div class="comment mb-3">' + 
+                            '<div class="avatar"><img src="' + user.avatar + '" alt="avatar"></div>' + 
+                            '<div class="flex-grow-1">' + 
+                                '<div class="d-flex justify-content-between">' + 
+                                    '<h6 class="mb-1">' + user.name + '</h6>' + 
+                                    '<small class="text-muted">' + comment.timestamp + '</small>' + 
+                                '</div>' + 
+                                '<p>' + comment.text.split('\n').join('<br>') + '</p>' + 
+                            '</div>' + 
+                        '</div>'
+                    );
+                }
+            });
+        };
+
+        const renderTaskDetailsInModal = (task) => {
+            const assignee = mockData.users.find(function(u) { return u.id === task.assigneeId; });
+            document.getElementById('modal-task-assignee').textContent = assignee ? assignee.name : '미지정';
+            document.getElementById('modal-task-progress').textContent = getTaskProgress(task.id) + '%';
+            document.getElementById('modal-task-period').textContent = (task.startDate || '') + ' ~ ' + (task.endDate || '');
+            document.getElementById('modal-task-description').innerHTML = '<p>' + (task.description || '상세 내용이 없습니다.') + '</p>';
+            
+            const taskAttachmentsContainer = document.getElementById('modal-task-attachments');
+            taskAttachmentsContainer.innerHTML = '';
+            if (task.files && task.files.length > 0) {
+                task.files.forEach(function(file) {
+                    taskAttachmentsContainer.innerHTML += createFileListItem(file);
+                });
+            } else {
+                taskAttachmentsContainer.innerHTML = '<p class="text-muted small">첨부파일이 없습니다.</p>';
+            }
+        };
+
+        const renderChecklist = (taskId) => {
+            const container = document.getElementById('checklist-container');
+            container.innerHTML = '';
+            const taskChecklists = mockData.checklists[taskId] || [];
+            taskChecklists.forEach(function(item) {
+                const itemEl = document.createElement('div');
+                itemEl.className = 'checklist-item list-group-item ' + (item.done ? 'done' : '');
+                itemEl.dataset.itemId = item.id;
+                itemEl.innerHTML = '<input class="form-check-input" type="checkbox" ' + (item.done ? 'checked' : '') + '><span class="checklist-text flex-grow-1">' + item.text + '</span><div class="btn-group btn-group-sm"><button class="btn btn-outline-secondary btn-edit-checklist"><i class="bi bi-pencil"></i></button><button class="btn btn-outline-danger btn-delete-checklist"><i class="bi bi-trash"></i></button></div>';
+                container.appendChild(itemEl);
+            });
+        };
+
+        const toggleEditMode = (isEditing) => {
+            taskDetailsContainer.classList.toggle('d-none', isEditing);
+            taskEditFormContainer.classList.toggle('d-none', !isEditing);
+            editTaskBtn.classList.toggle('d-none', isEditing);
+            saveTaskBtn.classList.toggle('d-none', !isEditing);
+        };
+
+        const populateEditForm = (task) => {
+            document.getElementById('modal-task-name-edit').value = task.name;
+            const assigneeSelect = document.getElementById('modal-task-assignee-edit');
+            assigneeSelect.innerHTML = '';
+            project.participantIds.map(function(id) { return mockData.users.find(function(u) { return u.id === id; }); }).forEach(function(user) {
+                if (!user) return;
+                const option = document.createElement('option');
+                option.value = user.id;
+                option.textContent = user.name;
+                if (user.id === task.assigneeId) option.selected = true;
+                assigneeSelect.appendChild(option);
+            });
+            document.getElementById('modal-task-start-date-edit').value = task.startDate;
+            document.getElementById('modal-task-end-date-edit').value = task.endDate;
+            document.getElementById('modal-task-description-edit').value = task.description || '';
+        };
+        
+        const populateCreateForm = () => {
+            const assigneeSelect = document.getElementById('task-assignee-modal');
+            assigneeSelect.innerHTML = '';
+            project.participantIds.map(function(id) { return mockData.users.find(function(u) { return u.id === id; }); }).forEach(function(user) {
+                if (!user) return;
+                const option = document.createElement('option');
+                option.value = user.id;
+                option.textContent = user.name;
+                assigneeSelect.appendChild(option);
+            });
+        };
+
+        const renderPage = () => {
+            renderProjectHeader(project);
+            renderProjectProgress(project);
+            renderTasks(project);
+        };
+
+        // --- EVENT HANDLERS ---
+        document.getElementById('task-list-tbody').addEventListener('click', function(e) {
+            if (e.target.closest('.btn-task-detail')) {
+                const taskId = parseInt(e.target.closest('.btn-task-detail').dataset.taskId);
+                const task = mockData.tasks.find(function(t) { return t.id === taskId; });
+                if (!task) return;
+                currentEditingTaskId = taskId;
+                document.querySelector('#taskChecklistModalLabel span').textContent = task.name;
+                renderTaskDetailsInModal(task);
+                renderChecklist(taskId);
+                renderComments(taskId);
+                toggleEditMode(false);
+                taskChecklistModal.show();
+            }
+        });
+        
+        document.querySelector('[data-bs-target="#task-create-modal"]').addEventListener('click', populateCreateForm);
+
+        editTaskBtn.addEventListener('click', function() {
+            const task = mockData.tasks.find(function(t) { return t.id === currentEditingTaskId; });
+            if (task) {
+                populateEditForm(task);
+                toggleEditMode(true);
+            }
+        });
+
+        saveTaskBtn.addEventListener('click', function() {
+            const task = mockData.tasks.find(function(t) { return t.id === currentEditingTaskId; });
+            if (task) {
+                task.name = document.getElementById('modal-task-name-edit').value;
+                task.assigneeId = parseInt(document.getElementById('modal-task-assignee-edit').value);
+                task.startDate = document.getElementById('modal-task-start-date-edit').value;
+                task.endDate = document.getElementById('modal-task-end-date-edit').value;
+                task.description = document.getElementById('modal-task-description-edit').value;
+                renderPage();
+                document.querySelector('#taskChecklistModalLabel span').textContent = task.name;
+                renderTaskDetailsInModal(task);
+                toggleEditMode(false);
+            }
+        });
+
+        createTaskBtn.addEventListener('click', function() {
+            const newTask = {
+                id: Date.now(),
+                projectId: projectId,
+                name: document.getElementById('task-name-modal').value,
+                assigneeId: parseInt(document.getElementById('task-assignee-modal').value),
+                status: document.getElementById('task-status-modal').value,
+                startDate: document.getElementById('start-date-modal').value,
+                endDate: document.getElementById('end-date-modal').value,
+                description: document.getElementById('task-description-modal').value,
+                files: []
+            };
+            mockData.tasks.push(newTask);
+            project.taskIds.push(newTask.id);
+            mockData.checklists[newTask.id] = [];
+            mockData.comments[newTask.id] = [];
+            renderPage();
+            taskCreateModal.hide();
+            document.querySelector('#task-create-modal form').reset();
+        });
+
+        // --- INITIAL LOAD ---
+        renderPage();
+    });
+    </script>
+</body>
+
+</html>

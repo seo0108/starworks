@@ -1,0 +1,367 @@
+
+  /* 네모칸 중앙정렬용 */
+.icon-box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  border-radius: 8px;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  transition: background-color 0.25s, border-color 0.25s, color 0.25s;
+  cursor: pointer;
+}
+	/* 마우스 올렸을 때 선택된 것처럼 색 채워짐 */
+.icon-box:hover {
+  background-color: #0d6efd;  /* Mazer 기본 파랑 계열 */
+  border-color: #0d6efd;
+}
+
+ /* hover 시: 사이드바 색상과 동일하게 */
+.icon-box:hover {
+  background-color: rgb(99, 102, 241); /* 사이드바 hover 색상 */
+  border-color: rgb(99, 102, 241);
+}
+
+  .icon-grid {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-right: 1rem;
+  }
+
+ /* 아이콘 기본색 */
+.icon-box i {
+  font-size: 1.4em;
+  color: #202123;
+  transition: color 0.25s;
+}
+.icon-box:hover i {
+  color: #fff; /* 배경 위에서 아이콘이 잘 보이도록 흰색으로 */
+}
+
+/* ============================================
+   알림 드롭다운
+   ============================================ */
+
+/* 알림 드롭다운 메뉴 */
+.notification-dropdown {
+  min-width: 360px !important;
+  max-width: 450px !important;
+  padding: 0 !important;
+  border: 1px solid #e5e7eb !important;
+  border-radius: 12px !important;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08), 0 4px 10px rgba(0, 0, 0, 0.05) !important;
+  margin-top: 8px !important;
+  overflow: hidden;
+}
+
+/* 알림 헤더 */
+.notification-dropdown .dropdown-header {
+  padding: 16px 20px;
+  background: linear-gradient(135deg, #ff6b6b 0%, #ee5a6f 100%);
+  border-bottom: none;
+  margin-bottom: 0;
+}
+
+.notification-dropdown .dropdown-header h6 {
+  color: #ffffff;
+  font-size: 1rem;
+  font-weight: 600;
+  margin: 0;
+  letter-spacing: -0.01em;
+}
+
+/* 알림 목록 컨테이너 */
+#notification-div {
+  max-height: 400px;
+  overflow-y: auto;
+  overflow-x: hidden; /* 가로 스크롤 제거 */
+  background-color: #ffffff;
+}
+
+/* 스크롤바 스타일 */
+#notification-div::-webkit-scrollbar {
+  width: 6px;
+}
+
+#notification-div::-webkit-scrollbar-track {
+  background: #f3f4f6;
+}
+
+#notification-div::-webkit-scrollbar-thumb {
+  background: #d1d5db;
+  border-radius: 3px;
+}
+
+#notification-div::-webkit-scrollbar-thumb:hover {
+  background: #9ca3af;
+}
+
+/* 개별 알림 아이템 (JavaScript로 추가될 요소를 위한 스타일) */
+.notification-item {
+  display: flex;
+  align-items: flex-start;
+  padding: 14px 20px;
+  border-bottom: 1px solid #f3f4f6;
+  transition: background-color 0.2s ease;
+  cursor: pointer;
+  text-decoration: none;
+  color: inherit;
+}
+
+.notification-item:hover {
+  background-color: #f9fafb;
+}
+
+.notification-item:last-child {
+  border-bottom: none;
+}
+
+/* 읽지 않은 알림 */
+.notification-item.unread {
+  background-color: #eff6ff;
+}
+
+.notification-item.unread:hover {
+  background-color: #dbeafe;
+}
+
+/* 알림 아이콘 */
+.notification-icon {
+  width: 36px;
+  height: 36px;
+  min-width: 36px;
+  border-radius: 50%;
+  /* display: flex; */
+  align-items: center;
+  justify-content: center;
+  margin-right: 12px;
+  font-size: 0.9rem;
+}
+
+.notification-icon.type-approval {
+  background-color: #dbeafe;
+  color: #2563eb;
+}
+
+.notification-icon.type-project {
+  background-color: #fef3c7;
+  color: #f59e0b;
+}
+
+.notification-icon.type-mail {
+  background-color: #fce7f3;
+  color: #ec4899;
+}
+
+.notification-icon.type-calendar {
+  background-color: #dcfce7;
+  color: #16a34a;
+}
+
+/* 알림 내용 */
+.notification-content {
+  flex: 1;
+  min-width: 0;
+}
+
+.notification-title {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #1f2937;
+  margin: 0 0 4px 0;
+  line-height: 1.4;
+}
+
+.notification-desc {
+  font-size: 0.85rem;
+  color: #6b7280;
+  margin: 0 0 6px 0;
+  line-height: 1.4;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+.notification-time {
+  font-size: 0.75rem;
+  color: #9ca3af;
+  margin: 0;
+}
+
+/* 읽지 않음 표시 점 */
+.notification-item.unread .notification-title::before {
+  content: '';
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: #3b82f6;
+  margin-right: 6px;
+  vertical-align: middle;
+}
+
+/* 알림 없을 때 */
+.notification-empty {
+  padding: 60px 20px;
+  text-align: center;
+  color: #9ca3af;
+}
+
+.notification-empty i {
+  font-size: 3rem;
+  color: #d1d5db;
+  margin-bottom: 12px;
+}
+
+.notification-empty p {
+  font-size: 0.9rem;
+  margin: 0;
+}
+
+/* 모두 보기 링크 */
+.notification-dropdown > li:last-child {
+  background-color: #f9fafb;
+  border-top: 1px solid #e5e7eb;
+}
+
+.notification-dropdown > li:last-child a {
+  display: block;
+  text-decoration: none;
+  transition: background-color 0.2s ease;
+}
+
+.notification-dropdown > li:last-child a:hover {
+  background-color: #f3f4f6;
+}
+
+.notification-dropdown > li:last-child p {
+  color: #0045d5;
+  font-size: 0.9rem;
+  font-weight: 600;
+  margin: 0;
+  padding: 14px 0;
+}
+
+.notification-dropdown > li:last-child a:hover p {
+  color: #4f46e5;
+}
+
+/* ============================================
+   사용자 프로필 드롭다운
+   ============================================ */
+
+/* 드롭다운 메뉴 전체 스타일 */
+.user-dropdown-menu {
+  min-width: 200px !important;
+  padding: 0 !important;
+  border: 1px solid #e5e7eb !important;
+  border-radius: 12px !important;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08), 0 4px 10px rgba(0, 0, 0, 0.05) !important;
+  margin-top: 8px !important;
+  overflow: hidden;
+}
+
+.user-dropdown-header h6 {
+  color: #ffffff;
+  font-size: 0.95rem;
+  font-weight: 600;
+  margin: 0;
+  letter-spacing: -0.01em;
+}
+
+/* 드롭다운 아이템 컨테이너 */
+.user-dropdown-body {
+  padding: 8px 0;
+}
+
+/* 드롭다운 개별 아이템 */
+.user-dropdown-item {
+  display: flex;
+  align-items: center;
+  padding: 12px 20px;
+  color: #374151;
+  font-size: 0.9rem;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  text-decoration: none;
+  border: none;
+  background: transparent;
+}
+
+.user-dropdown-item:hover {
+  background-color: #f3f4f6;
+  color: #0045d5;
+  padding-left: 24px;
+}
+
+.user-dropdown-item i {
+  width: 20px;
+  font-size: 1.1rem;
+  margin-right: 12px;
+  color: #6b7280;
+  transition: color 0.2s ease;
+}
+
+.user-dropdown-item:hover i {
+  color: #0045d5;
+}
+
+/* 구분선 */
+.user-dropdown-divider {
+  margin: 8px 0;
+  border-top: 1px solid #e5e7eb;
+  opacity: 1;
+}
+
+/* 로그아웃 아이템 특별 스타일 */
+.user-dropdown-item.logout {
+  color: #dc2626;
+}
+
+.user-dropdown-item.logout i {
+  color: #dc2626;
+}
+
+.user-dropdown-item.logout:hover {
+  background-color: #fef2f2;
+  color: #b91c1c;
+}
+
+.user-dropdown-item.logout:hover i {
+  color: #b91c1c;
+}
+
+/* 드롭다운 푸터 */
+.user-dropdown-footer {
+  padding: 12px 20px;
+  background-color: #f9fafb;
+  border-top: 1px solid #e5e7eb;
+  text-align: center;
+}
+
+.user-dropdown-footer a {
+  color: #6366f1;
+  font-size: 0.85rem;
+  font-weight: 500;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.user-dropdown-footer a:hover {
+  color: #4f46e5;
+}
+
+/* 프로필 이미지 호버 효과 */
+.user-profile {
+  cursor: pointer;
+  transition: opacity 0.2s ease;
+}
+
+.user-profile:hover {
+  opacity: 0.9;
+}

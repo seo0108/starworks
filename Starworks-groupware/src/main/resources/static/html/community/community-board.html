@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>커뮤니티 v2 - 그룹웨어</title>
+
+</head>
+
+<body>
+
+	<div id="main-content">
+
+		<div class="page-content">
+			<div class="row">
+				<div class="col-lg-10 mx-auto">
+					<div class="page-heading">
+						<h3>사내 커뮤니티</h3>
+					</div>
+
+					<!-- Category Pills -->
+					<ul class="nav nav-pills justify-content-center mb-5"
+						id="category-pills">
+						<li class="nav-item"><a class="nav-link active" href="#">전체</a></li>
+						<li class="nav-item"><a class="nav-link" href="#">동호회</a></li>
+						<li class="nav-item"><a class="nav-link" href="#">경조사</a></li>
+						<li class="nav-item"><a class="nav-link" href="#">사내활동</a></li>
+						<li class="nav-item"><a class="nav-link" href="#">건의사항</a></li>
+						<li class="nav-item"><a class="nav-link" href="#">기타</a></li>
+					</ul>
+
+					<!-- Search and Write Button -->
+					<div class="d-flex justify-content-between align-items-center mb-4">
+						<div class="col-md-4 col-sm-6">
+							<div class="input-group">
+								<button class="btn dropdown-toggle search-criteria-btn"
+									type="button" data-bs-toggle="dropdown" aria-expanded="false">전체</button>
+								<ul class="dropdown-menu">
+									<li><a class="dropdown-item" href="#">전체</a></li>
+									<li><a class="dropdown-item" href="#">제목</a></li>
+									<li><a class="dropdown-item" href="#">작성자</a></li>
+									<li><a class="dropdown-item" href="#">내용</a></li>
+								</ul>
+								<input type="text" class="form-control" placeholder="검색...">
+								<button class="btn btn-primary" type="button">
+									<i class="bi bi-search"></i>
+								</button>
+							</div>
+						</div>
+						<a href="community-board-create.html" class="btn btn-primary">글쓰기</a>
+					</div>
+
+					<section class="section">
+						<div class="card rounded-2">
+							<div class="card-header">
+								<strong>총 3건의 게시물</strong>
+								<hr class="my-2">
+							</div>
+							<div class="card-body">
+								<!-- Post 1 -->
+								<div class="post-item py-3">
+									<h5 class="card-title">
+										<a href="community-board-detail.html"
+											class="text-dark text-decoration-none">등산 동호회 9월 정기 산행 안내</a>
+									</h5>
+									<div
+										class="d-flex justify-content-between align-items-center mt-2 mb-3">
+										<small class="text-muted">작성자: John Ducky</small> <small
+											class="text-muted">2025-09-16</small>
+									</div>
+									<p class="card-text">안녕하세요, 등산 동호회입니다. 9월 정기 산행은 관악산으로 갑니다.
+										많은 참여 바랍니다...</p>
+									<div class="d-flex align-items-center">
+										<i class="bi bi-paperclip me-2"></i> <a href="#">산행계획.pdf</a>
+									</div>
+								</div>
+
+								<hr class="my-2">
+
+								<!-- Post 2 -->
+								<div class="post-item py-3">
+									<h5 class="card-title">
+										<a href="community-board-detail.html"
+											class="text-dark text-decoration-none">[경조] 김민준 대리 결혼</a>
+									</h5>
+									<div
+										class="d-flex justify-content-between align-items-center mt-2 mb-3">
+										<small class="text-muted">작성자: Jane Doe</small> <small
+											class="text-muted">2025-09-15</small>
+									</div>
+									<p class="card-text">경영지원팀 김민준 대리가 이번 주 토요일에 결혼합니다. 모두 함께
+										축하해주세요.</p>
+								</div>
+
+								<hr class="my-2">
+
+								<!-- Post 3 -->
+								<div class="post-item py-3">
+									<h5 class="card-title">
+										<a href="community-board-detail.html"
+											class="text-dark text-decoration-none">구내식당 메뉴 개선 건의</a>
+									</h5>
+									<div
+										class="d-flex justify-content-between align-items-center mt-2 mb-3">
+										<small class="text-muted">작성자: Peter Jones</small> <small
+											class="text-muted">2025-09-14</small>
+									</div>
+									<p class="card-text">안녕하세요. 구내식당 메뉴에 대한 건의사항이 있습니다. 최근 국물
+										요리의 염도가 너무 높은 것 같습니다...</p>
+								</div>
+							</div>
+						</div>
+					</section>
+
+					<!-- Pagination -->
+					<nav aria-label="Page navigation">
+						<ul class="pagination justify-content-center">
+							<li class="page-item disabled"><a class="page-link" href="#"
+								tabindex="-1" aria-disabled="true">이전</a></li>
+							<li class="page-item active" aria-current="page"><a
+								class="page-link" href="#">1</a></li>
+							<li class="page-item"><a class="page-link" href="#">2</a></li>
+							<li class="page-item"><a class="page-link" href="#">다음</a></li>
+						</ul>
+					</nav>
+				</div>
+			</div>
+		</div>
+	</div>
+
+</body>
+
+</html>

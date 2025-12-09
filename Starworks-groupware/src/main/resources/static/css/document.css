@@ -1,0 +1,42 @@
+/**
+ * <pre>
+ * << 개정이력(Modification Information) >>
+ *
+ *   수정일      			수정자           수정내용
+ *  -----------   	-------------    ---------------------------
+ *  2025. 10. 25.     	임가영            최초 생성
+ *
+ * </pre>
+ */
+@charset "UTF-8";
+
+.documentTable thead {
+	border-top: 2px solid #dee2e6; /* 위쪽 테두리 */
+}
+
+.documentTable tbody tr:hover {
+	cursor: default !important; /* hover 시 기본 커서 유지 */
+}
+
+.documentTable th.col-checkbox {
+    width: 5%;
+}
+.documentTable th.col-title {
+    width: 59%;
+}
+
+.documentTable th.col-user {
+    width: 25%;
+}
+
+.documentTable th.col-date {
+    width: 12%;
+}
+
+.documentTable th.col-filesize {
+    width: 12%;
+}
+
+.documentTable th.col-setting {
+    width: 12%;
+}

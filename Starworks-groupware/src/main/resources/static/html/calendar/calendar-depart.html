@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>부서 일정 관리 - 그룹웨어</title>
+
+
+
+</head>
+<body>
+
+
+	<div id="main-content">
+		<div class="page-heading">
+			<h3>부서 일정 관리</h3>
+			<p class="text-muted">부서 및 개인의 일정을 확인하고 관리합니다.</p>
+		</div>
+
+		<div class="page-content calendar-page-container">
+			<div class="card calendar-card">
+				<div class="card-header">
+					<div class="d-flex align-items-center">
+						<h5 class="card-title mb-0 me-3">필터:</h5>
+						<div id="filter-container">
+							<div class="form-check form-check-inline">
+								<input class="form-check-input" type="checkbox"
+									id="filter-department" value="department" checked> <label
+									class="form-check-label" for="filter-department">부서일정</label>
+							</div>
+							<div class="form-check form-check-inline">
+								<input class="form-check-input" type="checkbox"
+									id="filter-leave" value="leave" checked> <label
+									class="form-check-label" for="filter-leave">휴가</label>
+							</div>
+							<div class="form-check form-check-inline">
+								<input class="form-check-input" type="checkbox" id="filter-trip"
+									value="trip" checked> <label class="form-check-label"
+									for="filter-trip">외근/출장</label>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="card-body calendar-card-body">
+					<div id='calendar-container'>
+						<div id='calendar'></div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+	<!-- 일정 추가/수정 Modal -->
+	<div class="modal fade" id="eventModal" tabindex="-1"
+		aria-labelledby="eventModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="eventModalLabel"></h5>
+					<button type="button" class="btn-close" data-bs-dismiss="modal"
+						aria-label="Close"></button>
+				</div>
+				<div class="modal-body">
+					<form id="eventForm">
+						<input type="hidden" id="eventId">
+						<div class="mb-3">
+							<label for="eventType" class="form-label">일정 구분</label> <select
+								class="form-select" id="eventType">
+								<option value="department">부서일정</option>
+								<option value="leave">휴가</option>
+								<option value="trip">외근/출장</option>
+							</select>
+						</div>
+						<div class="mb-3" id="leaveTypeContainer" style="display: none;">
+							<label for="leaveType" class="form-label">휴가 종류</label> <select
+								class="form-select" id="leaveType">
+								<option value="annual">연차</option>
+								<option value="half">반차</option>
+								<option value="sick">병가</option>
+							</select>
+						</div>
+						<div class="mb-3">
+							<label for="eventTitle" class="form-label">일정 제목</label> <input
+								type="text" class="form-control" id="eventTitle" required>
+						</div>
+						<div class="mb-3">
+							<label for="eventStart" class="form-label">시작일</label> <input
+								type="datetime-local" class="form-control" id="eventStart"
+								required>
+						</div>
+						<div class="mb-3">
+							<label for="eventEnd" class="form-label">종료일</label> <input
+								type="datetime-local" class="form-control" id="eventEnd">
+						</div>
+						<div class="mb-3 form-check">
+							<input type="checkbox" class="form-check-input" id="allDayCheck">
+							<label class="form-check-label" for="allDayCheck">하루 종일</label>
+						</div>
+						<div class="mb-3">
+							<label for="eventDescription" class="form-label">설명</label>
+							<textarea class="form-control" id="eventDescription" rows="3"></textarea>
+						</div>
+					</form>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary"
+						data-bs-dismiss="modal">닫기</button>
+					<button type="button" class="btn btn-primary" id="saveEvent">저장</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- 일정 상세 정보 Modal -->
+	<div class="modal fade" id="eventDetailModal" tabindex="-1"
+		aria-labelledby="eventDetailModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="eventDetailModalLabel">일정 상세</h5>
+					<button type="button" class="btn-close" data-bs-dismiss="modal"
+						aria-label="Close"></button>
+				</div>
+				<div class="modal-body">
+					<p>
+						<strong>제목:</strong> <span id="detailTitle"></span>
+					</p>
+					<p>
+						<strong>구분:</strong> <span id="detailType"></span>
+					</p>
+					<p>
+						<strong>시작:</strong> <span id="detailStart"></span>
+					</p>
+					<p>
+						<strong>종료:</strong> <span id="detailEnd"></span>
+					</p>
+					<p>
+						<strong>설명:</strong> <span id="detailDescription"></span>
+					</p>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-danger" id="deleteEvent">삭제</button>
+					<button type="button" class="btn btn-primary" id="editEvent">수정</button>
+					<button type="button" class="btn btn-secondary"
+						data-bs-dismiss="modal">닫기</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+
+	<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // --- DOM 요소 및 Bootstrap Modal 인스턴스 ---
+        const calendarEl = document.getElementById('calendar');
+        const eventModal = new bootstrap.Modal(document.getElementById('eventModal'));
+        const eventDetailModal = new bootstrap.Modal(document.getElementById('eventDetailModal'));
+        
+        // --- 상태 변수 ---
+        let clickedEventInfo = null; // 사용자가 클릭한 이벤트의 정보를 저장
+
+        // --- 설정 ---
+        // 일정 유형별 이름 정보
+        const typeNames = {
+            department: '부서일정',
+            leave: '휴가',
+            trip: '외근/출장'
+        };
+        // 휴가 종류별 이름 정보
+        const leaveTypeNames = { annual: '연차', half: '반차', sick: '병가' };
+
+        // 샘플 데이터 (추후 서버에서 받아오도록 수정 가능)
+        let allEvents = [
+            { id: '1', title: '전사 워크샵', start: '2025-09-08', end: '2025-09-09', extendedProps: { type: 'department' }, allDay: true },
+            { id: '3', title: '김대리 연차', start: '2025-09-15', extendedProps: { type: 'leave', leaveType: 'annual' }, allDay: true },
+            { id: '4', title: '부산 출장', start: '2025-09-18', end: '2025-09-19', extendedProps: { type: 'trip' }, allDay: true },
+            { id: '5', title: '박과장 병가', start: '2025-09-22', extendedProps: { type: 'leave', leaveType: 'sick' }, allDay: true },
+        ];
+
+        // --- FullCalendar 초기화 ---
+        const calendar = new FullCalendar.Calendar(calendarEl, {
+            locale: 'ko',
+            timeZone: 'Asia/Seoul',
+            initialView: 'dayGridMonth', // 기본 월별 보기
+            headerToolbar: {
+                left: 'prev,next today addEventButton',
+                center: 'title',
+                right: 'dayGridMonth,timeGridWeek' // 월별/주별 보기 전환 버튼
+            },
+            customButtons: {
+                addEventButton: {
+                    text: '새 일정 추가',
+                    click: () => openAddModal() // 날짜 정보 없이 추가 모달 열기
+                }
+            },
+            height: '100%', // 부모 컨테이너 높이에 맞춤
+            events: allEvents,
+            eventClassNames: arg => 'event-' + arg.event.extendedProps.type, // 유형에 따른 CSS 클래스 적용
+            selectable: true,
+            editable: true, // 드래그로 일정 이동/기간 조절 활성화
+            droppable: false,
+            dayMaxEvents: true, // 하루에 표시할 최대 이벤트 수 (넘어가면 +more 링크)
+            
+            // 날짜 클릭 시 이벤트
+            dateClick: function(info) {
+                openAddModal(info);
+            },
+            // 기존 이벤트 클릭 시 이벤트
+            eventClick: function(info) {
+                clickedEventInfo = info; // 클릭된 이벤트 정보 저장
+                const event = info.event;
+                
+                // 상세 모달에 정보 채우기
+                document.getElementById('detailTitle').textContent = event.title;
+                
+                let typeText = typeNames[event.extendedProps.type] || '기타';
+                if(event.extendedProps.type === 'leave' && event.extendedProps.leaveType) {
+                    typeText += ' (' + (leaveTypeNames[event.extendedProps.leaveType] || '') + ')';
+                }
+                document.getElementById('detailType').textContent = typeText;
+
+                const startStr = formatEventDate(event.start, event.allDay);
+                const endStr = formatEventDate(event.end, event.allDay, true, event.start);
+                document.getElementById('detailStart').textContent = startStr;
+                document.getElementById('detailEnd').textContent = (endStr && endStr !== startStr) ? endStr : '미지정';
+                document.getElementById('detailDescription').textContent = event.extendedProps.description || '';
+                
+                eventDetailModal.show();
+            }
+        });
+
+        calendar.render();
+
+        // --- 이벤트 리스너 바인딩 ---
+
+        // 필터 체크박스 변경 시
+        document.querySelectorAll('#filter-container input[type="checkbox"]').forEach(checkbox => {
+            checkbox.addEventListener('change', applyFilters);
+        });
+
+        // 저장 버튼 클릭 시 (일정 추가/수정)
+        document.getElementById('saveEvent').addEventListener('click', saveEvent);
+
+        // 수정 버튼 클릭 시 (상세 모달에서)
+        document.getElementById('editEvent').addEventListener('click', handleEdit);
+
+        // 삭제 버튼 클릭 시 (상세 모달에서)
+        document.getElementById('deleteEvent').addEventListener('click', handleDelete);
+
+        // '하루 종일' 체크박스 변경 시
+        document.getElementById('allDayCheck').addEventListener('change', e => toggleAllDay(e.target.checked));
+        
+        // '일정 구분' select 변경 시
+        document.getElementById('eventType').addEventListener('change', e => toggleLeaveType(e.target.value));
+
+
+        // --- 함수 정의 ---
+
+        /** 필터링 적용 함수 */
+        function applyFilters() {
+            const visibleTypes = Array.from(document.querySelectorAll('#filter-container input:checked')).map(cb => cb.value);
+            calendar.getEvents().forEach(event => {
+                const isVisible = visibleTypes.includes(event.extendedProps.type);
+                event.setProp('display', isVisible ? 'auto' : 'none');
+            });
+        }
+
+        /** 새 일정 추가 모달 열기 */
+        function openAddModal(info = null) {
+            document.getElementById('eventForm').reset();
+            document.getElementById('eventModalLabel').innerText = '새 일정 추가';
+            document.getElementById('eventId').value = '';
+            
+            const now = new Date();
+            if (info && info.dateStr) { // 특정 날짜를 클릭한 경우
+                const clickedDate = new Date(info.dateStr);
+                now.setFullYear(clickedDate.getFullYear());
+                now.setMonth(clickedDate.getMonth());
+                now.setDate(clickedDate.getDate());
+            }
+            
+            document.getElementById('eventStart').value = toLocalISOString(now).substring(0, 16);
+            now.setHours(now.getHours() + 1);
+            document.getElementById('eventEnd').value = toLocalISOString(now).substring(0, 16);
+
+            toggleAllDay(false);
+            toggleLeaveType(document.getElementById('eventType').value);
+            eventModal.show();
+        }
+
+        /** 이벤트 저장 (추가/수정) */
+        function saveEvent() {
+            const id = document.getElementById('eventId').value;
+            const title = document.getElementById('eventTitle').value;
+            const type = document.getElementById('eventType').value;
+            const leaveType = document.getElementById('leaveType').value;
+            const description = document.getElementById('eventDescription').value;
+            const allDay = document.getElementById('allDayCheck').checked;
+            
+            let start = document.getElementById('eventStart').value;
+            let end = document.getElementById('eventEnd').value;
+
+            if (!title || !start) {
+                alert('일정 제목과 시작일은 필수입니다.');
+                return;
+            }
+            
+            // '하루 종일' 이벤트의 경우 FullCalendar에 맞게 종료일 조정
+            if(allDay && end) {
+                end = getNextDay(end);
+            }
+
+            const newEventData = {
+                title: title,
+                start: start,
+                end: end || null,
+                allDay: allDay,
+                extendedProps: {
+                    type: type,
+                    leaveType: type === 'leave' ? leaveType : undefined,
+                    description: description
+                },
+                classNames: ['event-' + type]
+            };
+
+            if (id) { // ID가 있으면 수정
+                const eventToUpdate = calendar.getEventById(id);
+                if (eventToUpdate) {
+                    eventToUpdate.setProp('title', newEventData.title);
+                    eventToUpdate.setStart(newEventData.start);
+                    eventToUpdate.setEnd(newEventData.end);
+                    eventToUpdate.setAllDay(newEventData.allDay);
+                    eventToUpdate.setExtendedProp('type', newEventData.extendedProps.type);
+                    eventToUpdate.setExtendedProp('leaveType', newEventData.extendedProps.leaveType);
+                    eventToUpdate.setExtendedProp('description', newEventData.extendedProps.description);
+                    eventToUpdate.setProp('classNames', newEventData.classNames);
+                }
+            } else { // ID가 없으면 새로 추가
+                newEventData.id = new Date().toISOString(); // 임시 ID 생성
+                calendar.addEvent(newEventData);
+            }
+            eventModal.hide();
+        }
+
+        /** 수정 버튼 핸들러 */
+        function handleEdit() {
+            if (!clickedEventInfo) return;
+            
+            const event = clickedEventInfo.event;
+            eventDetailModal.hide();
+            
+            document.getElementById('eventForm').reset();
+            document.getElementById('eventModalLabel').innerText = '일정 수정';
+            document.getElementById('eventId').value = event.id;
+            document.getElementById('eventTitle').value = event.title;
+            document.getElementById('eventType').value = event.extendedProps.type;
+            document.getElementById('eventDescription').value = event.extendedProps.description || '';
+            
+            toggleAllDay(event.allDay);
+            if (event.allDay) {
+                document.getElementById('eventStart').value = event.startStr;
+                document.getElementById('eventEnd').value = event.endStr ? getPrevDay(event.endStr) : '';
+            } else {
+                document.getElementById('eventStart').value = toLocalISOString(event.start).substring(0, 16);
+                document.getElementById('eventEnd').value = event.end ? toLocalISOString(event.end).substring(0, 16) : '';
+            }
+
+            if(event.extendedProps.type === 'leave'){
+                document.getElementById('leaveType').value = event.extendedProps.leaveType || 'annual';
+            }
+            toggleLeaveType(event.extendedProps.type);
+
+            eventModal.show();
+        }
+
+        /** 삭제 버튼 핸들러 */
+        function handleDelete() {
+            if (clickedEventInfo && confirm("'" + clickedEventInfo.event.title + "' 일정을 삭제하시겠습니까?")) {
+                clickedEventInfo.event.remove();
+                eventDetailModal.hide();
+            }
+        }
+
+        /** '하루 종일' UI 토글 */
+        function toggleAllDay(isAllDay) {
+            document.getElementById('allDayCheck').checked = isAllDay;
+            const startInput = document.getElementById('eventStart');
+            const endInput = document.getElementById('eventEnd');
+            const currentStart = startInput.value ? new Date(startInput.value) : new Date();
+            const currentEnd = endInput.value ? new Date(endInput.value) : new Date();
+
+            if (isAllDay) {
+                startInput.type = 'date';
+                endInput.type = 'date';
+                startInput.value = currentStart.toISOString().substring(0,10);
+                endInput.value = currentEnd.toISOString().substring(0,10);
+            } else {
+                startInput.type = 'datetime-local';
+                endInput.type = 'datetime-local';
+                startInput.value = toLocalISOString(currentStart).substring(0,16);
+                endInput.value = toLocalISOString(currentEnd).substring(0,16);
+            }
+        }
+
+        /** '휴가 종류' UI 토글 */
+        function toggleLeaveType(type) {
+            document.getElementById('leaveTypeContainer').style.display = type === 'leave' ? 'block' : 'none';
+        }
+
+        // --- 헬퍼 함수 ---
+
+        /** Date 객체를 'YYYY-MM-DDTHH:mm' 형식의 로컬 시간 문자열로 변환 */
+        function toLocalISOString(date) {
+            const tzoffset = (new Date()).getTimezoneOffset() * 60000;
+            return (new Date(date - tzoffset)).toISOString().slice(0, -1);
+        }
+        
+        /** FullCalendar의 allDay 종료일은 exclusive이므로, 저장을 위해 다음날로 설정 */
+        function getNextDay(dateStr) {
+            const date = new Date(dateStr);
+            date.setDate(date.getDate() + 1);
+            return date.toISOString().split('T')[0];
+        }
+        
+        /** allDay 이벤트를 편집할 때, FullCalendar의 exclusive 종료일을 원래 날짜로 되돌림 */
+        function getPrevDay(dateStr) {
+            const date = new Date(dateStr);
+            date.setDate(date.getDate() - 1);
+            return date.toISOString().split('T')[0];
+        }
+
+        /** 상세보기를 위한 날짜 포맷팅 */
+        function formatEventDate(date, isAllDay, isEnd = false, startDate = null) {
+            if (!date) return null;
+            
+            let d = new Date(date);
+            if (isAllDay && isEnd) {
+                d.setDate(d.getDate() - 1);
+                if (new Date(startDate).toISOString().split('T')[0] === d.toISOString().split('T')[0]) {
+                    return null;
+                }
+            }
+
+            const options = { year: 'numeric', month: 'long', day: 'numeric' };
+            if (!isAllDay) {
+                options.hour = '2-digit';
+                options.minute = '2-digit';
+                options.hour12 = false;
+            }
+            return d.toLocaleString('ko-KR', options);
+        }
+    });
+    </script>
+</body>
+</html>

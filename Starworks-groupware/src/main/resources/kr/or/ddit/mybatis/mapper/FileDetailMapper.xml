@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 
+ * == 개정이력(Modification Information) ==
+ *   
+ *   수정일      			수정자           수정내용
+ *  ============   	============== =======================
+ *  2025. 9. 25.     	장어진            최초 생성
+ *	2025. 9. 27. 		임가영			insertFileDetail 쿼리문 수정
+ *										resultMap 추가
+ *	2025.10. 10. 		장어진			insert문 selectkey 추가 및 update (delYn) 추가
+ *
+-->
+<mapper namespace="kr.or.ddit.mybatis.mapper.FileDetailMapper">
+	<resultMap type="kr.or.ddit.vo.FileDetailVO" id="fileDetailMap" autoMapping="true">
+	</resultMap>
+
+	<select id="selectFileDetailList" resultType="kr.or.ddit.vo.FileDetailVO">
+		SELECT 
+			FILE_ID
+			, FILE_SEQ
+			, ORGN_FILE_NM
+			, SAVE_FILE_NM
+			, EXT_FILE
+			, FILE_MIME_TYPE
+			, FILE_PATH
+			, FILE_SIZE
+		FROM 
+			FILE_DETAIL
+		WHERE FILE_ID = #{fileId}
+		
+	</select>
+	<select id="selectFileDetail" resultType="kr.or.ddit.vo.FileDetailVO">
+		SELECT 
+			FILE_ID
+			, FILE_SEQ
+			, ORGN_FILE_NM
+			, SAVE_FILE_NM
+			, EXT_FILE
+			, FILE_MIME_TYPE
+			, FILE_PATH
+			, FILE_SIZE
+		FROM 
+			FILE_DETAIL
+		WHERE 
+			FILE_SEQ = #{fileSeq}
+	</select>
+	
+	<select id="selectFileDetailS3" resultType="kr.or.ddit.vo.FileDetailVO">
+		SELECT 
+			FILE_ID
+			, FILE_SEQ
+			, ORGN_FILE_NM
+			, SAVE_FILE_NM
+			, EXT_FILE
+			, FILE_MIME_TYPE
+			, FILE_PATH
+			, FILE_SIZE
+		FROM 
+			FILE_DETAIL
+		WHERE 
+			SAVE_FILE_NM = #{saveFileNm}
+		
+	</select>
+	
+	<insert id="insertFileDetail">
+		<selectKey order="BEFORE" resultType="int" keyProperty="fileSeq">
+			SELECT FILE_DETAIL_SEQ.nextval FROM DUAL
+		</selectKey>
+		INSERT INTO
+			FILE_DETAIL ( 
+				FILE_ID
+				, FILE_SEQ
+				, ORGN_FILE_NM
+				, SAVE_FILE_NM
+				, EXT_FILE
+				, FILE_MIME_TYPE
+				, FILE_PATH
+				, FILE_SIZE
+			) VALUES (
+				#{fileId}
+				, #{fileSeq}
+				, #{orgnFileNm}
+				, #{saveFileNm}
+				, #{extFile}
+				, #{fileMimeType}
+				, #{filePath}
+				, #{fileSize}
+			)
+	</insert>
+	
+	<update id="deleteFileDetail">
+		UPDATE FILE_DETAIL
+		SET
+			DEL_YN = 'Y'
+		WHERE 
+			FILE_ID = #{fileId}
+			AND FILE_SEQ = #{fileSeq}
+	</update>
+	
+	<update id="restoreFileDetail">
+		UPDATE FILE_DETAIL
+		SET
+			DEL_YN = 'N'
+		WHERE 
+			FILE_ID = #{fileId}
+			AND FILE_SEQ = #{fileSeq}
+	</update>
+</mapper>

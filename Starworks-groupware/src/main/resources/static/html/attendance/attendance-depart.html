@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>근태 현황 - Mazer Admin Dashboard</title>
+    
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="mazer-1.0.0/dist/assets/css/bootstrap.css">
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="mazer-1.0.0/dist/assets/vendors/perfect-scrollbar/perfect-scrollbar.css">
+    <link rel="stylesheet" href="mazer-1.0.0/dist/assets/vendors/bootstrap-icons/bootstrap-icons.css">
+    <link rel="stylesheet" href="mazer-1.0.0/dist/assets/css/app.css">
+    <link rel="shortcut icon" href="mazer-1.0.0/dist/assets/images/favicon.svg" type="image/x-icon">
+</head>
+
+<body>
+    <div id="app">
+        <div id="sidebar" class="active">
+            <div class="sidebar-wrapper active">
+                <div class="sidebar-header">
+                    <div class="d-flex justify-content-between">
+                        <div class="logo">
+                            <a href="index.html"><img src="mazer-1.0.0/dist/assets/images/logo/logo.png" alt="Logo" srcset=""></a>
+                        </div>
+                        <div class="toggler">
+                            <a href="#" class="sidebar-hide d-xl-none d-block"><i class="bi bi-x bi-middle"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="sidebar-menu">
+                    <ul class="menu">
+                        <li class="sidebar-title">Menu</li>
+                        <li class="sidebar-item ">
+                            <a href="#" class='sidebar-link'>
+                                <i class="bi bi-grid-fill"></i>
+                                <span>Dashboard</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item ">
+                            <a href="electronic_approval(수정_카드분리).html" class='sidebar-link'>
+                                <i class="bi bi-file-earmark-check-fill"></i>
+                                <span>전자결재</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item active">
+                            <a href="근태_현황_예시.html" class='sidebar-link'>
+                                <i class="bi bi-person-check-fill"></i>
+                                <span>근태 현황</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <button class="sidebar-toggler btn x"><i data-feather="x"></i></button>
+            </div>
+        </div>
+        <div id="main">
+            <header class="mb-3">
+                <a href="#" class="burger-btn d-block d-xl-none">
+                    <i class="bi bi-justify fs-3"></i>
+                </a>
+            </header>
+            
+            <div class="page-heading">
+                <h3>부서 근태 현황</h3>
+                <p class="text-subtitle text-muted">부서의 실시간 근태 정보를 확인합니다.</p>
+            </div>
+            <div class="page-content">
+                <div class="row">
+                    <div class="col-lg col-md-6 col-12 mb-2">
+                        <div class="card">
+                            <div class="card-body px-3 py-4-5">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="stats-icon purple">
+                                            <i class="bi bi-people-fill bi-middle"></i>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <h6 class="text-muted font-semibold">총원</h6>
+                                        <h6 class="font-extrabold mb-0">12</h6>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg col-md-6 col-12 mb-2">
+                        <div class="card">
+                            <div class="card-body px-3 py-4-5">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="stats-icon green">
+                                            <i class="bi bi-briefcase-fill bi-middle"></i>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <h6 class="text-muted font-semibold">업무중</h6>
+                                        <h6 class="font-extrabold mb-0">8</h6>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg col-md-6 col-12 mb-2">
+                        <div class="card">
+                            <div class="card-body px-3 py-4-5">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="stats-icon red">
+                                            <i class="bi bi-alarm-fill bi-middle"></i>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <h6 class="text-muted font-semibold">지각</h6>
+                                        <h6 class="font-extrabold mb-0">1</h6>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg col-md-6 col-12 mb-2">
+                        <div class="card">
+                            <div class="card-body px-3 py-4-5">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="stats-icon blue">
+                                            <i class="bi bi-calendar2-heart-fill bi-middle"></i>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <h6 class="text-muted font-semibold">휴가/연차</h6>
+                                        <h6 class="font-extrabold mb-0">2</h6>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg col-md-6 col-12 mb-2">
+                        <div class="card">
+                            <div class="card-body px-3 py-4-5">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="stats-icon dark">
+                                            <i class="bi bi-house-door-fill bi-middle"></i>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <h6 class="text-muted font-semibold">재택근무</h6>
+                                        <h6 class="font-extrabold mb-0">1</h6>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row mb-4">
+                    <div class="col-md-8">
+                        <div class="kpi-card">
+                            <h4 class="card-title">요일별 초과근무 시간 추이</h4>
+                            <div class="line-chart-container">
+                                <svg width="100%" height="200" viewBox="0 0 500 200">
+                                    <defs>
+                                        <linearGradient id="area-gradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                                            <stop offset="0%" style="stop-color:var(--primary-light); stop-opacity:0.4" />
+                                            <stop offset="100%" style="stop-color:var(--primary-light); stop-opacity:0" />
+                                        </linearGradient>
+                                    </defs>
+                                    <g class="grid-lines" stroke="#eee" stroke-width="1">
+                                        <line x1="30" y1="0" x2="500" y2="0"></line>
+                                        <line x1="30" y1="50" x2="500" y2="50"></line>
+                                        <line x1="30" y1="100" x2="500" y2="100"></line>
+                                        <line x1="30" y1="150" x2="500" y2="150"></line>
+                                        <line x1="30" y1="200" x2="500" y2="200"></line>
+                                    </g>
+                                    <g class="y-axis-labels" fill="#aaa" font-size="12">
+                                        <text x="0" y="5">4h</text>
+                                        <text x="0" y="55">3h</text>
+                                        <text x="0" y="105">2h</text>
+                                        <text x="0" y="155">1h</text>
+                                        <text x="0" y="200">0h</text>
+                                    </g>
+                                    <path class="area-fill" fill="url(#area-gradient)" d="M80,125 L160,200 L240,100 L320,150 L400,25 L400,200 L80,200 Z"></path>
+                                    <polyline class="data-line" fill="none" stroke="var(--primary-color)" stroke-width="3" points="80,125 160,200 240,100 320,150 400,25"></polyline>
+                                    <g class="data-point-group" transform="translate(80, 125)"><circle r="5" fill="var(--primary-color)" stroke="white" stroke-width="2"></circle><text y="-10" text-anchor="middle" fill="#333" font-size="14" font-weight="bold">1.5h</text></g>
+                                    <g class="data-point-group" transform="translate(160, 200)"><circle r="5" fill="var(--primary-color)" stroke="white" stroke-width="2"></circle><text y="-10" text-anchor="middle" fill="#333" font-size="14" font-weight="bold">0h</text></g>
+                                    <g class="data-point-group" transform="translate(240, 100)"><circle r="5" fill="var(--primary-color)" stroke="white" stroke-width="2"></circle><text y="-10" text-anchor="middle" fill="#333" font-size="14" font-weight="bold">2.0h</text></g>
+                                    <g class="data-point-group" transform="translate(320, 150)"><circle r="5" fill="var(--primary-color)" stroke="white" stroke-width="2"></circle><text y="-10" text-anchor="middle" fill="#333" font-size="14" font-weight="bold">1.0h</text></g>
+                                    <g class="data-point-group" transform="translate(400, 25)"><circle r="5" fill="var(--primary-color)" stroke="white" stroke-width="2"></circle><text y="-10" text-anchor="middle" fill="#333" font-size="14" font-weight="bold">3.5h</text></g>
+                                </svg>
+                                <div class="x-axis-labels"><span>월</span><span>화</span><span>수</span><span>목</span><span>금</span></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="kpi-card list-card">
+                            <h4 class="card-title">지각/결근 현황 (월간 Top 5)</h4>
+                            <ol>
+                                <li><span>이영희 과장</span> <span class="counts"><span class="late">3회</span> / <span class="absent">1회</span></span></li>
+                                <li><span>김사원 사원</span> <span class="counts"><span class="late">2회</span> / <span class="absent">0회</span></span></li>
+                                <li><span>박대리 대리</span> <span class="counts"><span class="late">1회</span> / <span class="absent">1회</span></span></li>
+                                <li><span>강차장 차장</span> <span class="counts"><span class="late">1회</span> / <span class="absent">0회</span></span></li>
+                                <li><span>오사원 사원</span> <span class="counts"><span class="late">1회</span> / <span class="absent">0회</span></span></li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="card-title">부서원 상세 현황</h4>
+                    </div>
+                    <div class="card-body">
+                        <table class="table table-striped" id="table1">
+                            <thead>
+                                <tr><th>사원명</th><th>직급</th><th>상태</th><th>출근 시간</th><th>퇴근 시간</th><th>금일 근무 시간</th><th>월 누적 근무 시간</th><th>잔여 연차</th></tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>김철수</td><td>팀장</td><td><span class="status working">업무중</span></td><td>08:50</td><td>-</td><td>-</td><td>102시간</td><td>8.5일</td></tr>
+                                <tr><td>이영희</td><td>과장</td><td><span class="status late">지각</span></td><td>09:15</td><td>-</td><td>-</td><td>98시간</td><td>11일</td></tr>
+                                <tr><td>박민준</td><td>대리</td><td><span class="status working">업무중</span></td><td>08:55</td><td>-</td><td>-</td><td>110시간</td><td>3일</td></tr>
+                                <tr><td>최지아</td><td>사원</td><td><span class="status vacation">연차</span></td><td>-</td><td>-</td><td>-</td><td>90시간</td><td>5일</td></tr>
+                                <tr><td>정현우</td><td>사원</td><td><span class="status remote">재택근무</span></td><td>09:00</td><td>-</td><td>-</td><td>105시간</td><td>7일</td></tr>
+                                <tr><td>윤서연</td><td>대리</td><td><span class="status early-leave">조퇴</span></td><td>09:00</td><td>15:00</td><td>5시간</td><td>95시간</td><td>6.5일</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <footer>
+                <div class="footer clearfix mb-0 text-muted">
+                    <div class="float-start">
+                        <p>2021 &copy; Mazer</p>
+                    </div>
+                    <div class="float-end">
+                        <p>Crafted with <span class="text-danger"><i class="bi bi-heart"></i></span> by <a
+                                href="http://ahmadsaugi.com">A. Saugi</a></p>
+                    </div>
+                </div>
+            </footer>
+        </div>
+    </div>
+    <script src="mazer-1.0.0/dist/assets/vendors/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+    <script src="mazer-1.0.0/dist/assets/js/bootstrap.bundle.min.js"></script>
+    
+    <script src="mazer-1.0.0/dist/assets/js/main.js"></script>
+</body>
+
+</html>

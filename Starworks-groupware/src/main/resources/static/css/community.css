@@ -1,0 +1,27 @@
+/* 사내 커뮤니티 (community-board.html) */
+#category-pills .nav-link {
+	padding: .8rem 1.4rem;
+	font-size: 1.25rem;
+}
+
+#category-pills .nav-link.active {
+	background-color: transparent;
+	font-weight: bold;
+	text-decoration: underline;
+	text-underline-offset: 4px;
+	color: #25396f;
+	box-shadow: none;
+}
+
+.search-criteria-btn {
+	color: var(--bs-heading-color) !important;
+	background-color: #ffffff !important; /* 배경색을 흰색으로 강제 적용 */
+	border: 1px solid #dee2e6; /* Bootstrap's light gray border */
+}
+
+
+
+/* 사내 커뮤니티 상세 (community-board-detail.html) */
+.post-content {
+	margin-bottom: 5rem !important;
+}

@@ -1,0 +1,80 @@
+
+/* 부서 일정 관리(calendar-depart.html) */
+.page-heading, .page-content {
+	max-width: 1200px;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.calendar-page-container {
+	height: calc(100vh - 200px); /* 헤더와 푸터 높이를 고려하여 조정 */
+}
+
+.calendar-card {
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+}
+
+.calendar-card-body {
+	flex-grow: 1;
+	position: relative;
+}
+
+#calendar-container {
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	padding: 1.5rem;
+}
+/* Custom event colors */
+.fc-event.event-department {
+	background-color: #0d6efd;
+	border-color: #0d6efd;
+}
+
+.fc-event.event-leave {
+	background-color: #198754;
+	border-color: #198754;
+}
+
+.fc-event.event-trip {
+	background-color: #ffc107;
+	border-color: #ffc107;
+	color: #000; /* 밝은 배경에 어두운 텍스트 */
+}
+
+
+
+/* 팀 일정 관리(calendar-team.html) */
+.page-heading, .page-content {
+	max-width: 1200px;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.calendar-page-container {
+	height: calc(100vh - 200px);
+}
+
+.calendar-card {
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+}
+
+.calendar-card-body {
+	flex-grow: 1;
+	position: relative;
+}
+
+#calendar-container {
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	padding: 1.5rem;
+}

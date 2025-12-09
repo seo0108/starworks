@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>프로젝트 수정 - 그룹웨어</title>
+
+
+</head>
+
+<body>
+
+	<div id="main-content">
+		<div class="page-heading" style="max-width: 1140px; margin: 0 auto;">
+			<div class="page-title">
+				<div class="row">
+					<div class="col-12 col-md-6 order-md-1 order-last">
+						<h3>프로젝트 수정</h3>
+						<p class="text-subtitle text-muted">프로젝트 정보를 수정합니다.</p>
+					</div>
+					<div class="col-12 col-md-6 order-md-2 order-first">
+						<nav aria-label="breadcrumb"
+							class="breadcrumb-header float-start float-lg-end">
+							<ol class="breadcrumb">
+								<li class="breadcrumb-item"><a href="index.html">Dashboard</a></li>
+								<li class="breadcrumb-item">프로젝트 관리</li>
+								<li class="breadcrumb-item"><a href="project-detail.html">프로젝트
+										상세</a></li>
+								<li class="breadcrumb-item active" aria-current="page">프로젝트
+									수정</li>
+							</ol>
+						</nav>
+					</div>
+				</div>
+			</div>
+
+			<section id="project-edit-form">
+				<div class="card">
+					<div class="card-body">
+						<form class="form">
+							<!-- Section 1: Core Information -->
+							<h5 class="form-section-title">핵심 정보</h5>
+							<div class="row">
+								<div class="col-12">
+									<div class="form-group">
+										<label for="project-name-input">프로젝트명 <span
+											class="text-danger">*</span></label> <input type="text"
+											id="project-name-input" class="form-control form-control-lg"
+											value="신규 그룹웨어 개발" required>
+									</div>
+								</div>
+								<div class="col-md-6 col-12">
+									<div class="form-group">
+										<label for="project-type-select">프로젝트 유형</label> <select
+											class="form-select" id="project-type-select">
+											<option value="rnd">신제품 개발/R&D</option>
+											<option value="marketing">마케팅/프로모션</option>
+											<option value="partnership">외부협업/제휴</option>
+											<option value="csr">브랜드캠페인/CSR</option>
+											<option value="internal_system" selected>내부시스템/운영</option>
+										</select>
+									</div>
+								</div>
+								<div class="col-md-6 col-12">
+									<div class="form-group">
+										<label for="start-date-input">기간 <span
+											class="text-danger">*</span></label>
+										<div class="input-group">
+											<input type="date" id="start-date-input" class="form-control"
+												value="2025-09-01" required> <span
+												class="input-group-text">~</span> <input type="date"
+												id="end-date-input" class="form-control" value="2025-12-31"
+												required>
+										</div>
+									</div>
+								</div>
+							</div>
+
+							<hr class="form-section-divider">
+
+							<!-- Section 2: Team Setup -->
+							<h5 class="form-section-title">팀 구성</h5>
+							<div class="row">
+								<div class="col-12">
+									<div class="form-group">
+										<label for="project-manager-input">담당자 (책임자)</label> <input
+											type="text" id="project-manager-input" class="form-control"
+											value="김관리" readonly>
+									</div>
+								</div>
+								<div class="col-md-6">
+									<div class="form-group">
+										<label>참여자 <span class="text-danger">*</span></label>
+										<div id="participant-list" class="mb-2"></div>
+										<button class="btn btn-outline-primary w-100" type="button"
+											id="add-participant-btn">
+											<i class="bi bi-plus-circle"></i> 참여자 추가/변경
+										</button>
+									</div>
+								</div>
+								<div class="col-md-6">
+									<div class="form-group">
+										<label>열람자</label>
+										<div id="viewer-list" class="mb-2"></div>
+										<button class="btn btn-outline-secondary w-100" type="button"
+											id="add-viewer-btn">
+											<i class="bi bi-plus-circle"></i> 열람자 추가/변경
+										</button>
+									</div>
+								</div>
+							</div>
+
+							<hr class="form-section-divider">
+
+							<!-- Section 3: Project Details -->
+							<h5 class="form-section-title">상세 내용</h5>
+							<div class="row">
+								<div class="col-12">
+									<div class="form-group">
+										<label for="project-goal-input">목표 <span
+											class="text-danger">*</span></label> <input type="text"
+											id="project-goal-input" class="form-control"
+											value="차세대 그룹웨어 시스템 구축을 통한 업무 효율성 증대" required>
+									</div>
+								</div>
+								<div class="col-12">
+									<div class="form-group">
+										<label for="project-description-textarea">상세설명</label>
+										<textarea class="form-control"
+											id="project-description-textarea" rows="5">Mazer 템플릿을 기반으로 한 신규 그룹웨어 시스템 개발 프로젝트입니다. 주요 기능은 전자결재, 프로젝트 관리, 실시간 메신저 등을 포함하며, 최신 웹 기술을 적용하여 사용자 경험을 극대화하는 것을 목표로 합니다.</textarea>
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-md-6 col-12">
+									<div class="form-group">
+										<label for="project-scope-input">범위</label> <input type="text"
+											id="project-scope-input" class="form-control"
+											value="가맹점 점주 및 본사 직원이 사용할 수 있는 웹 기반 그룹웨어 시스템 구축.">
+									</div>
+								</div>
+								<div class="col-md-6 col-12">
+									<div class="form-group">
+										<label for="project-budget-input">예산</label>
+										<div class="input-group">
+											<input type="number" id="project-budget-input"
+												class="form-control" value="50000000"> <span
+												class="input-group-text">원</span>
+										</div>
+									</div>
+								</div>
+							</div>
+
+							<hr class="form-section-divider">
+
+							<!-- Section 4: Misc -->
+							<h5 class="form-section-title">파일 및 기타 설정</h5>
+							<div class="row align-items-center">
+								<div class="col-md-8 col-12">
+									<div class="form-group">
+										<label>첨부파일</label>
+										<div class="file-upload-area" id="file-upload-area">
+											<input type="file" id="file-input" multiple hidden> <i
+												class="bi bi-cloud-arrow-up"></i>
+											<p>파일을 이곳에 드래그하거나 클릭하여 업로드하세요.</p>
+										</div>
+										<div id="file-list" class="mt-3">
+											<p class="text-muted">
+												<i class="bi bi-file-earmark-text me-2"></i> 프로젝트 제안서.pdf
+											</p>
+										</div>
+									</div>
+								</div>
+								<div class="col-md-4 col-12">
+									<div class="form-group">
+										<label for="project-status-select">프로젝트 상태</label> <select
+											class="form-select" id="project-status-select">
+											<option value="progress" selected>진행</option>
+											<option value="hold">보류</option>
+											<option value="completed">완료</option>
+											<option value="canceled">취소</option>
+										</select>
+									</div>
+								</div>
+							</div>
+
+							<div class="col-12 d-flex justify-content-end mt-5">
+								<a href="project-detail.html"
+									class="btn btn-light-secondary me-1 mb-1">취소</a>
+								<button type="submit" class="btn btn-primary me-1 mb-1">저장</button>
+							</div>
+						</form>
+					</div>
+				</div>
+			</section>
+		</div>
+	</div>
+
+
+	<!-- Organization Chart Modal -->
+	<div class="modal fade" id="org-chart-modal" tabindex="-1"
+		aria-labelledby="orgChartModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-scrollable">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="orgChartModalLabel">사용자 선택</h5>
+					<button type="button" class="btn-close" data-bs-dismiss="modal"
+						aria-label="Close"></button>
+				</div>
+				<div class="modal-body">
+					<div class="org-chart" id="org-chart-container"></div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-light-secondary"
+						data-bs-dismiss="modal">취소</button>
+					<button type="button" class="btn btn-primary"
+						id="confirm-selection-btn">선택 완료</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<script src="mazer-1.0.0/dist/assets/js/bootstrap.bundle.min.js"></script>
+	<script src="assets/compiled/js/app.js"></script>
+	<script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // --- Mock Data ---
+            const orgData = {
+                '경영지원팀': [
+                    { id: 'user1', name: '홍길동', avatar: 'mazer-1.0.0/dist/assets/images/faces/1.jpg' },
+                ],
+                '개발팀': {
+                    '프론트엔드': [
+                        { id: 'user2', name: '김철수', avatar: 'mazer-1.0.0/dist/assets/images/faces/2.jpg' },
+                        { id: 'user3', name: '이영희', avatar: 'mazer-1.0.0/dist/assets/images/faces/3.jpg' },
+                    ],
+                    '백엔드': [
+                        { id: 'user4', name: '박지성', avatar: 'mazer-1.0.0/dist/assets/images/faces/4.jpg' },
+                        { id: 'user5', name: '김연아', avatar: 'mazer-1.0.0/dist/assets/images/faces/5.jpg' },
+                    ]
+                }
+            };
+
+            let selectedParticipants = [];
+            let selectedViewers = [];
+            let selectionMode = 'participants'; // 'participants' or 'viewers'
+
+            const orgChartModal = new bootstrap.Modal(document.getElementById('org-chart-modal'));
+
+            // --- Render Functions ---
+            function renderTags(containerId, userList) {
+                const container = document.getElementById(containerId);
+                container.innerHTML = '';
+                userList.forEach(user => {
+                    const tag = document.createElement('div');
+                    tag.className = 'participant-tag';
+                    tag.innerHTML = `<img src="${user.avatar}" alt="${user.name}"><span>${user.name}</span><button type="button" class="btn-close" data-user-id="${user.id}" data-list="${containerId}"></button>`;
+                    container.appendChild(tag);
+                });
+            }
+
+            function populateOrgChart() {
+                const container = document.getElementById('org-chart-container');
+                container.innerHTML = '';
+                const currentSelection = selectionMode === 'participants' ? selectedParticipants : selectedViewers;
+
+                function createEmployeeCheckbox(user) {
+                    const isChecked = currentSelection.some(u => u.id === user.id);
+                    return `
+                        <li class="employee">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="${user.id}" id="user-${user.id}" ${isChecked ? 'checked' : ''}>
+                                <label class="form-check-label" for="user-${user.id}">
+                                    <img src="${user.avatar}" alt="${user.name}"> ${user.name}
+                                </label>
+                            </div>
+                        </li>`;
+                }
+
+                function buildChart(data) {
+                    let html = '<ul>';
+                    for (const key in data) {
+                        html += '<li>';
+                        if (Array.isArray(data[key])) { // Employee list
+                            html += `<div class="form-check department"><input class="form-check-input" type="checkbox"><label class="form-check-label">${key}</label></div>`;
+                            html += '<ul>' + data[key].map(createEmployeeCheckbox).join('') + '</ul>';
+                        } else { // Department with teams
+                            html += `<div class="form-check department"><input class="form-check-input" type="checkbox"><label class="form-check-label">${key}</label></div>`;
+                            html += buildChart(data[key]);
+                        }
+                        html += '</li>';
+                    }
+                    html += '</ul>';
+                    return html;
+                }
+                container.innerHTML = buildChart(orgData);
+            }
+
+            // --- Event Listeners ---
+            document.getElementById('add-participant-btn').addEventListener('click', () => { selectionMode = 'participants'; populateOrgChart(); orgChartModal.show(); });
+            document.getElementById('add-viewer-btn').addEventListener('click', () => { selectionMode = 'viewers'; populateOrgChart(); orgChartModal.show(); });
+
+            document.getElementById('confirm-selection-btn').addEventListener('click', () => {
+                const selectedUsers = [];
+                document.querySelectorAll('#org-chart-container .employee .form-check-input:checked').forEach(checkbox => {
+                    const userId = checkbox.value;
+                    // Find user in the original orgData
+                    for(const dept in orgData) {
+                        if(Array.isArray(orgData[dept])) {
+                            const user = orgData[dept].find(u => u.id === userId);
+                            if(user) selectedUsers.push(user);
+                        } else {
+                            for(const team in orgData[dept]) {
+                                const user = orgData[dept][team].find(u => u.id === userId);
+                                if(user) selectedUsers.push(user);
+                            }
+                        }
+                    }
+                });
+
+                if (selectionMode === 'participants') {
+                    selectedParticipants = selectedUsers;
+                    renderTags('participant-list', selectedParticipants);
+                } else {
+                    selectedViewers = selectedUsers;
+                    renderTags('viewer-list', selectedViewers);
+                }
+                orgChartModal.hide();
+            });
+
+            document.getElementById('participant-list').addEventListener('click', (e) => {
+                if (e.target.matches('.btn-close')) { selectedParticipants = selectedParticipants.filter(u => u.id !== e.target.dataset.userId); renderTags('participant-list', selectedParticipants); }
+            });
+            document.getElementById('viewer-list').addEventListener('click', (e) => {
+                if (e.target.matches('.btn-close')) { selectedViewers = selectedViewers.filter(u => u.id !== e.target.dataset.userId); renderTags('viewer-list', selectedViewers); }
+            });
+
+            // File Upload UI (same as before)
+            const fileUploadArea = document.getElementById('file-upload-area'), fileInput = document.getElementById('file-input'), fileList = document.getElementById('file-list');
+            fileUploadArea.addEventListener('click', () => fileInput.click());
+            fileUploadArea.addEventListener('dragover', (e) => { e.preventDefault(); fileUploadArea.style.backgroundColor = '#f1f5f9'; });
+            fileUploadArea.addEventListener('dragleave', () => { fileUploadArea.style.backgroundColor = '#f8f9fa'; });
+            fileUploadArea.addEventListener('drop', (e) => { e.preventDefault(); fileUploadArea.style.backgroundColor = '#f8f9fa'; handleFiles(e.dataTransfer.files); });
+            fileInput.addEventListener('change', (e) => handleFiles(e.target.files));
+            function handleFiles(files) { fileList.innerHTML = ''; if (files.length > 0) { for (const file of files) { fileList.innerHTML += `<p class="text-muted"><i class="bi bi-file-earmark-text me-2"></i>${file.name} (${(file.size / 1024).toFixed(1)} KB)</p>`; } } }
+        });
+    </script>
+</body>
+
+</html>

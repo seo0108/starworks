@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ * == 개정이력(Modification Information) ==
+ *
+ *   수정일      			수정자           수정내용
+ *  ============   	============== =======================
+ *  2025. 9. 26.     	윤서현            최초 생성
+ * 	2025. 10. 14.		김주민			updateLeftTime, countRoomUsers 추가
+ * 	2025. 10. 15.		김주민			그룹채팅을 위한 insertRoomMembers 추가
+ *
+-->
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.or.ddit.mybatis.mapper.MessengerUserMapper">
+
+<!-- 특정 채팅방 참여자 목록 조회 -->
+<select id="selectRoomParticipants" parameterType="String" resultType="kr.or.ddit.vo.UsersVO">
+	SELECT
+        u.USER_ID AS userId,
+        u.USER_NM AS userNm,
+        d.DEPT_NM AS deptNm,
+        j.JBGD_NM AS jbgdNm,
+        fd.FILE_PATH AS filePath
+    FROM
+        MESSENGER_USER mu
+        INNER JOIN USERS u ON mu.USER_ID = u.USER_ID
+        LEFT JOIN DEPARTMENT d ON u.DEPT_ID = d.DEPT_ID
+        LEFT JOIN JOB_GRADE j ON u.JBGD_CD = j.JBGD_CD
+        LEFT JOIN FILE_DETAIL fd ON u.USER_IMG_FILE_ID = fd.FILE_ID
+    WHERE
+        mu.MSGR_ID = #{msgrId}
+        AND (mu.LEFT_DT IS NULL OR mu.LEFT_DT = '')
+    ORDER BY
+        u.USER_NM
+</select>
+
+<!-- 그룹채팅 멤버 인서트 -->
+<insert id="insertRoomMembers">
+	INSERT ALL
+    <foreach collection="userIds" item="userId" separator=" ">
+    INTO MESSENGER_USER (
+        MSGR_ID,
+        USER_ID,
+        JOIN_DT,
+        LEFT_DT
+    )
+    VALUES (
+        #{msgrId},
+        #{userId},
+        SYSDATE,
+        NULL
+    )
+    </foreach>
+    SELECT * FROM DUAL
+</insert>
+
+<!-- 채팅방 퇴장 시간 업데이트 -->
+<update id="updateLeftTime">
+	UPDATE MESSENGER_USER
+	SET LEFT_DT = TO_CHAR(SYSDATE, 'YYYY-MM-DD HH24:MI:SS')
+	WHERE USER_ID = #{userId}
+		AND MSGR_ID = #{msgrId}
+</update>
+
+<!-- 채팅방 참여자 수 조회 -->
+<select id="countRoomUsers" resultType="int">
+	SELECT COUNT(*)
+	FROM MESSENGER_USER
+	WHERE MSGR_ID = #{msgrId}
+		AND (LEFT_DT IS NULL OR LEFT_DT = '')
+</select>
+
+	<insert id="insertMessengerUser">
+		INSERT INTO MESSENGER_USER(
+			USER_ID
+			,MSGR_ID
+			,JOIN_DT
+			,LEFT_DT
+		)VALUES(
+			 #{userId}
+			 ,#{msgrId}
+			 ,#{joinDt}
+			 ,#{leftDt}
+		)
+	</insert>
+
+	<select id="selectMessengerUserList" resultType="kr.or.ddit.vo.MessengerUserVO">
+		SELECT
+			USER_ID
+			,MSGR_ID
+			,JOIN_DT
+			,LEFT_DT
+		FROM
+			MESSENGER_USER
+	</select>
+
+	<select id="selectMessengerUser" resultType="kr.or.ddit.vo.MessengerUserVO">
+		SELECT
+			USER_ID
+			,MSGR_ID
+			,JOIN_DT
+			,LEFT_DT
+		FROM
+			MESSENGER_USER
+		WHERE
+			USER_ID=#{userId}
+	</select>
+
+	<delete id="deleteMessengerUser">
+		DELETE FROM MESSENGER_USER
+		WHERE USER_ID=#{userId}
+	</delete>
+
+</mapper>

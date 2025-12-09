@@ -1,0 +1,559 @@
+/* ========================================
+  			업무 코멘트 CSS
+======================================== */
+#card-progress{
+	margin-bottom : 1.2rem !important;
+	border: none;
+}
+
+/* ========================================
+  			업무 코멘트 CSS
+======================================== */
+#comment-list {
+    min-height: 50px;
+}
+
+
+.comment-item .avatar {
+    width: 40px;
+    height: 40px;
+}
+
+.comment-item .comment-text p {
+    margin-bottom: 0.25rem;
+}
+
+.comment-item .comment-meta {
+    font-size: 0.8rem;
+    color: #6c757d;
+}
+
+
+/* ========================================
+  		 체크리스트 스타일 CSS
+======================================== */
+
+.checklist-item {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.checklist-item .form-check-input {
+    margin-top: 0;
+}
+
+.checklist-item .form-control {
+    flex-grow: 1;
+}
+
+.checklist-item .btn-group {
+    visibility: hidden;
+}
+
+.checklist-item:hover .btn-group {
+    visibility: visible;
+}
+
+.checklist-item.done .checklist-text {
+    text-decoration: line-through;
+    color: #6c757d;
+}
+
+
+
+.card-body .mb-3 > strong {
+    display: block;
+    margin-bottom: 0.25rem;
+    color: #555;
+    font-weight: 600;
+}
+
+/* ========================================
+   프로젝트 게시판 상세 (Project Post Detail)
+======================================== */
+
+.post-content img {
+    max-width: 100%;
+    height: auto;
+}
+
+/* ========================================
+   업무 목록 (task list)
+======================================== */
+
+
+#task-list-tbody tr.task-highlight-row {
+    /* 아주 연한 회색으로 배경색 지정 */
+    background-color: #e3e9ee!important; /* light-gray 계열 */
+}
+
+/*  .table-hover 효과마우스 오버 */
+.table-hover .task-highlight-row:hover {
+    background-color: #e5e8eb;
+}
+
+/* ========================================
+  		 테스트
+======================================== */
+
+.card-body .mb-3 > p,
+.card-body .mb-3 > .badge,
+.card-body .mb-3 > .avatar-group {
+    margin-top: 0.25rem;
+}
+
+.modal-body .list-group-item {
+    border-left: 0;
+    border-right: 0;
+}
+
+.task-status-select {
+    min-width: 50px;
+}
+
+/* ============================================
+   대시보드 스타일
+============================================ */
+
+/* 타임라인 진행률 */
+.timeline-progress-container {
+    position: relative;
+    padding: 20px 0;
+}
+
+.timeline-progress {
+    position: relative;
+    height: 10px;
+    background: linear-gradient(to right, #e9ecef 0%, #e9ecef 100%);
+    border-radius: 5px;
+    overflow: visible;
+}
+
+.timeline-progress-fill {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    background: linear-gradient(90deg, #435ebe 0%, #5a6ed8 100%);
+    border-radius: 5px;
+    transition: width 1s ease;
+}
+
+.timeline-progress-marker {
+    position: absolute;
+    top: 50%;
+    transform: translateX(-50%) translateY(-50%);
+    transition: left 1s ease;
+}
+
+.timeline-marker-dot {
+    width: 20px;
+    height: 20px;
+    background: white;
+    border: 3px solid #435ebe;
+    border-radius: 50%;
+    box-shadow: 0 2px 8px rgba(67, 94, 190, 0.3);
+}
+
+.timeline-marker-label {
+    position: absolute;
+    top: -35px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #435ebe;
+    color: white;
+    padding: 4px 12px;
+    border-radius: 12px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    white-space: nowrap;
+    box-shadow: 0 2px 8px rgba(67, 94, 190, 0.3);
+}
+
+.timeline-marker-label::after {
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 0;
+    border-left: 6px solid transparent;
+    border-right: 6px solid transparent;
+    border-top: 6px solid #435ebe;
+}
+
+/* 업무 상태 진행률 바 */
+.task-status-progress {
+    display: flex;
+    height: 32px;
+    background: #e9ecef;
+    border-radius: 16px;
+    overflow: hidden;
+}
+
+.task-status-bar {
+    height: 100%;
+    transition: width 0.8s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+.task-status-done {
+    background: linear-gradient(90deg, #198754 0%, #20c997 100%);
+}
+
+.task-status-doing {
+    background: linear-gradient(90deg, #435ebe 0%, #5a6ed8 100%);
+}
+
+.task-status-todo {
+    background: linear-gradient(90deg, #6c757d 0%, #868e96 100%);
+}
+
+.task-status-hold {
+    background: linear-gradient(90deg, #ffc107 0%, #ffca2c 100%);
+}
+
+/* 범례 */
+.task-status-legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    font-size: 0.9rem;
+}
+
+.task-status-legend-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.task-status-legend-color {
+    width: 12px;
+    height: 12px;
+    border-radius: 2px;
+}
+
+/* ============================================
+   대시보드 - 멤버별 업무 현황 & 생산성
+============================================ */
+
+/* 왼쪽: 멤버 업무 현황 */
+#member-tasks-section {
+    border-right: 1px solid #e9ecef;
+    padding-right: 1.5rem;
+}
+
+/* 오른쪽: 생산성 차트 */
+#member-chart-section {
+    padding-left: 1.5rem;
+}
+
+/* 차트 컨테이너 수정 */
+#member-productivity-chart {
+    position: relative;
+    min-height: 300px;
+    width: 100%;
+    padding: 0; /* 기존 padding 제거 */
+    overflow: visible; /* 잘림 방지 */
+}
+
+/* 차트 컨테이너 일반 스타일 */
+.chart-container {
+    position: relative;
+    min-height: 300px;
+    width: 100%;
+    padding: 10px; /* 여유 공간 확보 */
+}
+
+.chart-container svg {
+    overflow: visible;
+    max-width: 100%; /* 최대 너비 제한 */
+    height: auto;
+}
+
+/* 멤버 업무 현황 아이템 */
+.member-task-item {
+    padding: 1rem 0;
+    border-bottom: 1px solid #e9ecef;
+}
+
+.member-task-item:last-child {
+    border-bottom: none;
+}
+
+/* 가로 레이아웃 */
+.member-info-row {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 0.5rem;
+}
+
+.member-info {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    flex: 0 0 auto;
+    min-width: 150px;
+}
+
+/* 진행률 바 */
+.member-progress-container {
+    flex: 1;
+    display: flex;
+    align-items: center;
+}
+
+.member-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #435ebe 0%, #5a6ed8 100%);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    font-size: 1.1rem;
+    flex-shrink: 0;
+}
+
+.member-name {
+    font-weight: 600;
+    color: #333;
+    margin: 0;
+    font-size: 0.9rem;
+}
+
+.member-dept {
+    font-size: 0.75rem;
+    color: #6c757d;
+    margin: 0;
+}
+
+.member-progress-bar {
+    height: 24px;
+    background: #e9ecef;
+    border-radius: 12px;
+    overflow: hidden;
+    flex: 1;
+    margin-right: 0.75rem;
+}
+
+.member-progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #435ebe 0%, #5a6ed8 100%);
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding-right: 10px;
+    color: white;
+    font-size: 0.8rem;
+    font-weight: 600;
+    transition: width 0.8s ease;
+}
+
+.member-task-stats {
+    display: flex;
+    gap: 0.75rem;
+    font-size: 0.8rem;
+    color: #6c757d;
+    margin-top: 0.25rem;
+}
+
+.member-task-stats span {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+}
+
+.member-task-stats i {
+    font-size: 0.9rem;
+}
+
+/* ========================================
+   업무 담당자 필터 드롭다운 개선
+   (기존 HTML 구조 유지)
+======================================== */
+
+/* 드롭다운 메뉴 - 최소 너비 보장 및 위치 조정 */
+#task-assignee-filter-dropdown {
+    min-width: 250px !important;
+    max-width: 320px;
+    max-height: 400px;
+    overflow-y: auto;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+    z-index: 1060 !important;
+}
+
+#task-assignee-filter-dropdown .dropdown-item {
+    padding: 0.75rem 1rem;
+    white-space: nowrap;
+}
+
+#tasks-pane .table {
+    min-width: 900px;
+}
+
+#task-assignee-filter-dropdown .dropdown-item:hover {
+    background-color: #f8f9fa;
+}
+
+#task-assignee-filter-dropdown .dropdown-item.active {
+    background-color: #e7f1ff;
+    color: #435ebe;
+    font-weight: 600;
+}
+
+/* 체크 아이콘 */
+#task-assignee-filter-dropdown .bi-check2 {
+    font-size: 1.1rem;
+    flex-shrink: 0;
+    color: #435ebe;
+}
+
+/* 구분선 */
+#task-assignee-filter-dropdown .dropdown-divider {
+    margin: 0.5rem 0;
+    border-color: rgba(0, 0, 0, 0.08);
+}
+
+/* 필터 버튼 스타일 개선 */
+#task-assignee-filter-btn {
+    padding: 0.25rem 0.5rem;
+    font-size: 1rem;
+    border: none;
+    background: transparent;
+    color: #6c757d;
+    transition: all 0.2s ease;
+    cursor: pointer;
+}
+
+#task-assignee-filter-btn:hover {
+    color: #435ebe;
+    transform: scale(1.1);
+}
+
+#task-assignee-filter-btn.text-primary {
+    color: #435ebe !important;
+}
+
+#task-assignee-filter-btn .bi-funnel-fill {
+    color: #435ebe;
+}
+
+/* 스크롤바 스타일 (Webkit) */
+#task-assignee-filter-dropdown::-webkit-scrollbar {
+    width: 8px;
+}
+
+#task-assignee-filter-dropdown::-webkit-scrollbar-track {
+    background: #f8f9fa;
+    border-radius: 4px;
+}
+
+#task-assignee-filter-dropdown::-webkit-scrollbar-thumb {
+    background: #c1c1c1;
+    border-radius: 4px;
+}
+
+#task-assignee-filter-dropdown::-webkit-scrollbar-thumb:hover {
+    background: #a8a8a8;
+}
+
+/* 테이블 최소 너비 보장 */
+#tasks-pane .table-responsive {
+    overflow-x: auto;
+}
+
+#tasks-pane .table {
+    min-width: 900px; /* 테이블 최소 너비 */
+    width: 100%;
+}
+
+/* 담당자 컬럼 너비 조정 */
+#tasks-pane .table thead th:nth-child(3) {
+    min-width: 200px;
+    position: relative;
+}
+
+
+@media (max-width: 768px) {
+    #task-assignee-filter-dropdown {
+        min-width: 220px !important;
+        max-width: 85vw;
+    }
+
+    #tasks-pane .table {
+        min-width: 800px;
+    }
+}
+
+/* ========================================
+   테이블 너비 고정 (업무 목록)
+======================================== */
+
+/* 업무 목록 테이블 최소 너비 보장 */
+#tasks-pane .table-responsive {
+    min-width: 100%;
+}
+
+#tasks-pane .table {
+    min-width: 800px; /* 최소 너비 고정 */
+}
+
+/* 담당자 컬럼 너비 조정 */
+#tasks-pane .table th:nth-child(3),
+#tasks-pane .table td:nth-child(3) {
+    min-width: 180px; /* 담당자 컬럼 최소 너비 */
+    white-space: nowrap;
+}
+
+/* 체크박스가 있을 때 (책임자) */
+.project-detail-container #tasks-pane .table th:nth-child(3),
+.project-detail-container #tasks-pane .table td:nth-child(3) {
+    min-width: 180px;
+}
+
+/* 반응형 */
+@media (max-width: 991px) {
+    #member-tasks-section {
+        border-right: none;
+        border-bottom: 1px solid #e9ecef;
+        padding-right: 0;
+        padding-bottom: 1.5rem;
+        margin-bottom: 1.5rem;
+    }
+
+    #member-chart-section {
+        padding-left: 0;
+    }
+}
+
+@media (max-width: 768px) {
+    .member-info-row {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.75rem;
+    }
+
+    .member-info {
+        min-width: 100%;
+    }
+
+    .member-progress-container {
+        width: 100%;
+    }
+
+    .chart-container {
+        min-height: 250px;
+        padding: 5px; /* 모바일에서 패딩 축소 */
+    }
+}

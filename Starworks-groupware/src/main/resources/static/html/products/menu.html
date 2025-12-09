@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>메뉴 조회 - 그룹웨어</title>
+
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="mazer-1.0.0/dist/assets/css/bootstrap.css">
+    <link rel="stylesheet" href="mazer-1.0.0/dist/assets/vendors/bootstrap-icons/bootstrap-icons.css">
+    <link rel="stylesheet" href="mazer-1.0.0/dist/assets/css/app.css">
+
+    <!-- jsPDF and SheetJS libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.23/jspdf.autotable.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+
+    <style>
+        .menu-card .card-img-top {
+            height: 220px;
+            object-fit: cover;
+            cursor: pointer;
+        }
+        .card-body .badge {
+            font-size: 0.8rem;
+        }
+        #menu-detail-modal .modal-body img {
+            height: 300px;
+            object-fit: cover;
+        }
+        .filter-bar .form-control, .filter-bar .form-select {
+            height: calc(1.5em + .75rem + 2px);
+        }
+        .section {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .nav-tabs .nav-link {
+            cursor: pointer;
+        }
+        .pagination .page-item.active .page-link {
+            z-index: 3;
+            color: #fff;
+            background-color: #435ebe;
+            border-color: #435ebe;
+        }
+        .card-footer {
+            background-color: #fff;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <div id="sidebar" class="active">
+            <div class="sidebar-wrapper active">
+                <div class="sidebar-header">
+                    <div class="d-flex justify-content-between">
+                        <div class="logo"><a href="index.html">그룹웨어</a></div>
+                        <div class="toggler"><a href="#" class="sidebar-hide d-xl-none d-block"><i class="bi bi-x bi-middle"></i></a></div>
+                    </div>
+                </div>
+                <div class="sidebar-menu">
+                     <ul class="menu">
+                        <li class="sidebar-title">Menu</li>
+                        <li class="sidebar-item"><a href="#" class='sidebar-link'><i class="bi bi-grid-fill"></i><span>대시보드</span></a></li>
+                        <li class="sidebar-item active"><a href="menu_user_view.html" class='sidebar-link'><i class="bi bi-cup-fill"></i><span>메뉴 보기</span></a></li>
+                        <li class="sidebar-item"><a href="#" class='sidebar-link'><i class="bi bi-calendar-event-fill"></i><span>일정관리</span></a></li>
+                        <li class="sidebar-item"><a href="#" class='sidebar-link'><i class="bi bi-people-fill"></i><span>조직도</span></a></li>
+                        <li class="sidebar-item"><a href="#" class='sidebar-link'><i class="bi bi-chat-dots-fill"></i><span>메신저</span></a></li>
+                        <li class="sidebar-item"><a href="#" class='sidebar-link'><i class="bi bi-person-fill"></i><span>마이페이지</span></a></li>
+                    </ul>
+                </div>
+                <button class="sidebar-toggler btn x"><i data-feather="x"></i></button>
+            </div>
+        </div>
+        <div id="main">
+            <header class="mb-3"><a href="#" class="burger-btn d-block d-xl-none"><i class="bi bi-justify fs-3"></i></a></header>
+
+            <div class="page-heading">
+                <div class="page-title">
+                    <div class="row">
+                        <div class="col-12 col-md-6 order-md-1 order-last">
+                            <h3>메뉴 조회</h3>
+                            <p class="text-subtitle text-muted">프랜차이즈의 다양한 메뉴를 확인하고 검색할 수 있습니다.</p>
+                        </div>
+                        <div class="col-12 col-md-6 order-md-2 order-first">
+                            <nav aria-label="breadcrumb" class="breadcrumb-header float-start float-lg-end">
+                                <ol class="breadcrumb">
+                                    <li class="breadcrumb-item"><a href="index.html">Dashboard</a></li>
+                                    <li class="breadcrumb-item active" aria-current="page">메뉴 조회</li>
+                                </ol>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+
+                <section class="section">
+                    <div class="card">
+                        <div class="card-body">
+                            <ul class="nav nav-tabs" id="statusTab" role="tablist">
+                                <li class="nav-item" role="presentation">
+                                    <button class="nav-link active" data-status-filter="all" type="button" role="tab">전체</button>
+                                </li>
+                                <li class="nav-item" role="presentation">
+                                    <button class="nav-link" data-status-filter="판매중" type="button" role="tab">판매중</button>
+                                </li>
+                                <li class="nav-item" role="presentation">
+                                    <button class="nav-link" data-status-filter="시즌 한정" type="button" role="tab">시즌 한정</button>
+                                </li>
+                                <li class="nav-item" role="presentation">
+                                    <button class="nav-link" data-status-filter="단종" type="button" role="tab">단종</button>
+                                </li>
+                            </ul>
+                            <div class="filter-bar pt-3">
+                                <div class="row g-3 align-items-center">
+                                    <div class="col-lg-3">
+                                        <div class="input-group">
+                                            <span class="input-group-text" id="search-addon"><i class="bi bi-search"></i></span>
+                                            <input type="text" class="form-control" placeholder="메뉴명 검색..." id="search-input">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-2">
+                                        <select class="form-select" id="category-filter">
+                                            <option value="all">카테고리 전체</option>
+                                            <option value="커피">커피</option>
+                                            <option value="음료">음료</option>
+                                            <option value="티">티</option>
+                                            <option value="디저트">디저트</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-lg-2">
+                                        <select class="form-select" id="sort-options">
+                                            <option value="latest">최신 등록순</option>
+                                            <option value="price-asc">가격 낮은순</option>
+                                            <option value="price-desc">가격 높은순</option>
+                                            <option value="popular">인기순</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-lg-5 d-flex justify-content-end">
+                                        <button class="btn btn-light-secondary me-2" id="reset-filters">초기화</button>
+                                        <div class="btn-group" role="group">
+                                            <button class="btn btn-outline-primary" id="export-pdf"><i class="bi bi-file-earmark-pdf-fill"></i> PDF</button>
+                                            <button class="btn btn-outline-success" id="export-excel"><i class="bi bi-file-earmark-excel-fill"></i> Excel</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row match-height" id="menu-grid">
+                        <!-- Menu cards will be injected here by JavaScript -->
+                    </div>
+                    <div id="no-results" class="text-center p-5" style="display: none;">
+                        <p class="text-muted fs-4">검색 결과가 없습니다.</p>
+                    </div>
+                    
+                    <div id="pagination-container" class="d-flex justify-content-center mt-4">
+                        <!-- Pagination links will be injected here -->
+                    </div>
+                </section>
+            </div>
+
+            <footer><div class="footer clearfix mb-0 text-muted"><div class="float-start"><p>2025 &copy; YourCompany</p></div><div class="float-end"><p>Crafted with <span class="text-danger"><i class="bi bi-heart"></i></span> by <a href="#">YourName</a></p></div></div></footer>
+        </div>
+    </div>
+
+    <!-- Menu Detail Modal -->
+    <div class="modal fade" id="menu-detail-modal" tabindex="-1" aria-labelledby="menuDetailModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="menu-detail-title"></h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <img id="menu-detail-image" src="" class="img-fluid rounded w-100" alt="Menu Image">
+                        </div>
+                        <div class="col-md-6">
+                            <p id="menu-detail-description" class="mb-3"></p>
+                            <h4><strong id="menu-detail-price"></strong></h4>
+                            <div id="menu-detail-period" class="mt-3" style="display: none;">
+                                <strong>판매 기간:</strong> <span id="menu-detail-sales-period"></span>
+                            </div>
+                            <hr>
+                            <strong>알레르기/원재료 정보</strong>
+                            <p id="menu-detail-allergies" class="text-muted"></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success"><i class="bi bi-file-earmark-pdf"></i> PDF 매뉴얼</button>
+                    <button type="button" class="btn btn-info"><i class="bi bi-cloud-download"></i> 교육자료 다운로드</button>
+                    <button type="button" class="btn btn-light-secondary" data-bs-dismiss="modal">닫기</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Menu Edit Modal -->
+    <div class="modal fade" id="menu-edit-modal" tabindex="-1" aria-labelledby="menuEditModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <form id="menu-edit-form">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="menuEditModalLabel">메뉴 수정</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <input type="hidden" id="edit-menu-id">
+                        <div class="mb-3">
+                            <label for="edit-menu-name" class="form-label">메뉴명</label>
+                            <input type="text" class="form-control" id="edit-menu-name" required>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="edit-menu-category" class="form-label">카테고리</label>
+                                <select class="form-select" id="edit-menu-category" required>
+                                    <option value="커피">커피</option>
+                                    <option value="음료">음료</option>
+                                    <option value="티">티</option>
+                                    <option value="디저트">디저트</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="edit-menu-price" class="form-label">가격</label>
+                                <input type="number" class="form-control" id="edit-menu-price" required>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="edit-menu-description" class="form-label">메뉴 설명</label>
+                            <textarea class="form-control" id="edit-menu-description" rows="3" required></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label for="edit-menu-image" class="form-label">이미지 업로드</label>
+                            <input class="form-control" type="file" id="edit-menu-image">
+                        </div>
+                        <div class="mb-3">
+                            <label for="edit-menu-status" class="form-label">상태</label>
+                            <select class="form-select" id="edit-menu-status" required>
+                                <option value="판매중">판매중</option>
+                                <option value="시즌 한정">시즌 한정</option>
+                                <option value="단종">단종</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-light-secondary" data-bs-dismiss="modal">취소</button>
+                        <button type="submit" class="btn btn-primary">저장</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="mazer-1.0.0/dist/assets/js/bootstrap.bundle.min.js"></script>
+    <script src="mazer-1.0.0/dist/assets/js/app.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const { jsPDF } = window.jspdf;
+            let currentlyDisplayedItems = [];
+            let currentPage = 1;
+            const itemsPerPage = 12;
+
+            let menuData = [
+                { id: 1, name: '피치 망고 선셋 블렌디드', price: 5500, category: '음료', status: '시즌 한정', image: 'images/피치 망고 선셋 블렌디드.jpg', description: '달콤한 피치와 망고가 어우러져 저녁 노을을 연상시키는 상큼한 블렌디드 음료입니다.', salesStart: '2025-06-01', salesEnd: '2025-08-31', allergies: '복숭아', popularity: 85, registeredDate: '2025-05-20' },
+                { id: 2, name: '아포가토', price: 6000, category: '디저트', status: '판매중', image: 'images/아포가토.jpg', description: '진한 에스프레소와 달콤한 바닐라 아이스크림의 클래식한 조화.', salesStart: null, salesEnd: null, allergies: '우유', popularity: 92, registeredDate: '2024-03-10' },
+                { id: 3, name: '여수 윤슬 헤이즐넛', price: 6500, category: '커피', status: '시즌 한정', image: 'images/여수 윤슬 헤이즐넛.jpg', description: '여수의 밤바다처럼 반짝이는 헤이즐넛 콜드브루. 부드러운 크림과 헤이즐넛의 풍미가 일품입니다.', salesStart: '2025-07-01', salesEnd: '2025-09-30', allergies: '우유, 견과류', popularity: 95, registeredDate: '2025-06-15' },
+                { id: 4, name: '카라멜 마키아토', price: 4500, category: '커피', status: '판매중', image: 'images/카라멜마끼아또.jpg', description: '달콤한 카라멜 시럽과 부드러운 우유 거품이 어우러진 인기 메뉴입니다.', salesStart: null, salesEnd: null, allergies: '우유', popularity: 90, registeredDate: '2024-01-15' },
+                { id: 5, name: '콜드브루', price: 4500, category: '커피', status: '판매중', image: 'images/콜드브루.jpg', description: '장시간 저온 추출하여 깔끔하고 깊은 풍미를 자랑하는 콜드브루 커피입니다.', salesStart: null, salesEnd: null, allergies: null, popularity: 88, registeredDate: '2024-02-20' },
+                { id: 6, name: '녹차라떼', price: 5000, category: '티', status: '판매중', image: 'images/녹차라떼.jpg', description: '쌉싸름한 국내산 녹차와 부드러운 우유가 만나 깊고 진한 맛을 냅니다.', salesStart: null, salesEnd: null, allergies: '우유', popularity: 82, registeredDate: '2024-04-01' },
+                { id: 7, name: '망고라떼', price: 5500, category: '음료', status: '판매중', image: 'images/망고라떼.jpg', description: '신선한 망고 과육이 듬뿍 들어간 달콤하고 시원한 라떼입니다.', salesStart: null, salesEnd: null, allergies: '우유', popularity: 86, registeredDate: '2024-05-10' },
+                { id: 8, name: '딸기 스무디', price: 5800, category: '음료', status: '단종', image: 'images/딸기스무디.jpg', description: '신선한 딸기를 그대로 갈아 만든 상큼달콤한 스무디.', salesStart: null, salesEnd: null, allergies: '우유', popularity: 75, registeredDate: '2023-04-10' },
+                { id: 9, name: '바닐라 라떼', price: 4500, category: '커피', status: '단종', image: 'images/바닐라라떼.jpg', description: '부드러운 바닐라 향이 매력적인 스테디셀러 라떼.', salesStart: null, salesEnd: null, allergies: '우유', popularity: 80, registeredDate: '2023-01-20' },
+                { id: 10, name: '헤이즐넛 오트 쉐이큰 에스프레소', price: 6200, category: '커피', status: '판매중', image: 'images/헤이즐넛 오트 아이스 쉐이큰 에스프레소.jpg', description: '오트 밀크와 헤이즐넛의 고소함, 쉐이큰 에스프레소의 조화', popularity: 89, registeredDate: '2025-01-10' },
+                { id: 11, name: '베르가못 제주말차 크림 프라푸치노', price: 6300, category: '음료', status: '시즌 한정', image: 'images/베르가못 제주말차 크림 프라푸치노.jpg', description: '상큼한 베르가못과 진한 제주 말차가 어우러진 프라푸치노', popularity: 94, registeredDate: '2025-04-20' },
+                { id: 12, name: '아이스 유스베리 티', price: 4800, category: '티', status: '판매중', image: 'images/아이스 유스베리 티.jpg', description: '유스베리, 아사이베리 등이 블렌딩된 상큼한 티', popularity: 87, registeredDate: '2024-06-11' },
+                { id: 13, name: '자몽 허니 블랙 티', price: 5300, category: '티', status: '판매중', image: 'images/자몽 허니 블랙 티.jpg', description: '상큼한 자몽과 달콤한 꿀, 깊은 풍미의 블랙티의 만남', popularity: 93, registeredDate: '2025-03-01' },
+                { id: 14, name: '자바칩 프라푸치노', price: 6100, category: '음료', status: '판매중', image: 'images/자바칩 프라푸치노.jpg', description: '커피, 초콜릿, 초콜릿 칩이 한데 어우러진 프라푸치노', popularity: 96, registeredDate: '2024-08-05' },
+                { id: 15, name: '프렌치 바닐라 라떼', price: 5700, category: '커피', status: '판매중', image: 'images/프렌치 바닐라 라떼.jpg', description: '프랑스산 바닐라 시럽으로 풍미를 더한 부드러운 라떼', popularity: 90, registeredDate: '2024-09-01' }
+            ];
+
+            const menuGrid = document.getElementById('menu-grid');
+            const noResultsDiv = document.getElementById('no-results');
+            const paginationContainer = document.getElementById('pagination-container');
+            const searchInput = document.getElementById('search-input');
+            const categoryFilter = document.getElementById('category-filter');
+            const sortOptions = document.getElementById('sort-options');
+            const statusTabs = document.querySelectorAll('#statusTab .nav-link');
+            const resetBtn = document.getElementById('reset-filters');
+            const exportPdfBtn = document.getElementById('export-pdf');
+            const exportExcelBtn = document.getElementById('export-excel');
+            const menuDetailModal = new bootstrap.Modal(document.getElementById('menu-detail-modal'));
+            const menuEditModal = new bootstrap.Modal(document.getElementById('menu-edit-modal'));
+            const menuEditForm = document.getElementById('menu-edit-form');
+
+            const statusColors = {
+                '판매중': 'success',
+                '시즌 한정': 'info',
+                '단종': 'danger'
+            };
+
+            function renderMenuItems(items) {
+                menuGrid.innerHTML = '';
+                if (items.length === 0) {
+                    noResultsDiv.style.display = 'block';
+                    menuGrid.style.display = 'none';
+                    return;
+                }
+                noResultsDiv.style.display = 'none';
+                menuGrid.style.display = 'flex';
+
+                items.forEach(item => {
+                    const card = document.createElement('div');
+                    card.className = 'col-xl-3 col-lg-4 col-md-6 mb-4';
+                    card.innerHTML = `
+                        <div class="card h-100">
+                            <img src="${item.image}" class="card-img-top menu-card-image" alt="${item.name}" data-id="${item.id}">
+                            <div class="card-body">
+                                <h5 class="card-title">${item.name}</h5>
+                                <p class="card-text text-muted">${item.price.toLocaleString()}원</p>
+                                <span class="badge bg-light-${item.category === '커피' ? 'primary' : item.category === '음료' ? 'info' : item.category === '티' ? 'secondary' : 'warning'}">${item.category}</span>
+                                <span class="badge bg-${statusColors[item.status] || 'secondary'}">${item.status}</span>
+                            </div>
+                            <div class="card-footer d-flex justify-content-end pt-0 border-top-0 bg-white">
+                                <button class="btn btn-sm btn-outline-primary me-2 btn-edit" data-id="${item.id}">수정</button>
+                                <button class="btn btn-sm btn-outline-danger btn-delete" data-id="${item.id}">삭제</button>
+                            </div>
+                        </div>
+                    `;
+                    menuGrid.appendChild(card);
+                });
+            }
+
+            function setupPagination(items) {
+                paginationContainer.innerHTML = '';
+                const pageCount = Math.ceil(items.length / itemsPerPage);
+                if (pageCount <= 1) return;
+
+                const ul = document.createElement('ul');
+                ul.className = 'pagination';
+
+                for (let i = 1; i <= pageCount; i++) {
+                    const li = document.createElement('li');
+                    li.className = `page-item ${i === currentPage ? 'active' : ''}`;
+                    const a = document.createElement('a');
+                    a.className = 'page-link';
+                    a.href = '#';
+                    a.innerText = i;
+                    a.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        displayPage(i, items);
+                    });
+                    li.appendChild(a);
+                    ul.appendChild(li);
+                }
+                paginationContainer.appendChild(ul);
+            }
+
+            function displayPage(page, items) {
+                currentPage = page;
+                const start = (currentPage - 1) * itemsPerPage;
+                const end = start + itemsPerPage;
+                const paginatedItems = items.slice(start, end);
+                renderMenuItems(paginatedItems);
+                setupPagination(items);
+            }
+
+            function applyFiltersAndSort() {
+                let filteredData = [...menuData];
+                const searchTerm = searchInput.value.toLowerCase();
+                const category = categoryFilter.value;
+                const activeStatus = document.querySelector('#statusTab .nav-link.active').dataset.statusFilter;
+                const sort = sortOptions.value;
+
+                if (searchTerm) {
+                    filteredData = filteredData.filter(item => item.name.toLowerCase().includes(searchTerm));
+                }
+
+                if (category !== 'all') {
+                    filteredData = filteredData.filter(item => item.category === category);
+                }
+                
+                if (activeStatus !== 'all') {
+                    filteredData = filteredData.filter(item => item.status === activeStatus);
+                }
+
+                switch (sort) {
+                    case 'price-asc':
+                        filteredData.sort((a, b) => a.price - b.price);
+                        break;
+                    case 'price-desc':
+                        filteredData.sort((a, b) => b.price - a.price);
+                        break;
+                    case 'popular':
+                        filteredData.sort((a, b) => b.popularity - a.popularity);
+                        break;
+                    case 'latest':
+                    default:
+                        filteredData.sort((a, b) => new Date(b.registeredDate) - new Date(a.registeredDate));
+                        break;
+                }
+
+                currentlyDisplayedItems = filteredData;
+                displayPage(1, currentlyDisplayedItems);
+            }
+            
+            function resetAllFilters() {
+                searchInput.value = '';
+                categoryFilter.value = 'all';
+                sortOptions.value = 'latest';
+                document.querySelector('#statusTab .nav-link.active').classList.remove('active');
+                document.querySelector('#statusTab .nav-link[data-status-filter="all"]').classList.add('active');
+                applyFiltersAndSort();
+            }
+
+            function showMenuDetails(id) {
+                const item = menuData.find(m => m.id == id);
+                if (!item) return;
+
+                document.getElementById('menu-detail-title').textContent = item.name;
+                document.getElementById('menu-detail-image').src = item.image;
+                document.getElementById('menu-detail-description').textContent = item.description;
+                document.getElementById('menu-detail-price').textContent = `${item.price.toLocaleString()}원`;
+                document.getElementById('menu-detail-allergies').textContent = item.allergies || '해당 정보 없음';
+
+                const periodDiv = document.getElementById('menu-detail-period');
+                if (item.status === '시즌 한정' && item.salesStart && item.salesEnd) {
+                    document.getElementById('menu-detail-sales-period').textContent = `${item.salesStart} ~ ${item.salesEnd}`;
+                    periodDiv.style.display = 'block';
+                } else {
+                    periodDiv.style.display = 'none';
+                }
+                menuDetailModal.show();
+            }
+
+            function openEditModal(id) {
+                const item = menuData.find(m => m.id == id);
+                if (!item) return;
+
+                document.getElementById('edit-menu-id').value = item.id;
+                document.getElementById('edit-menu-name').value = item.name;
+                document.getElementById('edit-menu-category').value = item.category;
+                document.getElementById('edit-menu-price').value = item.price;
+                document.getElementById('edit-menu-description').value = item.description;
+                document.getElementById('edit-menu-status').value = item.status;
+                
+                menuEditModal.show();
+            }
+
+            function deleteMenuItem(id) {
+                if (confirm('정말로 이 메뉴를 삭제하시겠습니까?')) {
+                    const index = menuData.findIndex(item => item.id == id);
+                    if (index > -1) {
+                        menuData.splice(index, 1);
+                        applyFiltersAndSort(); // Re-render the list
+                    }
+                }
+            }
+
+            menuEditForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                const id = document.getElementById('edit-menu-id').value;
+                const index = menuData.findIndex(item => item.id == id);
+
+                if (index > -1) {
+                    menuData[index].name = document.getElementById('edit-menu-name').value;
+                    menuData[index].category = document.getElementById('edit-menu-category').value;
+                    menuData[index].price = parseInt(document.getElementById('edit-menu-price').value, 10);
+                    menuData[index].description = document.getElementById('edit-menu-description').value;
+                    menuData[index].status = document.getElementById('edit-menu-status').value;
+                    
+                    // Note: Image upload handling is not fully implemented, 
+                    // this just shows the filename.
+                    const imageFile = document.getElementById('edit-menu-image').files[0];
+                    if (imageFile) {
+                        // In a real app, you would upload the file and get a new URL.
+                        // For this demo, we'll just use a placeholder or the existing image path.
+                        console.log(`New image selected: ${imageFile.name}. Upload logic needed.`);
+                    }
+                }
+
+                menuEditModal.hide();
+                applyFiltersAndSort();
+            });
+
+            function exportToPDF() {
+                if (currentlyDisplayedItems.length === 0) {
+                    alert('내보낼 데이터가 없습니다.');
+                    return;
+                }
+                const doc = new jsPDF();
+                
+                doc.setFont('arial', 'normal');
+
+                doc.text("메뉴 목록", 14, 16);
+
+                const tableColumn = ["메뉴명", "카테고리", "가격", "상태"];
+                const tableRows = [];
+
+                currentlyDisplayedItems.forEach(item => {
+                    const itemData = [
+                        item.name,
+                        item.category,
+                        item.price.toLocaleString() + '원',
+                        item.status,
+                    ];
+                    tableRows.push(itemData);
+                });
+
+                doc.autoTable({
+                    head: [tableColumn],
+                    body: tableRows,
+                    startY: 20,
+                    styles: {
+                        font: "arial",
+                        fontStyle: 'normal'
+                    },
+                    headStyles: {
+                        fontStyle: 'bold'
+                    }
+                });
+
+                doc.save('menu_list.pdf');
+            }
+
+            function exportToExcel() {
+                if (currentlyDisplayedItems.length === 0) {
+                    alert('내보낼 데이터가 없습니다.');
+                    return;
+                }
+                const worksheetData = currentlyDisplayedItems.map(item => ({
+                    '메뉴명': item.name,
+                    '카테고리': item.category,
+                    '가격': item.price,
+                    '상태': item.status
+                }));
+
+                const worksheet = XLSX.utils.json_to_sheet(worksheetData);
+                const workbook = XLSX.utils.book_new();
+                XLSX.utils.book_append_sheet(workbook, worksheet, "메뉴 목록");
+
+                worksheet['!cols'] = [
+                    { wch: 30 }, // 메뉴명
+                    { wch: 15 }, // 카테고리
+                    { wch: 15 }, // 가격
+                    { wch: 15 }  // 상태
+                ];
+
+                XLSX.writeFile(workbook, "menu_list.xlsx");
+            }
+
+            // Event Listeners
+            searchInput.addEventListener('input', applyFiltersAndSort);
+            categoryFilter.addEventListener('change', applyFiltersAndSort);
+            sortOptions.addEventListener('change', applyFiltersAndSort);
+            resetBtn.addEventListener('click', resetAllFilters);
+            exportPdfBtn.addEventListener('click', exportToPDF);
+            exportExcelBtn.addEventListener('click', exportToExcel);
+
+            statusTabs.forEach(tab => {
+                tab.addEventListener('click', function() {
+                    statusTabs.forEach(t => t.classList.remove('active'));
+                    this.classList.add('active');
+                    applyFiltersAndSort();
+                });
+            });
+            
+            menuGrid.addEventListener('click', function(e) {
+                const editBtn = e.target.closest('.btn-edit');
+                const deleteBtn = e.target.closest('.btn-delete');
+                const cardImage = e.target.closest('.menu-card-image');
+
+                if (editBtn) {
+                    const menuId = editBtn.dataset.id;
+                    openEditModal(menuId);
+                    return;
+                }
+                if (deleteBtn) {
+                    const menuId = deleteBtn.dataset.id;
+                    deleteMenuItem(menuId);
+                    return;
+                }
+                if (cardImage) {
+                    const menuId = cardImage.dataset.id;
+                    showMenuDetails(menuId);
+                }
+            });
+
+            // Initial Render
+            applyFiltersAndSort();
+        });
+    </script>
+</body>
+
+</html>

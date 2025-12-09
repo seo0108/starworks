@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>프로젝트 대시보드 - 그룹웨어</title>
+
+</head>
+
+<body>
+  <div id="main-content">
+
+            <div class="page-heading">
+                <h3>프로젝트 현황</h3>
+                <p class="text-muted">기업 전체 프로젝트 상황을 한눈에 파악하세요.</p>
+            </div>
+
+            <div class="page-content">
+                <!-- KPI Cards -->
+                <section class="row">
+                    <div class="col-6 col-lg-3 col-md-6">
+                        <div class="card kpi-card">
+                            <div class="card-body">
+                                <div class="kpi-icon" style="background-color: var(--theme-primary);"><i class="bi bi-stack"></i></div>
+                                <div>
+                                    <h6 class="kpi-value">125</h6>
+                                    <span class="kpi-text">전체 프로젝트</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6 col-lg-3 col-md-6">
+                        <div class="card kpi-card">
+                            <div class="card-body">
+                                <div class="kpi-icon" style="background-color: #17a2b8;"><i class="bi bi-arrow-repeat"></i></div>
+                                <div>
+                                    <h6 class="kpi-value">82</h6>
+                                    <span class="kpi-text">진행 중</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6 col-lg-3 col-md-6">
+                        <div class="card kpi-card">
+                            <div class="card-body">
+                                <div class="kpi-icon" style="background-color: #ffc107;"><i class="bi bi-clock-history"></i></div>
+                                <div>
+                                    <h6 class="kpi-value">9</h6>
+                                    <span class="kpi-text">마감 임박 (D-7)</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6 col-lg-3 col-md-6">
+                        <div class="card kpi-card">
+                            <div class="card-body">
+                                <div class="kpi-icon" style="background-color: #6c757d;"><i class="bi bi-check2-circle"></i></div>
+                                <div>
+                                    <h6 class="kpi-value">43</h6>
+                                    <span class="kpi-text">완료</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Charts -->
+                <section class="row">
+                    <div class="col-12 col-lg-6">
+                        <div class="card">
+                            <div class="card-header"><h5 class="card-title">프로젝트 상태</h5></div>
+                            <div class="card-body"><canvas id="status-chart"></canvas></div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-lg-6">
+                        <div class="card">
+                            <div class="card-header"><h5 class="card-title">프로젝트 유형</h5></div>
+                            <div class="card-body"><canvas id="type-chart"></canvas></div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Deadline & Activity -->
+                <section class="row">
+                    <div class="col-12 col-lg-6">
+                        <div class="card">
+                            <div class="card-header"><h5 class="card-title">마감 임박 프로젝트 (Top 5)</h5></div>
+                            <div class="card-body">
+                                <div class="deadline-item">
+                                    <div class="info">
+                                        <span class="name fw-bold">모바일 앱 리뉴얼</span>
+                                        <span class="manager">박지성</span>
+                                    </div>
+                                    <div class="progress"><div class="progress-bar" role="progressbar" style="width: 90%" aria-valuenow="90"></div></div>
+                                    <small class="text-muted">마감일: 2025-09-18</small>
+                                </div>
+                                <div class="deadline-item">
+                                    <div class="info">
+                                        <span class="name fw-bold">신규 원두 소싱</span>
+                                        <span class="manager">이영희</span>
+                                    </div>
+                                    <div class="progress"><div class="progress-bar bg-warning" role="progressbar" style="width: 40%" aria-valuenow="40"></div></div>
+                                    <small class="text-muted">마감일: 2025-09-20</small>
+                                </div>
+                                <div class="deadline-item">
+                                    <div class="info">
+                                        <span class="name fw-bold">가을 시즌 프로모션</span>
+                                        <span class="manager">김철수</span>
+                                    </div>
+                                    <div class="progress"><div class="progress-bar" role="progressbar" style="width: 75%" aria-valuenow="75"></div></div>
+                                    <small class="text-muted">마감일: 2025-09-22</small>
+                                </div>
+                                <div class="deadline-item">
+                                    <div class="info">
+                                        <span class="name fw-bold">연말 CSR 캠페인</span>
+                                        <span class="manager">김연아</span>
+                                    </div>
+                                    <div class="progress"><div class="progress-bar bg-success" role="progressbar" style="width: 15%" aria-valuenow="15"></div></div>
+                                    <small class="text-muted">마감일: 2025-09-25</small>
+                                </div>
+                                <div class="deadline-item">
+                                    <div class="info">
+                                        <span class="name fw-bold">POS 시스템 업데이트</span>
+                                        <span class="manager">홍길동</span>
+                                    </div>
+                                    <div class="progress"><div class="progress-bar bg-danger" role="progressbar" style="width: 55%" aria-valuenow="55"></div></div>
+                                    <small class="text-muted">마감일: 2025-09-28</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-lg-6">
+                        <div class="card">
+                            <div class="card-header"><h5 class="card-title">최근 활동</h5></div>
+                            <div class="card-body">
+                                <ul class="activity-feed">
+                                    <li class="feed-item new-project">
+                                        <div class="time">1시간 전</div>
+                                        <div class="desc"><strong>김철수</strong>님이 신규 프로젝트 <a href="#">'가을 시즌 프로모션'</a>을 등록했습니다.</div>
+                                    </li>
+                                    <li class="feed-item new-comment">
+                                        <div class="time">3시간 전</div>
+                                        <div class="desc"><strong>이영희</strong>님이 <a href="#">'신규 원두 소싱'</a>에 새 댓글을 남겼습니다.</div>
+                                    </li>
+                                    <li class="feed-item status-update">
+                                        <div class="time">8시간 전</div>
+                                        <div class="desc"><a href="#">'하계 워크샵'</a> 프로젝트의 상태가 '완료'로 변경되었습니다.</div>
+                                    </li>
+                                    <li class="feed-item new-comment">
+                                        <div class="time">어제</div>
+                                        <div class="desc"><strong>박지성</strong>님이 <a href="#">'모바일 앱 리뉴얼'</a>에 파일을 첨부했습니다.</div>
+                                    </li>
+                                     <li class="feed-item status-update">
+                                        <div class="time">2일 전</div>
+                                        <div class="desc"><a href="#">'매장 레이아웃 변경'</a> 프로젝트의 상태가 '보류'로 변경되었습니다.</div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+            </div>
+
+<!--     <script src="mazer-1.0.0/dist/assets/js/bootstrap.bundle.min.js"></script>    <script src="mazer-1.0.0/dist/assets/vendors/chartjs/Chart.min.js"></script> -->
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var themeColors = {
+                primary: getComputedStyle(document.documentElement).getPropertyValue('--theme-primary').trim(),
+                secondary: getComputedStyle(document.documentElement).getPropertyValue('--theme-secondary').trim(),
+                dark: getComputedStyle(document.documentElement).getPropertyValue('--theme-dark').trim(),
+            }
+
+            // Status Chart (Doughnut)
+            var statusCtx = document.getElementById('status-chart').getContext('2d');
+            var statusChart = new Chart(statusCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['진행', '완료', '보류', '취소'],
+                    datasets: [{
+                        data: [82, 43, 15, 5],
+                        backgroundColor: [themeColors.primary, '#6c757d', '#ffc107', '#dc3545'],
+                        borderWidth: 2
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { position: 'bottom' }
+                    }
+                }
+            });
+
+            // Type Chart (Bar)
+            var typeCtx = document.getElementById('type-chart').getContext('2d');
+            var typeChart = new Chart(typeCtx, {
+                type: 'bar',
+                data: {
+                    labels: ['신제품/R&D', '마케팅', '외부협업', 'CSR', '내부시스템'],
+                    datasets: [{
+                        label: '프로젝트 수',
+                        data: [25, 35, 15, 10, 40],
+                        backgroundColor: themeColors.secondary,
+                        borderColor: themeColors.primary,
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: { beginAtZero: true }
+                    },
+                    plugins: {
+                        legend: { display: false }
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>

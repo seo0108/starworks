@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--
+ * == 개정이력(Modification Information) ==
+ *
+ *   수정일      			수정자           수정내용
+ *  ============   	============== =======================
+ *  2025. 10. 15.     	장어진            최초 생성
+ *  2025. 10. 15.     	장어진            재귀적 하위 항목 탐색을 위한 쿼리 수정
+ *
+-->
+<mapper namespace="kr.or.ddit.mybatis.mapper.AttendanceDepartStatusMapper">
+	<select id="selectAttendanceDepartStatusList" resultType="kr.or.ddit.dto.AttendanceDepartStatusDTO">
+		SELECT
+			U.USER_ID
+			, U.USER_NM
+			, U.JBGD_CD
+			, ADS.WORK_YMD
+			, ADS.WORK_BGNG_DT
+			, ADS.WORK_END_DT
+			, ADS.WORK_HR
+			, ADS.LATE_YN
+			, ADS.EARLY_YN
+			, ADS.OVERTIME_YN
+			, ADS.OVERTIME_HR
+			, U.DEPT_ID
+			, ADS.WORK_STTS_CD
+			, ADS.VACT_YN
+			, ADS.BZTR_YN
+		FROM USERS U
+		LEFT OUTER JOIN
+			ATTENDANCE_DEPART_STATUS ADS
+		ON U.USER_ID = ADS.USER_ID
+		AND ADS.WORK_YMD = #{workYmd}
+		LEFT OUTER JOIN (
+			SELECT
+				DEPT_ID
+			FROM
+				DEPARTMENT
+			START WITH DEPT_ID = #{deptId}
+			CONNECT BY PRIOR DEPT_ID = UP_DEPT_ID
+		) D ON U.DEPT_ID = D.DEPT_ID
+		WHERE
+			D.DEPT_ID IS NOT NULL
+			AND U.RSGNTN_YN = 'N'
+		ORDER BY
+			U.JBGD_CD
+			, U.USER_ID
+	</select>
+
+	<select id="selectAttendanceDepartStatisticsList" resultType="kr.or.ddit.dto.AttendanceDepartStatusDTO">
+		SELECT
+			U.USER_ID
+			, U.USER_NM
+			, U.JBGD_CD
+			, ADS.WORK_YMD
+			, ADS.WORK_BGNG_DT
+			, ADS.LATE_YN
+			, ADS.EARLY_YN
+			, ADS.OVERTIME_YN
+			, U.DEPT_ID
+			, ADS.WORK_STTS_CD
+			, ADS.VACT_YN
+			, ADS.BZTR_YN
+			, ADS.WORK_HR
+			, ADS.OVERTIME_HR
+		FROM USERS U
+		LEFT OUTER JOIN
+			ATTENDANCE_DEPART_STATUS ADS
+		ON U.USER_ID = ADS.USER_ID
+		LEFT OUTER JOIN (
+			SELECT
+				DEPT_ID
+			FROM
+				DEPARTMENT
+			START WITH DEPT_ID = #{deptId}
+			CONNECT BY PRIOR DEPT_ID = UP_DEPT_ID
+		) D ON U.DEPT_ID = D.DEPT_ID
+		WHERE
+			D.DEPT_ID IS NOT NULL
+			AND U.RSGNTN_YN = 'N'
+		ORDER BY
+			U.JBGD_CD
+			, U.USER_ID
+	</select>
+</mapper>

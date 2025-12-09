@@ -1,0 +1,991 @@
+/* ------------------------------------------------------------- */
+/* 1. 전역 스타일: 기존 프로젝트의 기본 스타일을 침범하지 않도록 주의합니다. */
+/* ------------------------------------------------------------- */
+* {
+    /* box-sizing은 일반적으로 프로젝트 전체에 일관되게 적용되므로 유지 */
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* body { */
+/*     폰트 설정은 유지하되, 레이아웃을 망치는 스타일(overflow, height)은 제거 */
+/*     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; */
+/*     body { background: #f5f7fa; } 와 같은 스타일이 있다면 제거 */
+/* } */
+
+.chat-container {
+    /* 폰트 설정은 유지하되, 레이아웃을 망치는 스타일(overflow, height)은 제거 */
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    /* body { background: #f5f7fa; } 와 같은 스타일이 있다면 제거 */
+}
+
+/* ------------------------------------------------------------- */
+/* 2. 플로팅 버튼: position: fixed로 화면에 독립적이므로 그대로 유지 */
+/* ------------------------------------------------------------- */
+.chat-fab {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    /* background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); */
+    background: linear-gradient(135deg, #aeff00 0%, #1e8d00 100%);
+    border: none;
+    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    z-index: 1000;
+
+    animation: fabPulse 2s ease-in-out infinite;
+}
+
+/* 흔들림 효과 */
+@keyframes fabShake {
+    0%, 100% { transform: scale(1.1) rotate(0deg); }
+    25% { transform: scale(1.1) rotate(-5deg); }
+    75% { transform: scale(1.1) rotate(5deg); }
+}
+
+/* 뱃지 펄스 */
+.chat-fab.has-badge::after {
+    content: attr(data-count);
+    position: absolute;
+    top: -4px;
+    right: -4px;
+    background: #ff4757;
+    color: white;
+    border-radius: 12px;
+    padding: 2px 6px;
+    font-size: 11px;
+    font-weight: bold;
+    min-width: 20px;
+    text-align: center;
+
+    /* ⭐ 뱃지 애니메이션 */
+    animation: badgePulse 1s ease-in-out infinite;
+}
+
+@keyframes badgePulse {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.2);
+    }
+}
+.chat-fab:hover {
+	animation: fabShake 0.5s ease;
+    transform: scale(1.1);
+}
+
+.chat-fab svg {
+    width: 36px;
+    height: 36px;
+    fill: white;
+}
+
+/* ------------------------------------------------------------- */
+/* 3. 채팅 컨테이너 (.chat-container) 및 내부 요소에 스코프 지정 */
+/* ------------------------------------------------------------- */
+.chat-container {
+    position: fixed;
+    bottom: 100px;
+    right: 24px;
+    width: 410px;
+    height: 650px;
+    background: white;
+    border-radius: 16px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+    display: none;
+    flex-direction: column;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.chat-container.show {
+    display: flex;
+    animation: slideUp 0.3s ease;
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ------------------ Header ------------------ */
+.chat-container .chat-header {
+    padding: 16px 20px;
+    background: linear-gradient(135deg, #19c300 0%, #26b300 100%);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-shrink: 0;
+}
+
+.chat-container .chat-header-left {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex: 1;
+    min-width: 0;
+}
+
+.chat-container .back-btn {
+    width: 32px;
+    height: 32px;
+    border: none;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 8px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s;
+    z-index: 99;
+}
+
+.chat-container .back-btn:hover {
+    background: rgba(255, 255, 255, 0.3);
+}
+
+.chat-container .back-btn svg {
+    width: 18px;
+    height: 18px;
+    fill: white;
+}
+
+.chat-container .chat-title {
+    font-size: 18px;
+    font-weight: 600;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.chat-container .chat-title.editable {
+    cursor: pointer;
+    padding: 4px 8px;
+    border-radius: 4px;
+    transition: background 0.2s;
+}
+
+.chat-container .chat-title.editable:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.chat-container .chat-title-input {
+    background: rgba(255, 255, 255, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    color: white;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 18px;
+    font-weight: 600;
+    width: 100%;
+}
+
+.chat-container .chat-title-input::placeholder {
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.chat-container .header-actions {
+    display: flex;
+    gap: 8px;
+}
+
+.chat-container .icon-btn {
+    width: 36px;
+    height: 36px;
+    border: none;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 8px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s;
+}
+
+.chat-container .icon-btn:hover {
+    background: rgba(255, 255, 255, 0.3);
+}
+
+.chat-container .icon-btn svg {
+    width: 20px;
+    height: 20px;
+    fill: white;
+}
+
+/* ------------------ Search & Content ------------------ */
+.chat-container .search-bar {
+    padding: 12px 16px;
+    background: #f8f9fa;
+    border-bottom: 1px solid #e9ecef;
+}
+
+.chat-container .search-input {
+    width: 100%;
+    padding: 10px 16px;
+    border: 1px solid #dee2e6;
+    border-radius: 8px;
+    font-size: 14px;
+    transition: border-color 0.2s;
+}
+
+.chat-container .search-input:focus {
+    outline: none;
+    border-color: #667eea;
+}
+
+.chat-container .chat-content {
+    flex: 1;
+    overflow: auto;  /* auto → hidden 변경 */
+    background: #f8f9fa;
+    display: flex;
+    flex-direction: column;
+}
+
+.chat-container .chat-content::-webkit-scrollbar {
+    width: 6px;
+}
+
+.chat-container .chat-content::-webkit-scrollbar-thumb {
+    background: #cbd5e0;
+    border-radius: 3px;
+}
+
+/* ------------------ Recent List ------------------ */
+.chat-container .recent-list {
+    padding: 8px 0;
+    overflow-y: auto;
+}
+
+.chat-container .recent-item {
+    padding: 12px 16px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    cursor: pointer;
+    transition: background 0.2s;
+    background: white;
+    border-bottom: 1px solid #f1f3f5;
+}
+
+.chat-container .recent-item:hover {
+    background: #f8f9fa;
+}
+
+.chat-container .avatar-wrapper {
+    position: relative;
+    flex-shrink: 0;
+}
+
+.chat-container .avatar {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    /* background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); */
+    background: linear-gradient(135deg, #97dd00 0%, #1e8d00 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: 600;
+    font-size: 18px;
+}
+
+.chat-container .status-indicator {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    border: 2px solid white;
+}
+
+.chat-container .status-indicator.online {
+    background: #51cf66;
+}
+
+.chat-container .status-indicator.offline {
+    background: #adb5bd;
+}
+
+.chat-container .recent-info {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.chat-container .recent-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.chat-container .recent-name {
+    font-weight: 600;
+    font-size: 15px;
+    color: #212529;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    flex: 1;
+    min-width: 0;
+}
+
+.chat-container .recent-time {
+    font-size: 12px;
+    color: #868e96;
+    white-space: nowrap;
+    margin-left: auto;
+    flex-shrink: 0;
+}
+
+/* 메시지와 뱃지를 같은 줄에 배치 */
+.chat-container .recent-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 8px;
+}
+
+.chat-container .recent-message {
+    font-size: 14px;
+    color: #868e96;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    flex: 1;
+    min-width: 0;
+}
+
+.chat-container .unread-badge {
+    min-width: 20px;
+    height: 20px;
+    background: #ff4757;
+    color: white;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    font-weight: bold;
+    padding: 0 6px;
+    flex-shrink: 0;
+}
+
+/* ------------------ User Select List ------------------ */
+.chat-container .user-list {
+    padding: 8px 0;
+    overflow-y: auto;
+}
+
+.chat-container .user-item {
+    padding: 12px 16px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    cursor: pointer;
+    transition: background 0.2s;
+    background: white;
+    border-bottom: 1px solid #f1f3f5;
+}
+
+.chat-container .user-item:hover {
+    background: #f8f9fa;
+}
+
+.chat-container .user-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.chat-container .user-name {
+    font-weight: 600;
+    font-size: 15px;
+    color: #212529;
+    margin-bottom: 2px;
+}
+
+.chat-container .user-dept {
+    font-size: 13px;
+    color: #868e96;
+}
+
+.chat-container .checkbox {
+    width: 20px;
+    height: 20px;
+    border: 2px solid #dee2e6;
+    border-radius: 4px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+    flex-shrink: 0;
+}
+
+.chat-container .checkbox.checked {
+    background: #1e8d00;
+    border-color: #1e8d00;
+}
+
+.chat-container .checkbox.checked svg {
+    width: 14px;
+    height: 14px;
+    fill: white;
+}
+
+/* ------------------ Chat Room ------------------ */
+.chat-container .messages {
+    flex: 1;
+    min-height: 0;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    overflow-x: hidden;
+    gap: 12px;
+}
+
+/*  .messages의 스크롤바 스타일 추가 */
+.chat-container .messages::-webkit-scrollbar {
+    width: 6px;
+}
+
+.chat-container .messages::-webkit-scrollbar-thumb {
+    background: #cbd5e0;
+    border-radius: 3px;
+}
+
+.chat-container .date-divider {
+    text-align: center;
+    margin: 16px 0;
+    position: relative;
+}
+
+.chat-container .date-divider span {
+    background: #f8f9fa;
+    padding: 4px 12px;
+    border-radius: 12px;
+    font-size: 12px;
+    color: #868e96;
+    display: inline-block;
+}
+
+.chat-container .message-group {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 8px;
+}
+
+.chat-container .message-group.sent {
+    flex-direction: row-reverse;
+}
+
+.chat-container .message-avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: 600;
+    font-size: 14px;
+    flex-shrink: 0;
+}
+
+.chat-container .message-avatar.message-img {
+    display: block !important;
+}
+
+.chat-container .message-content {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    max-width: 70%;
+
+    align-items: flex-start;
+}
+
+.chat-container .message-group.sent .message-content {
+    align-items: flex-end;
+}
+
+.chat-container .message-sender {
+    font-size: 13px;
+    color: #495057;
+    font-weight: 600;
+    margin-bottom: 2px;
+    width: max-content;
+    max-width: 100%;
+}
+
+.chat-container .message-sender-dept {
+    font-size: 11px;
+    color: #868e96;
+    font-weight: normal;
+}
+
+.chat-container .message-bubble {
+    padding: 10px 14px;
+    border-radius: 12px;
+    font-size: 14px;
+    line-height: 1.5;
+    word-wrap: break-word;
+    width: fit-content;
+    max-width: 100%;
+}
+
+/* 수신자 말풍선 */
+.chat-container .message-group.received .message-bubble {
+    background: white;
+    color: #212529;
+    border-bottom-left-radius: 4px;
+}
+
+/* 발신자 말풍선 */
+.chat-container .message-group.sent .message-bubble {
+    background: #00b307;
+    color: white;
+    border-bottom-right-radius: 4px;
+}
+
+.chat-container .message-meta {
+    display: flex;
+    align-items: end;
+    gap: 4px;
+    font-size: 11px;
+    color: #868e96;
+    width: fit-content;
+}
+
+.chat-container .message-group.sent .message-meta {
+    flex-direction: row-reverse;
+}
+
+.chat-container .read-status {
+    color: #667eea;
+    font-weight: 600;
+    font-size: 11px;
+    display: flex;
+    align-items: end;
+}
+
+.message-group.received .message-content .message-footer {
+    display: flex; /* 하위 요소(message-meta, read-status)를 가로로 정렬 */
+    align-items: flex-end; /* 아래쪽 정렬 */
+    gap: 4px; /* 시간과 읽음 상태 사이 간격 */
+    margin-top: 4px;
+}
+
+
+/* ------------------ Input Area ------------------ */
+.chat-container .input-area {
+    padding: 12px 16px;
+    background: white;
+    border-top: 1px solid #e9ecef;
+    display: flex;
+    gap: 8px;
+    align-items: flex-end;
+}
+
+.chat-container .file-btn {
+    width: 40px;
+    height: 40px;
+    border: none;
+    background: #f8f9fa;
+    border-radius: 8px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s;
+    flex-shrink: 0;
+}
+
+.chat-container .file-btn:hover {
+    background: #e9ecef;
+}
+
+.chat-container .file-btn svg {
+    width: 20px;
+    height: 20px;
+    fill: #495057;
+}
+
+.chat-container .message-input {
+    flex: 1;
+    padding: 10px 14px;
+    border: 1px solid #dee2e6;
+    border-radius: 8px;
+    font-size: 14px;
+    resize: none;
+    /* font-family: inherit을 사용해서 전역 폰트를 상속하도록 유지 */
+    font-family: inherit;
+    max-height: 100px;
+}
+
+.chat-container .message-input:focus {
+    outline: none;
+    border-color:#009906;
+}
+
+.chat-container .send-btn {
+    width: 40px;
+    height: 40px;
+    border: none;
+    background: #009906;
+/*     background: #667eea; */
+    border-radius: 8px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s;
+    flex-shrink: 0;
+}
+
+.chat-container .send-btn:hover {
+    background: #5568d3;
+}
+
+.chat-container .send-btn svg {
+    width: 20px;
+    height: 20px;
+    fill: white;
+}
+
+/* ------------------ Bottom Bar (Group Select) ------------------ */
+.chat-container .bottom-bar {
+    padding: 12px 16px;
+    background: white;
+    border-top: 1px solid #e9ecef;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.chat-container .selected-count {
+    font-size: 14px;
+    color: #495057;
+}
+
+.chat-container .selected-count span {
+    font-weight: 600;
+    color: #667eea;
+}
+
+.chat-container .confirm-btn {
+    padding: 8px 20px;
+    border: none;
+    background: #1ab500;
+    color: white;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.chat-container .confirm-btn:hover {
+    background: #138500;
+}
+
+.chat-container .confirm-btn:disabled {
+    background: #e9ecef;
+    color: #adb5bd;
+    cursor: not-allowed;
+}
+
+/* 스크롤바 스타일 (맨 아래 추가) */
+.chat-container .recent-list::-webkit-scrollbar,
+.chat-container .user-list::-webkit-scrollbar {
+    width: 6px;
+}
+
+.chat-container .recent-list::-webkit-scrollbar-thumb,
+.chat-container .user-list::-webkit-scrollbar-thumb {
+    background: #cbd5e0;
+    border-radius: 3px;
+}
+
+/* 채팅 목록 - 부서명+직급 표시 CSS */
+
+.recent-name {
+    font-weight: 600;
+    font-size: 15px;
+    color: #1a1a1a;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* ⭐ 부서명+직급 스타일 */
+.recent-position {
+    font-size: 12px;
+    color: #868e96;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.recent-time {
+    font-size: 12px;
+    color: #868e96;
+    flex-shrink: 0;
+    white-space: nowrap;
+}
+
+.recent-name-container {
+    display: flex; /* 이름과 인원수를 한 줄에 배치 */
+    align-items: center;
+}
+
+.recent-participant-count {
+    font-size: 11px;
+    color: #6c757d; /* 회색 계열 */
+    background-color: #e9ecef;
+    padding: 1px 6px;
+    border-radius: 10px;
+    margin-left: 8px;
+    font-weight: 500;
+}
+
+.chat-container .recent-name-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex: 0 1 auto;     /* ⭐ 변경 */
+    min-width: 0;
+    overflow: hidden;
+    max-width: 70%;
+}
+
+/* recent-name */
+.chat-container .recent-name {
+    font-weight: 600;
+    font-size: 15px;
+    color: #212529;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    flex: 1;
+    min-width: 0;
+}
+
+/* recent-participant-count  */
+.chat-container .recent-participant-count {
+    font-size: 12px;
+    color: #868e96;
+    font-weight: 500;
+    flex-shrink: 0;
+    white-space: nowrap;
+}
+
+
+.chat-container .recent-position {
+    font-size: 12px;
+    color: #868e96;
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+
+/* ==================== 채팅방 정보 사이드 패널 ==================== */
+
+/* 채팅방 컨텐츠 영역 (상대 위치) */
+.chat-container .chat-content {
+    position: relative;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+/* 사이드 패널 */
+.chat-container .room-info-panel {
+    position: absolute;
+    top: 0;
+    right: -100%;
+    width: 100%;
+    height: 100%;
+    background: white;
+    z-index: 10;
+    display: flex;
+    flex-direction: column;
+    transition: right 0.3s ease;
+    box-shadow: -2px 0 8px rgba(0, 0, 0, 0.1);
+}
+
+.chat-container .room-info-panel.show {
+    right: 0;
+}
+
+/* 사이드 패널 헤더 */
+.chat-container .room-info-header {
+    padding: 16px 20px;
+    border-bottom: 1px solid #e9ecef;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #f8f9fa;
+}
+
+.chat-container .room-info-header h3 {
+    font-size: 16px;
+    font-weight: 600;
+    color: #212529;
+    margin: 0;
+}
+
+.chat-container .close-panel-btn {
+    width: 32px;
+    height: 32px;
+    border: none;
+    background: rgba(0, 0, 0, 0.05);
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s;
+}
+
+.chat-container .close-panel-btn:hover {
+    background: rgba(0, 0, 0, 0.1);
+}
+
+.chat-container .close-panel-btn svg {
+    width: 18px;
+    height: 18px;
+    fill: #495057;
+}
+
+/* 사이드 패널 컨텐츠 */
+.chat-container .room-info-content {
+    flex: 1;
+    overflow-y: auto;
+    padding: 16px 20px;
+}
+
+/* 참여자 섹션 */
+.chat-container .participants-section h4 {
+    font-size: 14px;
+    font-weight: 600;
+    color: #495057;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.chat-container .participant-count-badge {
+    background: #e9ecef;
+    color: #495057;
+    font-size: 12px;
+    padding: 2px 8px;
+    border-radius: 12px;
+    font-weight: 500;
+}
+
+.chat-container .participants-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.chat-container .participant-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 8px;
+    border-radius: 8px;
+    transition: background 0.2s;
+}
+
+.chat-container .participant-item:hover {
+    background: #f8f9fa;
+}
+
+.chat-container .participant-item .avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: 600;
+    font-size: 16px;
+    flex-shrink: 0;
+}
+
+.chat-container .participant-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.chat-container .participant-name {
+    font-size: 14px;
+    font-weight: 600;
+    color: #212529;
+    margin-bottom: 2px;
+}
+
+.chat-container .participant-dept {
+    font-size: 12px;
+    color: #868e96;
+}
+
+/* 사이드 패널 푸터 */
+.chat-container .room-info-footer {
+    padding: 16px 20px;
+    border-top: 1px solid #e9ecef;
+    background: white;
+}
+
+.chat-container .leave-room-btn {
+    width: 100%;
+    padding: 12px 16px;
+    background: #ff4757;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    transition: background 0.2s;
+}
+
+.chat-container .leave-room-btn:hover {
+    background: #ee3545;
+}
+
+.chat-container .leave-room-btn svg {
+    width: 20px;
+    height: 20px;
+    fill: white;
+}
+

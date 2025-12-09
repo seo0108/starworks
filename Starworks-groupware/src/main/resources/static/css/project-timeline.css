@@ -1,0 +1,757 @@
+/* ========================================
+   프로젝트 타임라인 뷰 스타일
+======================================== */
+
+/* 타임라인 컨테이너 */
+.timeline-container {
+    position: relative;
+    padding: 20px 0;  /* 40px → 20px */
+    overflow-x: auto;
+    background: white;
+    border-radius: 0.75rem;
+    margin-bottom: 30px;  /* 카드 그리드와 간격 */
+}
+
+/* 월별 헤더 */
+.timeline-header {
+    display: flex;
+    border-bottom: 3px solid #435ebe;
+    margin-bottom: 15px;  /* 20px → 15px */
+    position: relative;
+}
+
+.timeline-month {
+    flex: 1;
+    text-align: center;
+    padding: 10px;  /* 12px → 10px */
+    font-weight: 600;
+    color: #435ebe;
+    border-right: 1px solid #e0e0e0;
+    font-size: 0.9rem;  /* 0.95rem → 0.9rem */
+}
+
+.timeline-month:last-child {
+    border-right: none;
+}
+
+/* 타임라인 그리드 */
+.timeline-grid {
+    position: relative;
+    min-height: 150px;  /* 200px → 150px */
+    /* max-height 제거 - 프로젝트 수에 따라 자동으로 늘어남 */
+    padding: 10px 0 30px 0;  /* 하단 패딩 추가로 범례와 겹치지 않게 */
+}
+
+/* 배경 세로선 (월 구분) */
+.timeline-grid-lines {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+}
+
+.timeline-grid-line {
+    position: absolute;
+    top: 0;
+    width: 1px;
+    height: 100%;
+    background: #e9ecef;
+}
+
+/* 오늘 날짜 표시 선 */
+.today-marker {
+    position: absolute;
+    top: -20px;  /* -25px → -20px */
+    width: 3px;
+    height: calc(100% + 20px);  /* 그리드 높이에 맞춰 자동으로 늘어남 */
+    background: #dc3545;
+    z-index: 5;
+    box-shadow: 0 0 10px rgba(220, 53, 69, 0.3);
+}
+
+.today-marker::before {
+    content: '오늘';
+    position: absolute;
+    top: -6px;  /* -8px → -6px */
+    left: 50%;
+    transform: translateX(-50%);
+    background: #dc3545;
+    color: white;
+    padding: 3px 8px;  /* 4px 10px → 3px 8px */
+    border-radius: 4px;
+    font-size: 10px;  /* 11px → 10px */
+    font-weight: 700;
+    white-space: nowrap;
+    box-shadow: 0 2px 8px rgba(220, 53, 69, 0.4);
+}
+
+/* 프로젝트 바 */
+.project-bar {
+    position: absolute;
+    /* height: 50px; */
+    min-width: 180px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-radius: 8px;
+    padding: 8px 12px;
+    color: white;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12);
+    overflow: visible;
+}
+
+.project-bar:hover {
+    transform: translateY(-4px) scale(1.02);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+    z-index: 100;
+}
+
+/* 프로젝트 바 상태별 색상 */
+.project-bar.status-pending {
+    background: linear-gradient(135deg, #ffd89b 0%, #ff9a56 100%);
+}
+
+.project-bar.status-progress {
+    /* background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); */
+    background: linear-gradient(135deg, #00b4ff 0%, #0045d5 100%);
+}
+
+.project-bar.status-hold {
+    background: linear-gradient(135deg, #a8a8a8 0%, #6c757d 100%);
+}
+
+.project-bar.status-done {
+    background: linear-gradient(135deg, #56ab2f 0%, #a8e063 100%);
+    opacity: 0.85;
+}
+
+.project-bar.status-locked {
+    background: linear-gradient(135deg, #cfd9df 0%, #e2ebf0 100%);
+    cursor: not-allowed;
+    opacity: 0.7;
+}
+
+/* ========================================
+   진행률 100% 완료 대기 스타일 START
+======================================== */
+
+/* 진행률 100% 스타일 - 기존 상태 색상보다 우선 적용 */
+.project-bar.progress-complete {
+    background: linear-gradient(135deg, #00c502 0%, #1db300 100%) !important;
+}
+
+/* 진행률 100% 체크 아이콘 */
+.project-bar.progress-complete .bi-check-circle-fill {
+    margin-left: 6px;
+    animation: checkBounce 2s infinite;
+}
+
+@keyframes checkBounce {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.15); }
+}
+
+@keyframes badgeBlink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.6; }
+}
+
+/* 진행률 100% 바운스 효과 - 통통 튀는 느낌 */
+.project-bar.progress-complete {
+    background: linear-gradient(135deg, #00c502 0%, #1db300 100%) !important;
+    animation: barBounce 2s ease-in-out infinite;
+    box-shadow: 0 0 15px rgba(0, 197, 2, 0.3);
+}
+
+@keyframes barBounce {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    10% {
+        transform: translateY(-4px);
+    }
+    20% {
+        transform: translateY(0);
+    }
+    30% {
+        transform: translateY(-2px);
+    }
+    40% {
+        transform: translateY(0);
+    }
+}
+
+/* 완료 대기 카드 바운스 효과 - 통통 튀는 느낌 */
+.project-card[data-complete="true"] {
+    animation: cardBounce 2s ease-in-out infinite;
+}
+
+@keyframes cardBounce {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    10% {
+        transform: translateY(-8px);
+    }
+    20% {
+        transform: translateY(0);
+    }
+    30% {
+        transform: translateY(-4px);
+    }
+    40% {
+        transform: translateY(0);
+    }
+}
+
+/* ========================================
+   진행률 100% 완료 대기 스타일 END
+======================================== */
+
+/* 프로젝트 정보 */
+.project-info {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+}
+
+.project-name {
+    font-weight: 700;
+    font-size: 13px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    flex: 1;
+    line-height: 1.2;
+}
+
+.project-progress {
+    font-size: 12px;
+    font-weight: 700;
+    background: rgba(255, 255, 255, 0.35);
+    padding: 2px 8px;
+    border-radius: 10px;
+    white-space: nowrap;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.project-meta {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 4px;
+    font-size: 10px;
+    opacity: 0.95;
+}
+
+/* 타임라인 아바타 그룹 - 숨김 */
+.timeline-avatar-group {
+    display: none;
+}
+
+.timeline-avatar {
+    display: none;
+}
+
+/* 상태 뱃지 */
+.status-badge {
+    display: inline-block;
+    padding: 2px 6px;
+    border-radius: 10px;
+    font-size: 9px;
+    font-weight: 600;
+    background: rgba(255, 255, 255, 0.35);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+/* D-day 표시 */
+.dday-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 2px;
+    padding: 2px 6px;
+    border-radius: 10px;
+    font-size: 9px;
+    font-weight: 700;
+    background: rgba(255, 255, 255, 0.35);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.dday-badge.urgent {
+    background: rgba(220, 53, 69, 0.2);
+    border-color: rgba(220, 53, 69, 0.4);
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.05);
+    }
+}
+
+/* 범례 */
+.timeline-legend {
+    display: flex;
+    gap: 20px;  /* 24px → 20px */
+    margin-top: 20px;  /* 30px → 20px */
+    padding-top: 15px;  /* 20px → 15px */
+    border-top: 2px solid #e9ecef;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;  /* 10px → 8px */
+    font-size: 12px;  /* 13px → 12px */
+    color: #495057;
+    font-weight: 500;
+}
+
+.legend-color {
+    width: 30px;  /* 35px → 30px */
+    height: 18px;  /* 22px → 18px */
+    border-radius: 5px;  /* 6px → 5px */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* 잠금 아이콘 */
+.project-bar .bi-lock-fill {
+    margin-left: 6px;
+    opacity: 0.8;
+}
+
+/* 완료 아이콘 */
+.project-bar .bi-check-circle-fill {
+    margin-left: 6px;
+}
+
+/* 빈 상태 */
+.timeline-empty {
+    text-align: center;
+    padding: 80px 20px;
+    color: #6c757d;
+}
+
+.timeline-empty i {
+    font-size: 4rem;
+    color: #cbd5e1;
+    margin-bottom: 20px;
+}
+
+.timeline-empty p {
+    font-size: 1.1rem;
+    margin-bottom: 0;
+}
+
+/* 툴팁 스타일 강화 */
+.project-bar[data-bs-toggle="tooltip"] {
+    position: relative;
+}
+
+/* 로딩 상태 */
+.timeline-loading {
+    text-align: center;
+    padding: 60px 20px;
+}
+
+.timeline-loading .spinner-border {
+    width: 3rem;
+    height: 3rem;
+    border-width: 0.3rem;
+}
+
+/* 반응형 */
+@media (max-width: 992px) {
+    .timeline-container {
+        overflow-x: scroll;
+    }
+
+    .timeline-grid {
+        min-width: 900px;
+    }
+
+    .project-bar {
+        height: 65px;
+        padding: 10px 14px;
+    }
+
+    .project-name {
+        font-size: 13px;
+    }
+}
+
+@media (max-width: 768px) {
+    .timeline-grid {
+        min-width: 800px;
+    }
+
+    .timeline-month {
+        font-size: 0.85rem;
+        padding: 10px;
+    }
+
+    .project-bar {
+        height: 60px;
+        padding: 8px 12px;
+    }
+
+    .project-name {
+        font-size: 12px;
+    }
+
+    .timeline-legend {
+        gap: 16px;
+    }
+
+    .legend-item {
+        font-size: 12px;
+    }
+}
+
+/* 스크롤바 스타일링 */
+.timeline-container::-webkit-scrollbar {
+    height: 8px;
+}
+
+.timeline-container::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 4px;
+}
+
+.timeline-container::-webkit-scrollbar-thumb {
+    background: #435ebe;
+    border-radius: 4px;
+}
+
+.timeline-container::-webkit-scrollbar-thumb:hover {
+    background: #364a92;
+}
+
+/* ========================================
+   뷰 전환 버튼 스타일
+======================================== */
+
+/* 타임라인 섹션 제목 */
+.timeline-section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+    padding: 15px 20px;
+    background: #f8f9fa;
+    border-radius: 8px;
+}
+
+.timeline-section-title {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #435ebe;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 0;
+}
+
+.timeline-section-subtitle {
+    font-size: 0.85rem;
+    color: #6c757d;
+    margin: 0;
+}
+
+/* ========================================
+   카드 그리드 뷰 스타일
+======================================== */
+.card-grid-container {
+    display: block;  /* 항상 표시 */
+    margin-top: 30px;  /* 타임라인과 간격 */
+}
+
+.card-grid-container.active {
+    display: block;
+}
+
+/* 카드 그리드 헤더 */
+.card-grid-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 2px solid #e9ecef;
+}
+
+.card-grid-title {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: #435ebe;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 0;
+}
+
+.project-cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 20px;
+    padding: 20px 0;
+    min-height: 300px;  /* 최소 높이 추가 */
+}
+
+/* 빈 상태일 때 중앙 정렬 */
+.project-cards-grid:has(.timeline-empty) {
+    display: flex;
+    justify-content: center;
+    align-items: crgb(13, 85, 255)}
+
+.project-card {
+    background: white;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    transition: all 0.3s ease;
+    cursor: pointer;
+    border: 2px solid transparent;
+}
+
+.project-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+    border-color: #435ebe;
+}
+
+/* 상태별 카드 좌측 보더 */
+.project-card.status-pending {
+    border-left: 5px solid #cbd5e1;
+    opacity: 0.85;
+    cursor: not-allowed;
+    filter: grayscale(20%) brightness(1.05);
+    background: #f8f9fa;
+    position: relative;
+}
+
+.project-card.status-pending:hover {
+    transform: none;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    border-color: transparent;
+}
+
+.project-card.status-pending::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(255, 255, 255, 0.2);
+    pointer-events: none;
+    border-radius: 12px;
+}
+
+.project-card.status-progress {
+    /* border-left: 5px solid #667eea; */
+    border-left: 5px solid #0045d5;
+}
+
+.project-card.status-hold {
+    border-left: 5px solid #6c757d;
+}
+
+.project-card.status-done {
+    border-left: 5px solid #56ab2f;
+    opacity: 0.85;
+}
+
+.project-card.status-locked {
+    border-left: 5px solid #cbd5e1;
+    opacity: 0.6;
+    cursor: not-allowed;
+    filter: grayscale(40%) brightness(1.05);
+    background: #f8f9fa;
+    position: relative;
+}
+
+.project-card.status-locked:hover {
+    transform: none;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    border-color: transparent;
+}
+
+.project-card.status-locked::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(255, 255, 255, 0.3);
+    pointer-events: none;
+    border-radius: 12px;
+}
+/* 카드 헤더 */
+.project-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 15px;
+}
+
+.project-card-title {
+    font-size: 16px;
+    font-weight: 700;
+    color: #2c3e50;
+    margin: 0;
+    line-height: 1.4;
+    flex: 1;
+}
+
+.project-card-status {
+    margin-left: 10px;
+}
+
+/* 카드 진행률 */
+.project-card-progress {
+    margin: 15px 0;
+}
+
+.project-card-progress-label {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 8px;
+    font-size: 13px;
+    color: #6c757d;
+}
+
+.project-card-progress-value {
+    font-weight: 700;
+    color: #435ebe;
+}
+
+.project-card-progress-bar {
+    height: 10px;
+    background: #e9ecef;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.project-card-progress-fill {
+    height: 100%;
+    border-radius: 10px;
+    transition: width 0.3s ease;
+}
+
+.project-card-progress-fill.status-pending {
+    background: linear-gradient(90deg, #ffd89b 0%, #ff9a56 100%);
+}
+
+.project-card-progress-fill.status-progress {
+    /* background: linear-gradient(90deg, #667eea 0%, #764ba2 100%); */
+    background: linear-gradient(135deg, #00b4ff 0%, #0045d5 100%);
+}
+
+.project-card-progress-fill.status-hold {
+    background: linear-gradient(90deg, #a8a8a8 0%, #6c757d 100%);
+}
+
+.project-card-progress-fill.status-done {
+    background: linear-gradient(90deg, #56ab2f 0%, #a8e063 100%);
+}
+
+/* 카드 날짜 정보 */
+.project-card-dates {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 15px 0;
+    font-size: 13px;
+    color: #6c757d;
+}
+
+.project-card-dates i {
+    color: #435ebe;
+}
+
+/* 카드 하단 */
+.project-card-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 15px;
+    border-top: 1px solid #e9ecef;
+    margin-top: 15px;
+}
+
+.project-card-members {
+    display: flex;
+}
+
+.project-card-avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    border: 2px solid white;
+    margin-left: -8px;
+    background: white;
+    transition: transform 0.2s;
+}
+
+.project-card-avatar:first-child {
+    margin-left: 0;
+}
+
+.project-card-avatar:hover {
+    transform: scale(1.15);
+    z-index: 10;
+}
+
+.project-card-avatar img {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.project-card-dday {
+    font-size: 12px;
+    font-weight: 700;
+    padding: 5px 12px;
+    border-radius: 12px;
+    background: #f0f4ff;
+    color: #435ebe;
+}
+
+.project-card-dday.urgent {
+    background: #fee;
+    color: #dc3545;
+    animation: cardPulse 2s infinite;
+}
+
+@keyframes cardPulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+}
+
+/* 카드 아이콘 */
+.project-card-icon {
+    margin-left: 6px;
+    opacity: 0.7;
+}
+
+/* 반응형 - 카드 그리드 */
+@media (max-width: 768px) {
+    .project-cards-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .view-toggle-buttons {
+        justify-content: center;
+    }
+}

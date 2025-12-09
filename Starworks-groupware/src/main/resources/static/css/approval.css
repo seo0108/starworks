@@ -1,0 +1,377 @@
+/* 기안서 작성(approval-draft-create.html) */
+.approval-line-table th, .approval-line-table td {
+	vertical-align: middle;
+}
+
+.user-node {
+	cursor: pointer;
+}
+
+.user-node:hover {
+	background-color: #f0f0f0;
+}
+
+.selected-user {
+	background-color: #e9ecef;
+	font-weight: bold;
+}
+
+#approval-line-final-list li, #fav-approval-line-final-list li {
+	cursor: grab;
+}
+
+.gu-mirror {
+	cursor: grabbing;
+}
+
+/* approval-draft.html */
+.table-hover tbody tr:hover {
+	background-color: #f8f9fa;
+	cursor: pointer;
+}
+
+/* 지출결의서 결제요청(approval-expense-create.html) */
+
+.approval-line-table th, .approval-line-table td {
+    vertical-align: middle;
+}
+.user-node {
+    cursor: pointer;
+}
+.user-node:hover {
+    background-color: #f0f0f0;
+}
+.selected-user {
+    background-color: #e9ecef;
+    font-weight: bold;
+}
+#approval-line-final-list li {
+    cursor: grab;
+}
+.gu-mirror {
+    cursor: grabbing;
+}
+
+
+/* 지출결의서 결재 페이지(approval-expense-view.html) */
+.approval-line-table th, .approval-line-table td {
+    vertical-align: middle;
+}
+
+
+
+/* 내 결재함(approval-main.html) */
+.btn-group .btn {
+    margin-right: 0;
+}
+.table-hover tbody tr:hover {
+    background-color: #f8f9fa;
+    cursor: pointer;
+}
+
+
+/* 품의서 상세 (approval-report-view.html) */
+.approval-line-box .approver {
+    padding: 1rem;
+    text-align: center;
+    border: 1px solid #ddd;
+}
+.approval-line-box .approver .status {
+    font-size: 0.8rem;
+    margin-top: 0.5rem;
+    color: #6c757d;
+}
+.approval-line-box .approver .name {
+    font-weight: bold;
+}
+.approval-line-box .approver .date {
+    font-size: 0.75rem;
+    color: #adb5bd;
+}
+.document-content {
+    min-height: 300px;
+    border: 1px solid #eee;
+    padding: 1.5rem;
+    border-radius: 5px;
+    background-color: #fcfcfc;
+}
+/* New styles for image-based approval line */
+.approval-line-table-img {
+    width: 100%;
+    border-collapse: collapse;
+    border: 1px solid #dee2e6;
+}
+.approval-line-table-img th, .approval-line-table-img td {
+    border: 1px solid #dee2e6;
+    padding: 0;
+    text-align: center;
+    vertical-align: middle;
+}
+.approval-line-table-img th {
+    width: 80px;
+    background-color: #f8f9fa;
+    font-weight: bold;
+}
+.approval-line-table-img .approver-cell {
+    min-width: 100px;
+    height: 100px; /* Adjust height as needed */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-size: 0.9rem;
+}
+.approval-line-table-img .approver-cell .status-circle {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+.approval-line-table-img .status-circle.approved {
+    background-color: #e0f7fa; /* Light blue */
+    border: 2px solid #00bcd4; /* Cyan */
+    color: #00bcd4;
+}
+.approval-line-table-img .status-circle.pending {
+    background-color: #fff3e0; /* Light orange */
+    border: 2px solid #ff9800; /* Orange */
+    color: #ff9800;
+}
+.approval-line-table-img .status-circle.rejected {
+    background-color: #ffebee; /* Light red */
+    border: 2px solid #f44336; /* Red */
+    color: #f44336;
+}
+.approval-line-table-img .approver-name {
+    font-weight: bold;
+}
+.approval-line-table-img .approver-date {
+    font-size: 0.75rem;
+    color: #6c757d;
+}
+
+/* //////////////////// 가영 추가 //////////////////// */
+
+/* 전자결재 메인화면 결재선 아바타 표시 */
+.approval-user-avatar {
+	width: 48px;
+	height: 48px;
+	border-radius: 50%;
+	background: var(--bg-gradient);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	color: white;
+	font-weight: 600;
+}
+
+/* wrapper에 테두리 주고 패딩으로 아바타와 간격 확보 */
+.approval-avatar-wrapper {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    padding: 3px; /* 테두리와 아바타 사이 간격 */
+
+    margin: 9px 0 9px 0;
+
+    position: relative; /* 추가: 체크표시 위치 기준 */
+}
+
+/* 승인한 아바타에 체크 표시 추가 */
+.approval-avatar-wrapper.approved::after {
+  content: "✔";
+  position: absolute;
+  bottom: 36px;
+  right: -8px;
+  background: rgb(53 95 225);
+  color: white;
+  font-size: 12px;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 3px solid white; /* 외곽선 */
+}
+
+/* 반려한 아바타에 체크 표시 추가 */
+.approval-avatar-wrapper.rejected::after {
+  content: "↩";
+  position: absolute;
+  bottom: 36px;
+  right: -8px;
+  background: var(--danger-color);
+  color: white;
+  font-size: 12px;
+  font-weight: bold;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 3px solid white; /* 외곽선 */
+}
+
+/* 회수한 아바타에 체크 표시 추가 */
+.approval-avatar-wrapper.recovery::after {
+  content: "⬅";
+  position: absolute;
+  bottom: 36px;
+  right: -8px;
+  background: var(--text-primary);
+  color: white;
+  font-size: 10px;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 3px solid white; /* 외곽선 */
+}
+
+.approval-avatar-wrapper.border-unread {
+  border: 2.5px dashed rgb(53 95 225); /* 미열람 */
+}
+
+.approval-avatar-wrapper.border-unprocessed {
+  border: 2.5px solid rgb(53 95 225); /* 미처리 */
+}
+
+.approval-avatar-wrapper.border-pass {
+  border: 2.5px solid var(--success-color); /* 승인 */
+}
+
+.approval-avatar-wrapper.border-reject {
+  border: 2.5px solid var(--danger-color); /* 반려 */
+}
+
+.approval-avatar-wrapper.border-recovery {
+  border: 2.5px solid var(--text-primary); /* 회수 */
+}
+
+.approval-avatar-wrapper.border-normal {
+  border: 2.5px solid #e6eaee; /* 일반 */
+}
+
+.approval-line-container { 	/* 컨테이너를 가로 Flexbox로 */
+    display: flex;
+    flex-direction: row;   /* 기본값이라 생략 가능 */
+    gap: 15px 20px;             /* 각 approval-line 사이 간격 */
+    flex-wrap: wrap;       /* 화면 작아지면 다음 줄로 넘어가도록 */
+
+    align-items: center;
+}
+
+.approval-line {			/* 각 approval-line을 세로로 쌓이게 */
+    display: flex;
+    flex-direction: column;
+    align-items: center;   /* 가운데 정렬 */
+    text-align: center;
+    min-width: 98px;       /* 필요에 따라 width 조정 */
+    position: relative; /* 화살표 위치를 위해 */
+}
+
+.approval-line:not(:last-child)::after { 		/* approval-line 사이 화살표 표시 */
+    content: '❯';             /* 화살표 아이콘 */
+    position: absolute;
+    right: -15px;              /* div 사이 간격 조정 */
+    top: 42%;
+    transform: translateY(-50%);
+    font-size: 22px;
+    color: #cccccc;
+}
+
+.approval-info span {
+	font-size: 14px;
+	color: #bbbbbb;
+}
+
+/* 상태 텍스트 */
+.approval-status {
+    font-weight: 600;
+}
+
+.bg-outline-primary {
+    --bs-bg-opacity: 1;
+    color:  rgb(63 106 240);
+    border: 2.3px solid  rgb(63 106 240);
+    background-color: white !important;
+}
+
+/* 메인화면 문서 종류 */
+.doc-card {
+  width: 6rem;
+  height: 6rem;
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+
+.doc-title {
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+/* 전자결재 홈 테이블 */
+
+/* 테이블 패딩 줄임 */
+.table-lg.approval-table > :not(caption) > * > * {
+    padding: 1.2rem !important;
+}
+
+.approval-line-td {
+	display:flex;
+}
+
+.approval-table {
+    table-layout: fixed;
+    width: 100%;
+}
+
+.approval-table th.col-title {
+    width: 35%;
+}
+
+.approval-table th.col-date {
+    width: 18%;
+}
+
+.approval-table th.col-author {
+    width: 10%;
+}
+
+.approval-table th.col-status {
+    width: 37%;
+}
+
+/* 제목 열 */
+.approval-table th.col-title,
+.approval-table td.col-title {
+    padding-left: 5rem !important;   /* 기존 padding 덮어쓰기 */
+}
+
+/* 기안일시 열 중앙정렬 */
+.approval-table th.col-date,
+.approval-table td.col-date {
+    text-align: center;
+}
+
+/* 기안자 열 */
+.approval-table th.col-author,
+.approval-table td.col-author {
+    width: 13%;
+    text-align: center;
+}
+

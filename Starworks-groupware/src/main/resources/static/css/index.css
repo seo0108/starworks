@@ -1,0 +1,123 @@
+/**
+ * <pre>
+ * << 개정이력(Modification Information) >>
+ *
+ *   수정일      			수정자           수정내용
+ *  -----------   	-------------    ---------------------------
+ *  2025. 10. 22.     	윤서현            최초 생성
+ *
+ * </pre>
+ */
+@charset "UTF-8";
+
+.welcome-section {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: linear-gradient(135deg, #686ef1, #8a7df9);
+  border-radius: 18px;
+  padding: 36px 48px;
+  color: #fff;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+  position: relative;
+  overflow: hidden;
+  margin-bottom: 25px;
+}
+
+/* 부드러운 라이트 효과 */
+.welcome-section::before {
+  content: "";
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle at top right, rgba(255,255,255,0.3), transparent 70%);
+  z-index: 0;
+}
+
+.welcome-left {
+  position: relative;
+  z-index: 1;
+}
+
+.welcome-title {
+  font-size: 1.9rem;
+  font-weight: 800;
+  margin-bottom: 8px;
+}
+
+.welcome-subtitle {
+  font-size: 1.05rem;
+  opacity: 0.95;
+}
+
+/* 🌤️ 날씨 카드 */
+.weather-card {
+  position: relative;
+  z-index: 1;
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 16px;
+  padding: 18px 24px;
+  min-width: 220px;
+  color: #fff;
+  text-align: right;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
+  backdrop-filter: blur(10px);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.weather-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+}
+
+.weather-main {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.weather-left img {
+  width: 48px;
+  height: 48px;
+  filter: drop-shadow(0 2px 3px rgba(0, 0, 0, 0.25));
+}
+
+#weather-temp {
+  font-size: 1.6rem;
+  font-weight: 700;
+  margin-right: 4px;
+}
+
+.weather-extra {
+  font-size: 0.9rem;
+  opacity: 0.9;
+  margin-top: 4px;
+}
+
+.weather-footer {
+  font-size: 0.75rem;
+  opacity: 0.85;
+  margin-top: 6px;
+  display: flex;
+  justify-content: flex-end;
+  gap: 6px;
+}
+
+/* ✨ 반응형 개선 */
+@media (max-width: 992px) {
+  .welcome-section {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 20px;
+  }
+  .weather-card {
+    align-self: flex-end;
+  }
+}
+

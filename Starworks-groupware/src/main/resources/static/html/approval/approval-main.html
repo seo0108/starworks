@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>전자결재</title>
+<!--     <link rel="preconnect" href="https://fonts.gstatic.com"> -->
+<!--     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700;800&display=swap" rel="stylesheet"> -->
+<!--     <link rel="stylesheet" href="mazer-1.0.0/dist/assets/css/bootstrap.css"> -->
+<!--     <link rel="stylesheet" href="mazer-1.0.0/dist/assets/vendors/perfect-scrollbar/perfect-scrollbar.css"> -->
+<!--     <link rel="stylesheet" href="mazer-1.0.0/dist/assets/vendors/bootstrap-icons/bootstrap-icons.css"> -->
+<!--     <link rel="stylesheet" href="mazer-1.0.0/dist/assets/css/app.css"> -->
+<!--     <link rel="shortcut icon" href="mazer-1.0.0/dist/assets/images/favicon.svg" type="image/x-icon"> -->
+    
+</head>
+<body>
+            
+            <div id="main-content">
+                <div class="page-heading">
+                    <div class="page-title">
+                        <div class="row">
+                            <div class="col-12 col-md-6 order-md-1 order-last">
+                                <h3>전자결재</h3>
+                                <p class="text-subtitle text-muted">결재 문서를 확인하거나 새 문서를 기안합니다.</p>
+                            </div>
+                            <div class="col-12 col-md-6 order-md-2 order-first d-flex align-items-center justify-content-end">
+                                <a href="#" class="btn btn-primary btn-lg" data-bs-toggle="modal" data-bs-target="#selectFormModal"><i class="bi bi-pencil-fill me-2"></i>기안서 작성</a>
+                            </div>
+                        </div>
+                    </div>
+                    <section class="section">
+                        <ul class="nav nav-tabs" id="myTab" role="tablist">
+                            <li class="nav-item" role="presentation">
+                                <a class="nav-link active" id="incoming-tab" data-bs-toggle="tab" href="#incoming" role="tab" aria-controls="incoming" aria-selected="true">내 결재</a>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <a class="nav-link" id="frequent-tab" data-bs-toggle="tab" href="#frequent" role="tab" aria-controls="frequent" aria-selected="false">자주쓰는 결재</a>
+                            </li>
+                        </ul>
+                        <div class="tab-content" id="myTabContent">
+                            <div class="tab-pane fade show active" id="incoming" role="tabpanel" aria-labelledby="incoming-tab">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div class="row mb-4" id="approval-filters">
+                                            <div class="col-md-4 d-grid">
+                                                <button type="button" class="btn btn-primary" data-status="all">전체</button>
+                                            </div>
+                                            <div class="col-md-4 d-grid">
+                                                <button type="button" class="btn btn-outline-primary" data-status="pending">결재대기</button>
+                                            </div>
+                                            <div class="col-md-4 d-grid">
+                                                <button type="button" class="btn btn-outline-primary" data-status="my-status">나에게 온 결재</button>
+                                            </div>
+                                        </div>
+                                        <div class="table-responsive">
+                                            <table class="table table-lg table-hover" id="approval-table">
+                                                <thead>
+                                                    <tr><th>문서종류</th><th>제목</th><th>기안자</th><th>기안일</th><th>상태</th></tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr data-status="pending"><td class="text-bold-500">지출결의서</td><td>[1분기] 사무용품 구매</td><td class="text-bold-500">김차장</td><td>2025-09-12</td><td><span class="badge bg-danger">미확인</span></td></tr>
+                                                    <tr data-status="pending"><td class="text-bold-500">휴가신청서</td><td>여름휴가 신청</td><td class="text-bold-500">박사원</td><td>2025-09-12</td><td><span class="badge bg-danger">미확인</span></td></tr>
+                                                    <tr data-status="my-status" data-href="전자/proposal_view.html"><td class="text-bold-500">품의서</td><td>영업팀 워크샵 장소 선정</td><td class="text-bold-500">이대리</td><td>2025-09-11</td><td><span class="badge bg-warning">결재대기중</span></td></tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane fade" id="frequent" role="tabpanel" aria-labelledby="frequent-tab">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-md-3 col-sm-6 mb-4">
+                                                <a href="전자/draft_proposal.html" class="card icon-card h-100 text-center text-decoration-none">
+                                                    <div class="card-body d-flex flex-column justify-content-center">
+                                                        <i class="bi bi-file-earmark-text-fill" style="font-size: 3rem; color: #435ebe;"></i>
+                                                        <h5 class="card-title mt-3">기안서</h5>
+                                                    </div>
+                                                </a>
+                                            </div>
+                                            <div class="col-md-3 col-sm-6 mb-4">
+                                                <a href="leave_request_v3.html" class="card icon-card h-100 text-center text-decoration-none">
+                                                    <div class="card-body d-flex flex-column justify-content-center">
+                                                        <i class="bi bi-calendar-check-fill" style="font-size: 3rem; color: #198754;"></i>
+                                                        <h5 class="card-title mt-3">휴가 신청서</h5>
+                                                    </div>
+                                                </a>
+                                            </div>
+                                            <div class="col-md-3 col-sm-6 mb-4">
+                                                <a href="expense_report_form.html" class="card icon-card h-100 text-center text-decoration-none">
+                                                    <div class="card-body d-flex flex-column justify-content-center">
+                                                        <i class="bi bi-cash-coin" style="font-size: 3rem; color: #dc3545;"></i>
+                                                        <h5 class="card-title mt-3">지출 결의서</h5>
+                                                    </div>
+                                                </a>
+                                            </div>
+                                             <div class="col-md-3 col-sm-6 mb-4">
+                                                <a href="new_product_approval.html" class="card icon-card h-100 text-center text-decoration-none">
+                                                    <div class="card-body d-flex flex-column justify-content-center">
+                                                        <i class="bi bi-box-seam-fill" style="font-size: 3rem; color: #fd7e14;"></i>
+                                                        <h5 class="card-title mt-3">신규 상품 품의</h5>
+                                                    </div>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            </div>
+
+    <!-- Select Form Modal -->
+    <div class="modal fade" id="selectFormModal" tabindex="-1" aria-labelledby="selectFormModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="selectFormModalLabel">결재 양식 선택</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <!-- Left Column: Categories -->
+                        <div class="col-md-3 border-end">
+                            <h6 class="mb-3">양식 분류</h6>
+                            <div class="list-group list-group-flush" id="form-categories">
+                                <a href="#" class="list-group-item list-group-item-action active" data-category="all">전체</a>
+                                <a href="#" class="list-group-item list-group-item-action" data-category="hr">인사</a>
+                                <a href="#" class="list-group-item list-group-item-action" data-category="finance">재무/회계</a>
+                                <a href="#" class="list-group-item list-group-item-action" data-category="sales">영업/마케팅</a>
+                            </div>
+                        </div>
+                        <!-- Middle Column: Form List -->
+                        <div class="col-md-5 border-end">
+                            <div class="input-group mb-3">
+                                <input type="text" class="form-control" placeholder="양식명 검색" id="form-search-input">
+                                <span class="input-group-text"><i class="bi bi-search"></i></span>
+                            </div>
+                            <div class="list-group list-group-flush" id="form-list" style="height: 400px; overflow-y: auto;">
+                                <!-- JS will populate this -->
+                            </div>
+                        </div>
+                        <!-- Right Column: Details -->
+                        <div class="col-md-4">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <h6 class="mb-3">상세정보</h6>
+                                <button class="btn btn-sm btn-outline-secondary mb-3">자주 쓰는 양식으로 추가</button>
+                            </div>
+                            <div id="form-details">
+                                <div class="card-body text-center text-muted pt-5">
+                                    <i class="bi bi-card-list" style="font-size: 4rem;"></i>
+                                    <p class="mt-3">목록에서 양식을 선택하세요.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
+                    <button type="button" class="btn btn-primary" id="confirm-form-selection" disabled>확인</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<!--     <script src="mazer-1.0.0/dist/assets/vendors/perfect-scrollbar/perfect-scrollbar.min.js"></script> -->
+<!--     <script src="mazer-1.0.0/dist/assets/js/bootstrap.bundle.min.js"></script> -->
+<!--     <script src="mazer-1.0.0/dist/assets/js/main.js"></script> -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const approvalTableBody = document.querySelector('#approval-table tbody');
+            const filterButtons = document.querySelectorAll('#approval-filters .btn');
+
+            function updateFilterCounts() {
+                const totalCount = approvalTableBody.querySelectorAll('tr').length;
+                const pendingCount = approvalTableBody.querySelectorAll('tr[data-status="pending"]').length;
+                const myStatusCount = approvalTableBody.querySelectorAll('tr[data-status="my-status"]').length;
+
+                filterButtons.forEach(button => {
+                    const status = button.dataset.status;
+                    if (status === 'all') {
+                        button.innerHTML = `전체 <span class="badge bg-light text-dark ms-1">${totalCount}</span>`;
+                    } else if (status === 'pending') {
+                        button.innerHTML = `결재대기 <span class="badge bg-light text-dark ms-1">${pendingCount}</span>`;
+                    } else if (status === 'my-status') {
+                        button.innerHTML = `나에게 온 결재 <span class="badge bg-light text-dark ms-1">${myStatusCount}</span>`;
+                    }
+                });
+            }
+
+            function filterRows(status) {
+                const tableRows = approvalTableBody.querySelectorAll('tr');
+                tableRows.forEach(row => {
+                    row.style.display = (status === 'all' || row.dataset.status === status) ? '' : 'none';
+                });
+            }
+
+            filterButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    filterButtons.forEach(btn => {
+                        btn.classList.remove('btn-primary');
+                        btn.classList.add('btn-outline-primary');
+                    });
+                    this.classList.remove('btn-outline-primary');
+                    this.classList.add('btn-primary');
+                    filterRows(this.dataset.status);
+                });
+            });
+
+            if (approvalTableBody) {
+                const pendingDocs = JSON.parse(localStorage.getItem('pendingDocs')) || [];
+                pendingDocs.forEach(doc => {
+                    if (!doc.title) return; // 제목 없는 항목 제거
+
+                    const row = document.createElement('tr');
+                    
+                    // 상태에 따라 필터링을 위한 data-status 설정
+                    if(doc.status === '결재대기중') {
+                        row.dataset.status = 'my-status'; 
+                    } else {
+                        row.dataset.status = 'pending';
+                    }
+
+                    if(doc.href) {
+                        // 문서 조회 페이지로 이동 시, 고유 ID를 파라미터로 넘겨줍니다.
+                        row.dataset.href = `${doc.href}?docId=${doc.id}`;
+                    }
+
+                    const statusBadgeClass = doc.status === '미확인' ? 'bg-danger' : 'bg-warning';
+
+                    row.innerHTML = `
+                        <td class="text-bold-500">${doc.docType}</td>
+                        <td>${doc.title}</td>
+                        <td class="text-bold-500">${doc.drafter}</td>
+                        <td>${doc.draftDate}</td>
+                        <td><span class="badge ${statusBadgeClass}">${doc.status}</span></td>
+                    `;
+                    approvalTableBody.prepend(row);
+                });
+
+                approvalTableBody.addEventListener('click', function(e) {
+                    const row = e.target.closest('tr[data-href]');
+                    if (row) {
+                        window.location.href = row.dataset.href;
+                    }
+                });
+
+                 // 필터링 및 카운트 업데이트
+                filterRows('all');
+                updateFilterCounts();
+            }
+
+            // New Modal Logic
+            const selectFormModal = document.getElementById('selectFormModal');
+            if (selectFormModal) {
+                const formsData = [
+                    { id: 'draft_proposal', name: '기안서', category: 'sales', href: 'draft_proposal.html', details: { '보존연한': '3년', '기안부서': '영업팀', '설명': '일반적인 사항에 대해 상급자의 의사결정이 필요할 때 사용하는 기본 양식입니다.' } },
+                    { id: 'leave_request', name: '휴가 신청서', category: 'hr', href: 'leave_request_v3.html', details: { '보존연한': '5년', '기안부서': '인사팀', '설명': '연차, 반차, 병가, 경조사 등 휴가를 신청하기 위한 양식입니다.' } },
+                    { id: 'expense_report', name: '지출 결의서', category: 'finance', href: 'expense_report_form.html', details: { '보존연한': '5년', '기안부서': '재무회계팀', '설명': '업무상 발생한 비용을 정산받기 위해 제출하는 양식입니다.' } },
+                    { id: 'new_product', name: '신규 상품 품의', category: 'sales', href: 'new_product_approval.html', details: { '보존연한': '영구', '기안부서': '상품기획팀', '설명': '새로운 상품의 출시 또는 도입을 제안하고 승인받기 위한 양식입니다.' } }
+                ];
+
+                const formList = document.getElementById('form-list');
+                const formDetails = document.getElementById('form-details');
+                const searchInput = document.getElementById('form-search-input');
+                const confirmBtn = document.getElementById('confirm-form-selection');
+                const categoryLinks = document.querySelectorAll('#form-categories .list-group-item');
+                let selectedForm = null;
+
+                const renderList = (filter = '', category = 'all') => {
+                    formList.innerHTML = '';
+                    let hasResults = false;
+                    formsData.forEach(form => {
+                        if ((form.name.toLowerCase().includes(filter.toLowerCase()) || filter === '') && (category === 'all' || form.category === category)) {
+                            const item = document.createElement('a');
+                            item.href = '#';
+                            item.className = 'list-group-item list-group-item-action';
+                            item.dataset.id = form.id;
+                            item.textContent = form.name;
+                            formList.appendChild(item);
+                            hasResults = true;
+                        }
+                    });
+                    if (!hasResults) {
+                        formList.innerHTML = '<p class="text-center text-muted mt-3">검색 결과가 없습니다.</p>';
+                    }
+                };
+
+                const renderDetails = (form) => {
+                    if (!form) {
+                        formDetails.innerHTML = `
+                            <div class="card-body text-center text-muted pt-5">
+                                <i class="bi bi-card-list" style="font-size: 4rem;"></i>
+                                <p class="mt-3">목록에서 양식을 선택하세요.</p>
+                            </div>`;
+                        return;
+                    }
+                    let detailsHtml = '<ul class="list-group list-group-flush">';
+                    detailsHtml += `<li class="list-group-item"><h6>${form.name}</h6></li>`;
+                    detailsHtml += `<li class="list-group-item"><small class="text-muted">${form.details.설명}</small></li>`;
+                    detailsHtml += `<li class="list-group-item"><strong>보존연한:</strong> ${form.details.보존연한}</li>`;
+                    detailsHtml += `<li class="list-group-item"><strong>기안부서:</strong> ${form.details.기안부서}</li>`;
+                    detailsHtml += '</ul>';
+                    formDetails.innerHTML = detailsHtml;
+                };
+
+                searchInput.addEventListener('keyup', () => {
+                    const activeCategory = document.querySelector('#form-categories .active').dataset.category;
+                    renderList(searchInput.value, activeCategory);
+                });
+
+                categoryLinks.forEach(link => {
+                    link.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        categoryLinks.forEach(l => l.classList.remove('active'));
+                        link.classList.add('active');
+                        renderList(searchInput.value, link.dataset.category);
+                        renderDetails(null);
+                        confirmBtn.disabled = true;
+                        selectedForm = null;
+                    });
+                });
+
+                formList.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    if (e.target.classList.contains('list-group-item')) {
+                        const formId = e.target.dataset.id;
+                        selectedForm = formsData.find(f => f.id === formId);
+                        
+                        formList.querySelectorAll('.list-group-item').forEach(item => item.classList.remove('active'));
+                        e.target.classList.add('active');
+
+                        renderDetails(selectedForm);
+                        confirmBtn.disabled = false;
+                    }
+                });
+
+                confirmBtn.addEventListener('click', () => {
+                    if (selectedForm) {
+                        window.location.href = selectedForm.href;
+                    }
+                });
+
+                selectFormModal.addEventListener('show.bs.modal', () => {
+                    searchInput.value = '';
+                    categoryLinks.forEach(l => l.classList.remove('active'));
+                    document.querySelector('#form-categories .list-group-item[data-category="all"]').classList.add('active');
+                    renderList();
+                    renderDetails(null);
+                    confirmBtn.disabled = true;
+                    selectedForm = null;
+                });
+            }
+        });
+    </script>
+</body>
+</html>

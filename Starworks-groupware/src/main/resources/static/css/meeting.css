@@ -1,0 +1,163 @@
+/**
+ * <pre>
+ * << 개정이력(Modification Information) >>
+ *
+ *   수정일      			수정자            수정내용
+ *  -----------   	-------------    ---------------------------
+ *  2025. 10. 21.     	임가영            최초 생성
+ *
+ * </pre>
+ */
+@charset "UTF-8";
+
+.card-header {
+	padding: 1.5rem
+}
+
+.timeline-container {
+	position: relative;
+	padding-right: 1px;
+}
+
+#timeline-container table {
+  width: 100%;
+  table-layout: fixed; /* 열 너비 고정 계산 */
+  border-collapse: collapse;
+}
+
+/* 시간대 헤더 */
+#timeline-container th.timeline-header {
+/*     background-color: rgb(233, 236, 239); 연한 회색 */
+    font-weight: bold;
+    font-size: 0.9rem;
+    color: #6c757d;
+    text-align: center;
+/*     border: 1px solid rgb(206, 213, 219); */
+    padding: 8px 0;
+
+    width: 10%
+}
+
+#timeline-container th.timeline-header-blank {
+	width: 9%
+}
+
+#timeline-container th,
+#timeline-container td {
+  border: 1px solid rgb(218, 224, 228) !important;
+}
+
+/* 회의실 이름 열 */
+#timeline-container td.room-label {
+    background-color: rgb(252, 252, 252); /* 원하는 색 */
+    min-width: 70px;
+    font-weight: 600;
+    font-size: 1rem;
+    position: sticky;
+    left: 0;  /* 좌측 고정 */
+    z-index: 2;
+    text-align: center;
+}
+
+/* 시간 슬롯 */
+#timeline-container td.time-slot {
+    height: 67px; /* 높이 강제 지정 */
+    cursor: pointer;
+    text-align: center;
+    vertical-align: middle;
+    position: relative;
+    transition: background-color 0.2s;
+}
+
+#timeline-container td.time-slot:hover {
+	background-color:  rgb(227, 236, 251);
+}
+
+/* 비활성 슬롯 */
+#timeline-container td.disabled-slot {
+    background-color: rgb(197 205 213 / 93%);
+    cursor: default;
+}
+
+#timeline-container td.disabled-slot:hover {
+    background-color: rgb(225, 228, 232);
+    cursor: default;
+}
+
+/* 예약 표시 바 */
+.reservation-bar {
+	position: absolute;
+	height: 50px;
+	border-radius: 5px;
+	padding: 4px 8px;
+	font-size: 0.85rem;
+	cursor: pointer;
+	transition: all 0.2s;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	z-index: 3;
+	background-color: #e7f0ff;
+	border-left: 3px solid #435ebe;
+	color: #333;
+	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.reservation-bar:hover {
+    transform: scale(1.02);
+}
+
+/* 나의 회의 카드 */
+.meeting-note-card {
+	border: 1px solid #eee;
+	border-left: 4px solid var(--bs-primary);
+	border-radius: 8px;
+	transition: all 0.2s;
+}
+
+.meeting-note-card:hover {
+	transform: translateY(-5px);
+	box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+}
+
+.meeting-note-card.category-work {
+	border-left-color: var(--bs-primary);
+}
+
+.meeting-note-card.category-personal {
+	border-left-color: var(--bs-success);
+}
+
+.meeting-note-card.category-urgent {
+	border-left-color: var(--bs-danger);
+}
+
+/* 클릭만 불가능 (다른사람이 예약한..) */
+.readonly-input {
+  border: 1px solid #eee;
+  background: transparent;
+  pointer-events: none;
+}
+
+input[type="radio"].readonly {
+  opacity: 0.6;        /* 희미하게 */
+  pointer-events: none; /* 클릭 막기 */
+}
+
+/* 회색 배경 (내가 예약한..) */
+input[type="number"].readonly {
+  background-color: #e9ecef;
+  color: #6c757d;
+  border: 1px solid #ced4da;
+  pointer-events: none; /* 클릭 막기 */
+}
+
+/* 모달 헤더 */
+.bg-custom {
+	--bs-bg-opacity: 1;
+    background-color: rgb(48 45 58) !important;
+}
+
+.memo-snippet {
+  white-space: pre-line; /* 줄바꿈(\n)을 시각적으로 유지 */
+}

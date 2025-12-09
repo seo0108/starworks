@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>조직도 - Mazer Admin Dashboard</title>
+    
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700;800&amp;display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="mazer-1.0.0/dist/assets/css/bootstrap.css">
+    
+    <link rel="stylesheet" href="mazer-1.0.0/dist/assets/vendors/perfect-scrollbar/perfect-scrollbar.css">
+    <link rel="stylesheet" href="mazer-1.0.0/dist/assets/vendors/bootstrap-icons/bootstrap-icons.css">
+    <link rel="stylesheet" href="mazer-1.0.0/dist/assets/css/app.css">
+    <link rel="shortcut icon" href="assets/compiled/svg/favicon.svg" type="image/x-icon">
+    
+</head>
+
+<body>
+   
+<div class="page-content">
+    <section class="section">
+        <div class="container-xxl py-3">
+            <div class="d-flex align-items-center justify-content-between mb-3">
+                <h2 class="page-title mb-0"><i class="bi bi-diagram-3-fill me-2"></i>조직도</h2>
+                <div class="legend small text-muted d-none d-md-flex align-items-center gap-3">
+                  <span><span class="status-dot status-working"></span>근무중</span>
+                  <span><span class="status-dot status-business"></span>외근</span>
+                  <span><span class="status-dot status-leave"></span>연차</span>
+                </div>
+              </div>
+          
+              <!-- 검색 영역 -->
+              <div class="card shadow-sm mb-3">
+                <div class="card-body">
+                  <div class="row g-2 align-items-center">
+                    <div class="col-12 col-md-6">
+                      <div class="input-group">
+                        <span class="input-group-text bg-white"><i class="bi bi-search"></i></span>
+                        <input id="searchInput" type="text" class="form-control" placeholder="부서명 또는 구성원 이름을 입력하세요" />
+                        <button id="searchBtn" class="btn btn-primary">검색</button>
+                        <button id="resetBtn" class="btn btn-outline-secondary">초기화</button>
+                      </div>
+                    </div>
+                    <div class="col-12 col-md-6 text-md-end small text-muted">Tip: 엔터키로도 검색할 수 있어요.</div>
+                  </div>
+                </div>
+              </div>
+              
+              
+          
+              <div id="noResult" class="alert alert-warning search-empty" role="alert">
+                <i class="bi bi-exclamation-triangle-fill me-1"></i>검색 결과가 없습니다. 다른 키워드로 다시 시도해 주세요.
+              </div>
+          
+              <div class="row g-3">
+                <div class="col-12 col-lg-7">
+                  <div class="card shadow-sm h-100">
+                    <div class="card-header bg-white fw-semibold">
+                        <ul class="nav nav-tabs card-header-tabs" id="orgTab" role="tablist">
+                            <li class="nav-item" role="presentation">
+                              <button class="nav-link active" id="hq-tab" data-bs-toggle="tab" data-bs-target="#hq-tab-pane" type="button" role="tab" aria-controls="hq-tab-pane" aria-selected="true">본사</button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                              <button class="nav-link" id="franchise-tab" data-bs-toggle="tab" data-bs-target="#franchise-tab-pane" type="button" role="tab" aria-controls="franchise-tab-pane" aria-selected="false">가맹점</button>
+                            </li>
+                          </ul>
+                    </div>
+                    <div class="card-body org-tree">
+                        <div class="tab-content" id="orgTabContent">
+                            <div class="tab-pane fade show active" id="hq-tab-pane" role="tabpanel" aria-labelledby="hq-tab">
+                                <ul id="orgRootHq" class="mb-0">
+                                    <li>
+                                        <span class="dept-toggle expanded" data-dept="본사(HQ)"><i class="bi bi-caret-right-fill caret"></i>본사(HQ) <span class="text-muted">(18)</span></span>
+                                        <ul class="dept-members show">
+                                          <li class="member-item" data-id="ceo"><img class="member-avatar" src="https://i.pravatar.cc/100?img=1" alt="" /><span class="status-dot status-working"></span><span class="member-name">김대표</span><span class="text-muted">(CEO)</span></li>
+                                          <li>
+                                            <span class="dept-toggle expanded" data-dept="경영지원본부"><i class="bi bi-caret-right-fill caret"></i>경영지원본부 <span class="text-muted">(4)</span></span>
+                                            <ul class="dept-members show">
+                                              <li class="member-item" data-id="mng1"><img class="member-avatar" src="https://i.pravatar.cc/100?img=2" alt="" /><span class="status-dot status-working"></span><span class="member-name">이본부</span><span class="text-muted">(본부장)</span></li>
+                                              <li>
+                                                <span class="dept-toggle" data-dept="인사팀"><i class="bi bi-caret-right-fill caret"></i>인사팀 <span class="text-muted">(1)</span></span>
+                                                <ul class="dept-members"><li class="member-item" data-id="hr1"><img class="member-avatar" src="https://i.pravatar.cc/100?img=3" alt="" /><span class="status-dot status-working"></span><span class="member-name">박인사</span><span class="text-muted">(팀장)</span></li></ul>
+                                              </li>
+                                              <li>
+                                                <span class="dept-toggle" data-dept="총무팀"><i class="bi bi-caret-right-fill caret"></i>총무팀 <span class="text-muted">(1)</span></span>
+                                                <ul class="dept-members"><li class="member-item" data-id="ga1"><img class="member-avatar" src="https://i.pravatar.cc/100?img=4" alt="" /><span class="status-dot status-business"></span><span class="member-name">최총무</span><span class="text-muted">(팀장)</span></li></ul>
+                                              </li>
+                                              <li>
+                                                <span class="dept-toggle" data-dept="재무팀"><i class="bi bi-caret-right-fill caret"></i>재무팀 <span class="text-muted">(1)</span></span>
+                                                <ul class="dept-members"><li class="member-item" data-id="fin1"><img class="member-avatar" src="https://i.pravatar.cc/100?img=5" alt="" /><span class="status-dot status-leave"></span><span class="member-name">정재무</span><span class="text-muted">(팀장)</span></li></ul>
+                                              </li>
+                                            </ul>
+                                          </li>
+                                          <li>
+                                              <span class="dept-toggle" data-dept="영업본부"><i class="bi bi-caret-right-fill caret"></i>영업본부 <span class="text-muted">(2)</span></span>
+                                              <ul class="dept-members">
+                                                  <li class="member-item" data-id="sales1"><img class="member-avatar" src="https://i.pravatar.cc/100?img=6" alt="" /><span class="status-dot status-working"></span><span class="member-name">강영업</span><span class="text-muted">(본부장)</span></li>
+                                                  <li class="member-item" data-id="sv1"><img class="member-avatar" src="https://i.pravatar.cc/100?img=7" alt="" /><span class="status-dot status-business"></span><span class="member-name">오슈퍼</span><span class="text-muted">(슈퍼바이저)</span></li>
+                                              </ul>
+                                          </li>
+                                          <li>
+                                              <span class="dept-toggle" data-dept="마케팅본부"><i class="bi bi-caret-right-fill caret"></i>마케팅본부 <span class="text-muted">(3)</span></span>
+                                              <ul class="dept-members">
+                                                  <li class="member-item" data-id="mkt1"><img class="member-avatar" src="https://i.pravatar.cc/100?img=8" alt="" /><span class="status-dot status-working"></span><span class="member-name">나마케</span><span class="text-muted">(팀장)</span></li>
+                                                  <li class="member-item" data-id="mkt2"><img class="member-avatar" src="https://i.pravatar.cc/100?img=9" alt="" /><span class="status-dot status-working"></span><span class="member-name">유브랜</span><span class="text-muted">(대리)</span></li>
+                                                  <li class="member-item" data-id="mkt3"><img class="member-avatar" src="https://i.pravatar.cc/100?img=10" alt="" /><span class="status-dot status-working"></span><span class="member-name">한온라</span><span class="text-muted">(사원)</span></li>
+                                              </ul>
+                                          </li>
+                                          <li>
+                                              <span class="dept-toggle" data-dept="R&D본부"><i class="bi bi-caret-right-fill caret"></i>R&D본부 <span class="text-muted">(2)</span></span>
+                                              <ul class="dept-members">
+                                                  <li class="member-item" data-id="rnd1"><img class="member-avatar" src="https://i.pravatar.cc/100?img=11" alt="" /><span class="status-dot status-working"></span><span class="member-name">문개발</span><span class="text-muted">(팀장)</span></li>
+                                                  <li class="member-item" data-id="rnd2"><img class="member-avatar" src="https://i.pravatar.cc/100?img=12" alt="" /><span class="status-dot status-working"></span><span class="member-name">조품질</span><span class="text-muted">(과장)</span></li>
+                                              </ul>
+                                          </li>
+                                          <li>
+                                              <span class="dept-toggle" data-dept="물류/구매본부"><i class="bi bi-caret-right-fill caret"></i>물류/구매본부 <span class="text-muted">(2)</span></span>
+                                              <ul class="dept-members">
+                                                  <li class="member-item" data-id="log1"><img class="member-avatar" src="https://i.pravatar.cc/100?img=13" alt="" /><span class="status-dot status-working"></span><span class="member-name">배구매</span><span class="text-muted">(팀장)</span></li>
+                                                  <li class="member-item" data-id="log2"><img class="member-avatar" src="https://i.pravatar.cc/100?img=14" alt="" /><span class="status-dot status-working"></span><span class="member-name">추물류</span><span class="text-muted">(대리)</span></li>
+                                              </ul>
+                                          </li>
+                                          <li>
+                                              <span class="dept-toggle" data-dept="IT/시스템팀"><i class="bi bi-caret-right-fill caret"></i>IT/시스템팀 <span class="text-muted">(2)</span></span>
+                                              <ul class="dept-members">
+                                                  <li class="member-item" data-id="it1"><img class="member-avatar" src="https://i.pravatar.cc/100?img=15" alt="" /><span class="status-dot status-working"></span><span class="member-name">장서버</span><span class="text-muted">(팀장)</span></li>
+                                                  <li class="member-item" data-id="it2"><img class="member-avatar" src="https://i.pravatar.cc/100?img=16" alt="" /><span class="status-dot status-working"></span><span class="member-name">권보안</span><span class="text-muted">(사원)</span></li>
+                                              </ul>
+                                          </li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="tab-pane fade" id="franchise-tab-pane" role="tabpanel" aria-labelledby="franchise-tab">
+                                <ul id="orgRootFranchise" class="mb-0">
+                                    <li>
+                                        <span class="dept-toggle expanded" data-dept="가맹점"><i class="bi bi-caret-right-fill caret"></i>가맹점 <span class="text-muted">(10)</span></span>
+                                        <ul class="dept-members show">
+                                          <li>
+                                            <span class="dept-toggle" data-dept="서울권"><i class="bi bi-caret-right-fill caret"></i>서울권 <span class="text-muted">(4)</span></span>
+                                            <ul class="dept-members">
+                                              <li>
+                                                <span class="dept-toggle" data-dept="강남점"><i class="bi bi-caret-right-fill caret"></i>강남점 <span class="text-muted">(2)</span></span>
+                                                <ul class="dept-members">
+                                                  <li class="member-item" data-id="s1_owner"><img class="member-avatar" src="https://i.pravatar.cc/100?img=20" alt="" /><span class="status-dot status-working"></span><span class="member-name">송점주</span><span class="text-muted">(점주)</span></li>
+                                                  <li class="member-item" data-id="s1_barista"><img class="member-avatar" src="https://i.pravatar.cc/100?img=21" alt="" /><span class="status-dot status-working"></span><span class="member-name">신바리</span><span class="text-muted">(바리스타)</span></li>
+                                                </ul>
+                                              </li>
+                                              <li>
+                                                <span class="dept-toggle" data-dept="홍대점"><i class="bi bi-caret-right-fill caret"></i>홍대점 <span class="text-muted">(2)</span></span>
+                                                <ul class="dept-members">
+                                                  <li class="member-item" data-id="s2_manager"><img class="member-avatar" src="https://i.pravatar.cc/100?img=22" alt="" /><span class="status-dot status-working"></span><span class="member-name">홍매니</span><span class="text-muted">(매니저)</span></li>
+                                                  <li class="member-item" data-id="s2_parttimer"><img class="member-avatar" src="https://i.pravatar.cc/100?img=23" alt="" /><span class="status-dot status-leave"></span><span class="member-name">임알바</span><span class="text-muted">(파트타이머)</span></li>
+                                                </ul>
+                                              </li>
+                                            </ul>
+                                          </li>
+                                          <li>
+                                              <span class="dept-toggle" data-dept="경기권"><i class="bi bi-caret-right-fill caret"></i>경기권 <span class="text-muted">(3)</span></span>
+                                              <ul class="dept-members">
+                                                  <li class="member-item" data-id="g1_owner"><img class="member-avatar" src="https://i.pravatar.cc/100?img=30" alt="" /><span class="status-dot status-working"></span><span class="member-name">황점주</span><span class="text-muted">(점주)</span></li>
+                                                  <li class="member-item" data-id="g1_manager"><img class="member-avatar" src="https://i.pravatar.cc/100?img=31" alt="" /><span class="status-dot status-working"></span><span class="member-name">표매니</span><span class="text-muted">(매니저)</span></li>
+                                                  <li class="member-item" data-id="g1_barista"><img class="member-avatar" src="https://i.pravatar.cc/100?img=32" alt="" /><span class="status-dot status-working"></span><span class="member-name">편바리</span><span class="text-muted">(바리스타)</span></li>
+                                              </ul>
+                                          </li>
+                                          <li>
+                                              <span class="dept-toggle" data-dept="지방권"><i class="bi bi-caret-right-fill caret"></i>지방권 <span class="text-muted">(3)</span></span>
+                                              <ul class="dept-members">
+                                                  <li class="member-item" data-id="p1_owner"><img class="member-avatar" src="https://i.pravatar.cc/100?img=40" alt="" /><span class="status-dot status-working"></span><span class="member-name">우점주</span><span class="text-muted">(점주)</span></li>
+                                                  <li class="member-item" data-id="p1_manager"><img class="member-avatar" src="https://i.pravatar.cc/100?img=41" alt="" /><span class="status-dot status-working"></span><span class="member-name">허매니</span><span class="text-muted">(매니저)</span></li>
+                                                  <li class="member-item" data-id="p1_barista"><img class="member-avatar" src="https://i.pravatar.cc/100?img=42" alt="" /><span class="status-dot status-working"></span><span class="member-name">전바리</span><span class="text-muted">(바리스타)</span></li>
+                                              </ul>
+                                          </li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                  </div>
+                </div>
+          
+                <div class="col-12 col-lg-5">
+                  <div class="card shadow-sm h-100 sticky-top sticky-col" style="top:1rem;">
+                    <div class="card-header bg-white fw-semibold">상세 정보</div>
+                    <div class="card-body" id="detailPlaceholder">
+                      <div class="text-center text-muted py-4">
+                        <i class="bi bi-person-lines-fill fs-1 d-block mb-2"></i>
+                        구성원을 선택하세요
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+    </section>
+</div>
+
+
+    <script>
+        // 샘플 데이터 (실서비스에서는 API로 대체)
+        const MEMBERS = {
+            ceo: { id:'ceo', empNo:'A0001', name:'김대표', position:'CEO', department:'CEO실', phone:'010-1111-2222', email:'ceo@example.com', status:'근무중', avatar:'https://i.pravatar.cc/100?img=1', chatUrl:'/chat?userId=ceo' },
+            mng1: { id:'mng1', empNo:'B1001', name:'이본부', position:'본부장', department:'경영지원본부', phone:'010-1234-5678', email:'mng.lee@example.com', status:'근무중', avatar:'https://i.pravatar.cc/100?img=2', chatUrl:'/chat?userId=mng1' },
+            hr1: { id:'hr1', empNo:'B1101', name:'박인사', position:'팀장', department:'경영지원본부 > 인사팀', phone:'010-1111-1111', email:'hr.park@example.com', status:'근무중', avatar:'https://i.pravatar.cc/100?img=3', chatUrl:'/chat?userId=hr1' },
+            ga1: { id:'ga1', empNo:'B1201', name:'최총무', position:'팀장', department:'경영지원본부 > 총무팀', phone:'010-2222-2222', email:'ga.choi@example.com', status:'외근', avatar:'https://i.pravatar.cc/100?img=4', chatUrl:'/chat?userId=ga1' },
+            fin1: { id:'fin1', empNo:'B1301', name:'정재무', position:'팀장', department:'경영지원본부 > 재무팀', phone:'010-3333-3333', email:'fin.jung@example.com', status:'연차', avatar:'https://i.pravatar.cc/100?img=5', chatUrl:'/chat?userId=fin1' },
+            sales1: { id:'sales1', empNo:'B2001', name:'강영업', position:'본부장', department:'영업본부', phone:'010-4444-4444', email:'sales.kang@example.com', status:'근무중', avatar:'https://i.pravatar.cc/100?img=6', chatUrl:'/chat?userId=sales1' },
+            sv1: { id:'sv1', empNo:'B2101', name:'오슈퍼', position:'슈퍼바이저', department:'영업본부 > 슈퍼바이저팀', phone:'010-5555-5555', email:'sv.oh@example.com', status:'외근', avatar:'https://i.pravatar.cc/100?img=7', chatUrl:'/chat?userId=sv1' },
+            mkt1: { id:'mkt1', empNo:'B3101', name:'나마케', position:'팀장', department:'마케팅본부 > 브랜드전략팀', phone:'010-6666-6666', email:'mkt.na@example.com', status:'근무중', avatar:'https://i.pravatar.cc/100?img=8', chatUrl:'/chat?userId=mkt1' },
+            mkt2: { id:'mkt2', empNo:'B3201', name:'유브랜', position:'대리', department:'마케팅본부 > 프로모션팀', phone:'010-7777-7777', email:'mkt.yu@example.com', status:'근무중', avatar:'https://i.pravatar.cc/100?img=9', chatUrl:'/chat?userId=mkt2' },
+            mkt3: { id:'mkt3', empNo:'B3301', name:'한온라', position:'사원', department:'마케팅본부 > 온라인마케팅팀', phone:'010-8888-8888', email:'mkt.han@example.com', status:'근무중', avatar:'https://i.pravatar.cc/100?img=10', chatUrl:'/chat?userId=mkt3' },
+            rnd1: { id:'rnd1', empNo:'B4101', name:'문개발', position:'팀장', department:'R&D본부 > 메뉴개발팀', phone:'010-9999-9999', email:'rnd.moon@example.com', status:'근무중', avatar:'https://i.pravatar.cc/100?img=11', chatUrl:'/chat?userId=rnd1' },
+            rnd2: { id:'rnd2', empNo:'B4201', name:'조품질', position:'과장', department:'R&D본부 > 품질관리팀', phone:'010-0000-0000', email:'rnd.cho@example.com', status:'근무중', avatar:'https://i.pravatar.cc/100?img=12', chatUrl:'/chat?userId=rnd2' },
+            log1: { id:'log1', empNo:'B5101', name:'배구매', position:'팀장', department:'물류/구매본부 > 구매팀', phone:'010-1212-1212', email:'log.bae@example.com', status:'근무중', avatar:'https://i.pravatar.cc/100?img=13', chatUrl:'/chat?userId=log1' },
+            log2: { id:'log2', empNo:'B5201', name:'추물류', position:'대리', department:'물류/구매본부 > 물류팀', phone:'010-3434-3434', email:'log.chu@example.com', status:'근무중', avatar:'https://i.pravatar.cc/100?img=14', chatUrl:'/chat?userId=log2' },
+            it1: { id:'it1', empNo:'C1001', name:'장서버', position:'팀장', department:'IT/시스템팀', phone:'010-5656-5656', email:'it.jang@example.com', status:'근무중', avatar:'https://i.pravatar.cc/100?img=15', chatUrl:'/chat?userId=it1' },
+            it2: { id:'it2', empNo:'C1002', name:'권보안', position:'사원', department:'IT/시스템팀', phone:'010-7878-7878', email:'it.kwon@example.com', status:'근무중', avatar:'https://i.pravatar.cc/100?img=16', chatUrl:'/chat?userId=it2' },
+            s1_owner: { id:'s1_owner', empNo:'S0001', name:'송점주', position:'점주', department:'가맹점 > 서울권 > 강남점', phone:'010-1111-0001', email:'store.song@example.com', status:'근무중', avatar:'https://i.pravatar.cc/100?img=20', chatUrl:'/chat?userId=s1_owner' },
+            s1_barista: { id:'s1_barista', empNo:'S0002', name:'신바리', position:'바리스타', department:'가맹점 > 서울권 > 강남점', phone:'010-1111-0002', email:'barista.shin@example.com', status:'근무중', avatar:'https://i.pravatar.cc/100?img=21', chatUrl:'/chat?userId=s1_barista' },
+            s2_manager: { id:'s2_manager', empNo:'S0003', name:'홍매니', position:'매니저', department:'가맹점 > 서울권 > 홍대점', phone:'010-2222-0001', email:'manager.hong@example.com', status:'근무중', avatar:'https://i.pravatar.cc/100?img=22', chatUrl:'/chat?userId=s2_manager' },
+            s2_parttimer: { id:'s2_parttimer', empNo:'S0004', name:'임알바', position:'파트타이머', department:'가맹점 > 서울권 > 홍대점', phone:'010-2222-0002', email:'part.lim@example.com', status:'연차', avatar:'https://i.pravatar.cc/100?img=23', chatUrl:'/chat?userId=s2_parttimer' },
+            g1_owner: { id:'g1_owner', empNo:'G0001', name:'황점주', position:'점주', department:'가맹점 > 경기권 > 분당점', phone:'010-3333-0001', email:'store.hwang@example.com', status:'근무중', avatar:'https://i.pravatar.cc/100?img=30', chatUrl:'/chat?userId=g1_owner' },
+            g1_manager: { id:'g1_manager', empNo:'G0002', name:'표매니', position:'매니저', department:'가맹점 > 경기권 > 분당점', phone:'010-3333-0002', email:'manager.pyo@example.com', status:'근무중', avatar:'https://i.pravatar.cc/100?img=31', chatUrl:'/chat?userId=g1_manager' },
+            g1_barista: { id:'g1_barista', empNo:'G0003', name:'편바리', position:'바리스타', department:'가맹점 > 경기권 > 분당점', phone:'010-3333-0003', email:'barista.pyeon@example.com', status:'근무중', avatar:'https://i.pravatar.cc/100?img=32', chatUrl:'/chat?userId=g1_barista' },
+            p1_owner: { id:'p1_owner', empNo:'P0001', name:'우점주', position:'점주', department:'가맹점 > 지방권 > 부산점', phone:'010-4444-0001', email:'store.woo@example.com', status:'근무중', avatar:'https://i.pravatar.cc/100?img=40', chatUrl:'/chat?userId=p1_owner' },
+            p1_manager: { id:'p1_manager', empNo:'P0002', name:'허매니', position:'매니저', department:'가맹점 > 지방권 > 부산점', phone:'010-4444-0002', email:'manager.heo@example.com', status:'근무중', avatar:'https://i.pravatar.cc/100?img=41', chatUrl:'/chat?userId=p1_manager' },
+            p1_barista: { id:'p1_barista', empNo:'P0003', name:'전바리', position:'바리스타', department:'가맹점 > 지방권 > 부산점', phone:'010-4444-0003', email:'barista.jeon@example.com', status:'근무중', avatar:'https://i.pravatar.cc/100?img=42', chatUrl:'/chat?userId=p1_barista' },
+        };
+    
+        // 토글 핸들러
+        document.querySelectorAll('.dept-toggle').forEach(t => {
+          t.addEventListener('click', () => {
+            t.classList.toggle('expanded');
+            const list = t.nextElementSibling;
+            if (list && list.classList.contains('dept-members')) list.classList.toggle('show');
+          });
+        });
+    
+        // 구성원 클릭 → 상세 패널 + 모달
+        const memberItems = document.querySelectorAll('.member-item');
+        memberItems.forEach(el => {
+          el.addEventListener('click', () => openDetail(el.dataset.id));
+        });
+    
+        function setStatusBadge(el, status){
+          el.textContent = status;
+          el.className = 'badge rounded-pill';
+          if (status === '근무중') el.classList.add('bg-success');
+          else if (status === '외근') el.classList.add('bg-primary');
+          else if (status === '연차') el.classList.add('bg-warning', 'text-dark');
+        }
+    
+        function renderSideDetail(m){
+          const html = `
+            <div class="d-flex align-items-center gap-3 mb-3">
+              <img src="${m.avatar}" class="rounded-circle" width="72" height="72" alt="" />
+              <div>
+                <div class="fw-bold fs-5">${m.name} <span class="text-muted fs-6">(${m.position})</span></div>
+                <div class="text-muted">${m.department}</div>
+                <span id="sideStatus" class="badge rounded-pill mt-1"></span>
+              </div>
+            </div>
+            <div class="row g-2">
+              <div class="col-12 col-md-6"><div class="small text-muted">사번</div><div class="fw-semibold">${m.empNo}</div></div>
+              <div class="col-12 col-md-6"><div class="small text-muted">전화번호</div><div class="fw-semibold">${m.phone}</div></div>
+              <div class="col-12"><div class="small text-muted">이메일</div><div class="fw-semibold">${m.email}</div></div>
+            </div>
+            <div class="mt-3 d-flex gap-2">
+              <a class="btn btn-sm btn-primary" href="${m.chatUrl}"><i class="bi bi-chat-dots me-1"></i>채팅</a>
+              <button class="btn btn-sm btn-outline-secondary" data-bs-target="#memberModal" data-bs-toggle="modal">자세히</button>
+            </div>`;
+          const box = document.getElementById('detailPlaceholder');
+          box.innerHTML = html;
+          setStatusBadge(document.getElementById('sideStatus'), m.status);
+        }
+        
+        const memberModal = new bootstrap.Modal(document.getElementById('memberModal'));
+
+        function openDetail(id){
+          const m = MEMBERS[id];
+          if (!m) return;
+          // 우측 패널 갱신
+          renderSideDetail(m);
+          // 모달 데이터 바인딩
+          document.getElementById('mAvatar').src = m.avatar;
+          document.getElementById('mName').textContent = m.name;
+          document.getElementById('mPosition').textContent = m.position;
+          setStatusBadge(document.getElementById('mStatusBadge'), m.status);
+          document.getElementById('mEmpNo').textContent = m.empNo;
+          document.getElementById('mDept').textContent = m.department;
+          document.getElementById('mPhone').textContent = m.phone;
+          document.getElementById('mEmail').textContent = m.email;
+          document.getElementById('mChatLink').href = m.chatUrl;
+        }
+    
+        // 검색
+        const searchInput = document.getElementById('searchInput');
+        document.getElementById('searchBtn').addEventListener('click', doSearch);
+        document.getElementById('resetBtn').addEventListener('click', () => { searchInput.value=''; resetTree(); });
+        searchInput.addEventListener('keydown', e => { if (e.key==='Enter') doSearch(); });
+    
+        function doSearch(){
+          const term = searchInput.value.trim().toLowerCase();
+          const activePane = document.querySelector('.tab-pane.active');
+          if (!activePane) return;
+          if (!term){ resetTree(); return; }
+    
+          let found = false;
+          // 기본 접기
+          activePane.querySelectorAll('.dept-members').forEach(ul => ul.classList.remove('show'));
+          activePane.querySelectorAll('.dept-toggle').forEach(t => t.classList.remove('expanded'));
+    
+          // 구성원 검색
+          activePane.querySelectorAll('.member-item').forEach(m => {
+            const id = m.dataset.id;
+            const data = MEMBERS[id];
+            const text = (m.querySelector('.member-name')?.textContent || '') + ' ' + (data?.department || '');
+            const hit = text.toLowerCase().includes(term);
+            m.style.display = hit ? '' : 'none';
+            if (hit){
+              found = true;
+              // 상위 부서 펼치기
+              let ul = m.closest('.dept-members');
+              while (ul){
+                ul.classList.add('show');
+                const toggle = ul.previousElementSibling;
+                if (toggle?.classList.contains('dept-toggle')) toggle.classList.add('expanded');
+                ul = ul.parentElement.closest('.dept-members');
+              }
+            }
+          });
+    
+          // 부서명 검색
+          activePane.querySelectorAll('.dept-toggle').forEach(t => {
+            const hit = t.textContent.toLowerCase().includes(term);
+            if (hit){
+              found = true;
+              t.classList.add('expanded');
+              const list = t.nextElementSibling; if (list) list.classList.add('show');
+              // 상위도 펼치기
+              let ul = t.closest('.dept-members');
+              while (ul){ ul.classList.add('show'); const pt = ul.previousElementSibling; if (pt?.classList.contains('dept-toggle')) pt.classList.add('expanded'); ul = ul.parentElement.closest('.dept-members'); }
+            }
+          });
+    
+          document.getElementById('noResult').classList.toggle('show', !found);
+        }
+    
+        function resetTree(){
+          document.getElementById('noResult').classList.remove('show');
+          document.querySelectorAll('.org-tree .member-item').forEach(m => m.style.display='');
+          document.querySelectorAll('.org-tree .dept-members').forEach(ul => ul.classList.remove('show'));
+          document.querySelectorAll('.org-tree .dept-toggle').forEach(t => t.classList.remove('expanded'));
+          
+          const activePane = document.querySelector('.tab-pane.active');
+          if(activePane) {
+              activePane.querySelectorAll(':scope > ul > li > .dept-toggle').forEach(t => { 
+                  t.classList.add('expanded'); 
+                  const ul = t.nextElementSibling; 
+                  if (ul) ul.classList.add('show'); 
+                });
+          }
+        }
+        let myOrgChart;
+        const hqChartData = {
+            labels: ['경영지원', '영업', '마케팅', 'R&D', '물류/구매', 'IT'],
+            datasets: [{
+                data: [10, 8, 9, 6, 7, 5],
+                backgroundColor: ['#435ebe', '#5867e0', '#6e7fe8', '#8596f0', '#9cadf7', '#b3c4ff']
+            }]
+        };
+        const franchiseChartData = {
+            labels: ['서울권', '경기권', '지방권'],
+            datasets: [{
+                data: [12, 10, 13],
+                backgroundColor: ['#198754', '#20a368', '#27bf7c']
+            }]
+        };
+
+        function renderChart(data, title) {
+            if (myOrgChart) {
+                myOrgChart.destroy();
+            }
+            const ctx = document.getElementById('orgChart').getContext('2d');
+            myOrgChart = new Chart(ctx, {
+                type: 'doughnut',
+                data: data,
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: { position: 'top' },
+                        title: { display: true, text: title, font: { size: 16 } }
+                    }
+                },
+            });
+        }
+
+        function updateDashboard(orgType) {
+            const totalStaffEl = document.getElementById('total-staff');
+            const totalUnitsEl = document.getElementById('total-units');
+            const keyUnitsEl = document.getElementById('key-units');
+
+            if (orgType === 'hq') {
+                totalStaffEl.textContent = '45명';
+                totalUnitsEl.textContent = '6개 부서';
+                keyUnitsEl.textContent = '경영지원, 영업, 마케팅, R&D, 물류, IT';
+                renderChart(hqChartData, '본사 부서별 인원 분포');
+            } else {
+                totalStaffEl.textContent = '210명';
+                totalUnitsEl.textContent = '35개 매장';
+                keyUnitsEl.textContent = '서울권(12), 경기권(10), 지방권(13)';
+                renderChart(franchiseChartData, '가맹점 권역별 매장 분포');
+            }
+        }
+
+        // 탭 변경 시 대시보드 및 트리 리셋
+        document.querySelectorAll('#orgTab button[data-bs-toggle="tab"]').forEach(tabEl => {
+            tabEl.addEventListener('shown.bs.tab', event => {
+                const orgType = event.target.id === 'hq-tab' ? 'hq' : 'franchise';
+                updateDashboard(orgType);
+                searchInput.value = '';
+                resetTree();
+            });
+        });
+    
+        // 초기 로드
+        document.addEventListener('DOMContentLoaded', () => {
+            updateDashboard('hq');
+            resetTree();
+        });
+
+      </script>
+</body>
+
+</html>

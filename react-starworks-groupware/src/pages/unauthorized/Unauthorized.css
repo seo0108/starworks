@@ -1,0 +1,43 @@
+.unauth-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: calc(100vh - 120px);
+  background: linear-gradient(135deg, #f8f9fa, #e7f3ff);
+  padding-top: 0;
+}
+
+.unauth-card {
+  background: white;
+  width: 450px;
+  border: 1px solid #ebf3fc;
+  transition: all 0.3s ease;
+  transform: translateY(-100px);
+}
+
+.unauth-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+  transform: translateY(-105px);
+}
+
+.unauth-icon {
+  font-size: 4rem;
+  color: #dc3545;
+  animation: pulse 1.8s infinite;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+    opacity: 0.8;
+  }
+  50% {
+    transform: scale(1.1);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 0.8;
+  }
+}

@@ -1,0 +1,46 @@
+.tree {
+  list-style: none;
+  padding-left: 1rem;
+  position: relative;
+}
+
+.tree::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 8px;
+  border-left: 1px solid #ccc;
+  bottom: 0;
+}
+
+.tree li {
+  position: relative;
+  padding-left: 20px;
+  margin: 6px 0;
+}
+
+.tree li::before {
+  content: "";
+  position: absolute;
+  top: 14px;
+  left: 8px;
+  width: 12px;
+  border-top: 1px solid #ccc;
+}
+
+.tree-node {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 6px;
+  border-radius: 4px;
+  transition: background 0.15s ease;
+}
+
+.tree-node:hover {
+  background: #f8f9fa;
+}
+
+.tree-icon {
+  color: #f0ad4e;
+}

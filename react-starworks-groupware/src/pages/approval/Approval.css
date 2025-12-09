@@ -1,0 +1,10 @@
+/* Approval.css */
+.table th.checkbox-col { width: 3%; }
+.table th.id-col { width: 9%; }
+.table th.category-col { width: 12%; }
+.table th.name-col { width: 15%; }
+.table th.secure-col { width: 7%;  }
+.table th.save-col { width: 7%; }
+.table th.date-col { width: 10%; }
+.table th.preview-col { width: 8%; }
+.table th.action-col { width: 7%; }

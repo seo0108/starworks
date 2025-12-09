@@ -1,0 +1,11 @@
+table#table1 tr td {
+  padding: 1.3rem .3rem;
+}
+
+table#table1 th {
+  padding: 1.3rem .3rem
+}
+
+.authCard {
+  min-height: 600px;
+}

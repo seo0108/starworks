@@ -1,0 +1,16 @@
+.change-box {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px; /* 글자와 화살표 간격 */
+}
+
+.change-box span {
+  font-weight: 500;
+}
+
+.arrow {
+  color: #6c757d; /* 부드러운 회색 (무난한 색상) */
+  font-size: 1.1rem;
+  vertical-align: middle;
+}

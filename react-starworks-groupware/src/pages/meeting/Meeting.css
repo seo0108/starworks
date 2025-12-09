@@ -1,0 +1,32 @@
+/* ✅ 승인 버튼 (찐초록 그라데이션) */
+.btn-success {
+  background: linear-gradient(90deg, #0b8a43, #00b050) !important;
+  border: none !important;
+  font-weight: 600 !important;
+  color: #fff !important;
+  letter-spacing: 0.3px;
+  transition: all 0.25s ease;
+  box-shadow: 0 2px 6px rgba(11, 138, 67, 0.3);
+}
+
+.btn-success:hover {
+  background: linear-gradient(90deg, #087a3a, #009b48) !important;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(11, 138, 67, 0.45);
+}
+
+/* ❌ 반려 버튼은 그대로 유지 */
+.btn-danger {
+  background: linear-gradient(90deg, #e74c3c, #ff6b6b) !important;
+  border: none !important;
+  font-weight: 600 !important;
+  color: #fff !important;
+  transition: all 0.25s ease;
+  box-shadow: 0 2px 6px rgba(231, 76, 60, 0.3);
+}
+
+.btn-danger:hover {
+  background: linear-gradient(90deg, #c0392b, #ff4757) !important;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(231, 76, 60, 0.4);
+}

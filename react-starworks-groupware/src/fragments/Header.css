@@ -1,0 +1,77 @@
+@import url('https://fonts.googleapis.com/css2?family=SUIT:wght@400;500;600;700&family=Pretendard:wght@400;500;600;700&display=swap');
+
+/* 상단 네비게이션 바 */
+.main-navbar {
+  background: linear-gradient(90deg, #0e57c4, #4997f0, #9ed2fa); /* 더 맑고 시원한 블루톤 */
+  padding: 0.85rem 0;
+  border-radius: 0;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.12);
+  font-family: 'SUIT', 'Pretendard', sans-serif;
+  backdrop-filter: blur(6px);  /* 🔹 반투명 유리 느낌 */
+  transition: background 0.4s ease;
+}
+
+/* 메뉴 기본 스타일 */
+.main-navbar .menu-link {
+  color: #ffffff !important;
+  font-weight: 600;
+  font-size: 1.05rem;
+  letter-spacing: 0.3px;
+  text-shadow: 0 0 6px rgba(0, 0, 0, 0.1);
+  transition: all 0.25s ease;
+}
+
+/* hover */
+.main-navbar .menu-link:hover {
+  color: #e8f4ff !important;
+  transform: translateY(-2px);
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+}
+
+/* active 메뉴 강조 */
+.main-navbar .menu-link.active {
+  color: #ffffff !important;
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: 6px;
+  text-decoration-thickness: 2px;
+}
+
+/* 메뉴 간격 조정 */
+.main-navbar ul {
+  display: flex;
+  gap: 18px;
+  align-items: center;
+}
+
+/* 로고 텍스트 */
+.logo h5 {
+  font-family: 'SUIT', 'Pretendard', sans-serif;
+  font-weight: 800;
+  letter-spacing: 1px;
+  font-size: 1.7rem;
+  background: linear-gradient(90deg, #004aad, #4e9fff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 1px 1px 8px rgba(78, 159, 255, 0.25);
+  transition: transform 0.2s ease;
+}
+
+/* 로고 hover 시 살짝 반응 */
+.logo h5:hover {
+  transform: scale(1.02);
+}
+
+/* 반응형 */
+@media (max-width: 992px) {
+  .main-navbar ul {
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  .main-navbar .menu-link {
+    font-size: 0.95rem;
+  }
+  .logo h5 {
+    font-size: 1.4rem;
+  }
+}
